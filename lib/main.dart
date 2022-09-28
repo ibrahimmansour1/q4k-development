@@ -13,6 +13,12 @@ void main() async {
   print("testing");
   print("testing2");
   print("fayez edit ");
+  print('ibrahim edit');
+  print('ibrahim edit');
+  print('ibrahim edit');
+  print('im-1');
+  print('im-3');
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
