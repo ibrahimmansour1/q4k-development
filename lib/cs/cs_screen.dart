@@ -23,6 +23,7 @@ class _CSState extends State<CS> {
     ];
 
     return Scaffold(
+      backgroundColor: lightColor,
       appBar: AppBar(
         backgroundColor: primaryColor,
         title: const Text(

@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-import '../constants.dart';
+import '../../constants.dart';
 
-class WebProgramming extends StatefulWidget {
-  const WebProgramming({super.key});
+class WebProgrammingPdf extends StatefulWidget {
+  const WebProgrammingPdf({super.key});
 
   @override
-  State<WebProgramming> createState() => _WebProgrammingState();
+  State<WebProgrammingPdf> createState() => _WebProgrammingPdfState();
 }
 
-class _WebProgrammingState extends State<WebProgramming> {
+class _WebProgrammingPdfState extends State<WebProgrammingPdf> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

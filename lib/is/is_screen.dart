@@ -24,6 +24,7 @@ class _ISState extends State<IS> {
     ];
 
     return Scaffold(
+      backgroundColor: lightColor,
       appBar: AppBar(
         backgroundColor: primaryColor,
         title: const Text(
