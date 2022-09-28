@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -25,6 +24,7 @@ class _MMState extends State<MM> {
     ];
 
     return Scaffold(
+      backgroundColor: lightColor,
       appBar: AppBar(
         backgroundColor: primaryColor,
         title: const Text(

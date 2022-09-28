@@ -4,14 +4,14 @@ import 'package:flutter/src/widgets/framework.dart';
 
 import '../../constants.dart';
 
-class WebProgramming extends StatefulWidget {
-  const WebProgramming({super.key});
+class WebProgrammingAudio extends StatefulWidget {
+  const WebProgrammingAudio({super.key});
 
   @override
-  State<WebProgramming> createState() => _WebProgrammingState();
+  State<WebProgrammingAudio> createState() => _WebProgrammingAudioState();
 }
 
-class _WebProgrammingState extends State<WebProgramming> {
+class _WebProgrammingAudioState extends State<WebProgrammingAudio> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
