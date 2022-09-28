@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -62,11 +61,11 @@ class _WebProgrammingState extends State<WebProgramming> {
                             SizedBox(
                               height: 5,
                             ),
-                            CachedNetworkImage(
-                              imageUrl: pictures_url[index],
-                              height: 110,
-                              width: 110,
-                            ),
+                            // CachedNetworkImage(
+                            //   imageUrl: pictures_url[index],
+                            //   height: 110,
+                            //   width: 110,
+                            // ),
                             Text(
                               section_name[index],
                               style: TextStyle(
