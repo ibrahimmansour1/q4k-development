@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:q4k/cs/cs_screen.dart';
+import 'package:q4k/is/is_screen.dart';
+import 'package:q4k/it/it_screen.dart';
+import 'package:q4k/mm/mm.dart';
 
 import 'constants.dart';
 
@@ -14,17 +18,23 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
-    List<String> section_name = [
+    List<String> sectionName = [
       'IT',
       'CS',
       'IS',
       'MM',
     ];
-    List<IconData> icon_name = [
+    List<IconData> iconName = [
       Icons.lan,
       Icons.laptop_sharp,
       Icons.data_array_rounded,
       Icons.display_settings,
+    ];
+    List<Widget> screens = [
+      const IT(),
+      const CS(),
+      const IS(),
+      const MM(),
     ];
     return Scaffold(
       backgroundColor: primaryColor,
@@ -38,10 +48,10 @@ class _MainScreenState extends State<MainScreen> {
       // ),
       body: SingleChildScrollView(
         child: Column(children: [
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
-          Text(
+          const Text(
             'Q4K',
             style: TextStyle(
               color: goldenColor,
@@ -49,10 +59,10 @@ class _MainScreenState extends State<MainScreen> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
-          Text(
+          const Text(
             'All you want is here',
             style: TextStyle(
               color: goldenColor,
@@ -60,216 +70,101 @@ class _MainScreenState extends State<MainScreen> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           SizedBox(
             width: 400,
             height: 1000,
             child: ListView.builder(
-              itemCount: section_name.length,
-              itemBuilder: (context, index) => Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: primaryColor,
-                      borderRadius: BorderRadius.circular(12.0),
-                      border: Border.all(
-                        color: goldenColor,
-                        width: 2,
-                        style: BorderStyle.solid,
-                      )),
-                  height: 100,
-                  width: double.infinity,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          width: 80,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            color: primaryColor,
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          child: Icon(
-                            icon_name[index],
-                            size: 60,
-                            color: goldenColor,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        section_name[index],
-                        style: TextStyle(
-                          color: goldenColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.arrow_forward_ios,
-                          color: goldenColor,
-                          size: 30,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            child: Container(
-              decoration: BoxDecoration(
-                  color: primaryColor,
-                  borderRadius: BorderRadius.circular(12.0),
-                  border: Border.all(
-                    color: goldenColor,
-                    width: 2,
-                    style: BorderStyle.solid,
-                  )),
-              height: 100,
-              width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        color: primaryColor,
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      child: Icon(
-                        Icons.computer_sharp,
-                        color: goldenColor,
-                        size: 60,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    'CS',
-                    style: TextStyle(
-                      color: goldenColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.arrow_forward_ios,
-                      color: goldenColor,
-                      size: 30,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            child: Container(
-              decoration: BoxDecoration(
-                color: primaryColor,
-                borderRadius: BorderRadius.circular(12.0),
-              ),
-              height: 100,
-              width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        color: lightColor,
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      child: Icon(
-                        Icons.data_array_rounded,
-                        size: 60,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    'IS',
-                    style: TextStyle(
-                      color: goldenColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.arrow_forward_ios,
-                      color: lightColor,
-                      size: 30,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-            child: Container(
-              decoration: BoxDecoration(
-                color: primaryColor,
-                borderRadius: BorderRadius.circular(12.0),
-              ),
-              height: 100,
-              width: double.infinity,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: 80,
-                      height: 80,
-                      decoration: BoxDecoration(
-                        color: lightColor,
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      child: Icon(
-                        Icons.display_settings,
-                        size: 60,
-                      ),
-                    ),
-                  ),
-                  Text(
-                    'MM',
-                    style: TextStyle(
-                      color: goldenColor,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.arrow_forward_ios,
-                      color: lightColor,
-                      size: 30,
-                    ),
-                  ),
-                ],
-              ),
+              itemCount: sectionName.length,
+              itemBuilder: (context, index) => DepartmentCard(
+                  onPress: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => screens[index]));
+                  },
+                  index: index,
+                  icon_name: iconName,
+                  section_name: sectionName),
             ),
           ),
         ]),
+      ),
+    );
+  }
+}
+
+class DepartmentCard extends StatelessWidget {
+  const DepartmentCard({
+    super.key,
+    required this.icon_name,
+    required this.section_name,
+    required this.index,
+    required this.onPress,
+  });
+
+  final List<IconData> icon_name;
+  final List<String> section_name;
+  final int index;
+  final VoidCallback onPress;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onPress,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        child: Container(
+          decoration: BoxDecoration(
+              color: primaryColor,
+              borderRadius: BorderRadius.circular(12.0),
+              border: Border.all(
+                color: goldenColor,
+                width: 2,
+                style: BorderStyle.solid,
+              )),
+          height: 100,
+          width: double.infinity,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: primaryColor,
+                    borderRadius: BorderRadius.circular(12.0),
+                  ),
+                  child: Icon(
+                    icon_name[index],
+                    size: 60,
+                    color: goldenColor,
+                  ),
+                ),
+              ),
+              Text(
+                section_name[index],
+                style: const TextStyle(
+                  color: goldenColor,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30,
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Icon(
+                  Icons.arrow_forward_ios,
+                  color: goldenColor,
+                  size: 30,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
