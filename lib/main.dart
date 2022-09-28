@@ -15,6 +15,7 @@ void main() async {
   print('ibrahim edit');
   print('ibrahim edit');
   print('ibrahim edit');
+  print('im-1');
 
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
