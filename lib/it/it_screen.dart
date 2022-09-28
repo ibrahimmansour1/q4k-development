@@ -50,7 +50,11 @@ class _ITState extends State<IT> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => CategoriesScreen()));
+                                builder: (context) => CategoriesScreen(
+                                      subjectName: subject_name[index]
+                                          .toLowerCase()
+                                          .replaceAll(" ", "_"),
+                                    )));
                       }),
                       index: index,
                     )),
