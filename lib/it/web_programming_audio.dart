@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-import '../constants.dart';
+import '../shared/constants.dart';
 
 class WebProgramming extends StatefulWidget {
   const WebProgramming({super.key});

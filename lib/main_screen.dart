@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'constants.dart';
+import 'shared/constants.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -26,7 +26,7 @@ class _MainScreenState extends State<MainScreen> {
       Icons.display_settings,
     ];
     return Scaffold(
-      backgroundColor: primaryColor,
+      //backgroundColor: primaryColor,
       // appBar: PreferredSize(
       //   preferredSize: Size.fromHeight(50.0), // here the desired height
       //   child: AppBar(
@@ -43,16 +43,15 @@ class _MainScreenState extends State<MainScreen> {
           const Text(
             'Q4K',
             style: TextStyle(
-              color: goldenColor,
-              fontSize: 40,
-              fontWeight: FontWeight.bold,
+              fontSize: 48,
+              color: lightColor
             ),
           ),
           const SizedBox(
             height: 5,
           ),
           Text('All you want is here',
-              style: GoogleFonts.cookie(fontSize: 48, color: goldenColor)),
+              style: GoogleFonts.cookie(fontSize: 48, color: lightColor)),
           const SizedBox(
             height: 30,
           ),
@@ -63,10 +62,9 @@ class _MainScreenState extends State<MainScreen> {
               itemCount: sectionName.length,
               itemBuilder: (context, index) => Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 child: Container(
                   decoration: BoxDecoration(
-                      color: primaryColor,
                       borderRadius: BorderRadius.circular(12.0),
                       border: Border.all(
                         color: goldenColor,
@@ -84,20 +82,20 @@ class _MainScreenState extends State<MainScreen> {
                           width: 80,
                           height: 80,
                           decoration: BoxDecoration(
-                            color: primaryColor,
+                            color: goldenColor,
                             borderRadius: BorderRadius.circular(12.0),
                           ),
                           child: Icon(
                             iconName[index],
                             size: 60,
-                            color: goldenColor,
+                            color: lightColor,
                           ),
                         ),
                       ),
                       Text(
                         sectionName[index],
                         style: const TextStyle(
-                          color: goldenColor,
+                          color: lightColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 30,
                         ),
@@ -106,7 +104,7 @@ class _MainScreenState extends State<MainScreen> {
                         padding: EdgeInsets.all(8.0),
                         child: Icon(
                           Icons.arrow_forward_ios,
-                          color: goldenColor,
+                          color: lightColor,
                           size: 30,
                         ),
                       ),
@@ -123,7 +121,7 @@ class _MainScreenState extends State<MainScreen> {
                   color: primaryColor,
                   borderRadius: BorderRadius.circular(12.0),
                   border: Border.all(
-                    color: goldenColor,
+                    color: primaryColor,
                     width: 2,
                     style: BorderStyle.solid,
                   )),

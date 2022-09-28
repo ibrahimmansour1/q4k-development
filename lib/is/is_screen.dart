@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:q4k/test.dart';
-import 'package:q4k/constants.dart';
+import 'package:q4k/shared/constants.dart';
 
 class IS extends StatefulWidget {
   const IS({super.key});

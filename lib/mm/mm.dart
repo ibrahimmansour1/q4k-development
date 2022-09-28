@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:q4k/test.dart';
-import 'package:q4k/constants.dart';
+import 'package:q4k/shared/constants.dart';
 
 class MM extends StatefulWidget {
   const MM({super.key});
@@ -66,7 +66,7 @@ class _MMState extends State<MM> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   subject_name[index],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 24,
                                     color: primaryColor,
@@ -79,7 +79,8 @@ class _MMState extends State<MM> {
                           ),
                         ),
                       ),
-                    )),
+                    )
+            ),
           ),
         ]),
       ),
