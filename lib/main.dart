@@ -10,18 +10,6 @@ import 'it/it_screen.dart';
 import 'it/web_programming.dart';
 
 void main() async {
-  print("testing");
-  print("testing2");
-  print("fayez edit ");
-  print('ibrahim edit');
-  print('ibrahim edit');
-  print('ibrahim edit');
-  print('im-1');
-  print('im-3');
-  print("af1");
-  print('im-4');
-
-
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

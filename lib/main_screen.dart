@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'constants.dart';
 
@@ -14,13 +13,13 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
-    List<String> section_name = [
+    List<String> sectionName = [
       'IT',
       'CS',
       'IS',
       'MM',
     ];
-    List<IconData> icon_name = [
+    List<IconData> iconName = [
       Icons.lan,
       Icons.laptop_sharp,
       Icons.data_array_rounded,
@@ -38,10 +37,10 @@ class _MainScreenState extends State<MainScreen> {
       // ),
       body: SingleChildScrollView(
         child: Column(children: [
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
-          Text(
+          const Text(
             'Q4K',
             style: TextStyle(
               color: goldenColor,
@@ -49,25 +48,19 @@ class _MainScreenState extends State<MainScreen> {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
-          Text(
-            'All you want is here',
-            style: TextStyle(
-              color: goldenColor,
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          SizedBox(
+          Text('All you want is here',
+              style: GoogleFonts.cookie(fontSize: 48, color: goldenColor)),
+          const SizedBox(
             height: 30,
           ),
           SizedBox(
             width: 400,
             height: 1000,
             child: ListView.builder(
-              itemCount: section_name.length,
+              itemCount: sectionName.length,
               itemBuilder: (context, index) => Padding(
                 padding:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
@@ -95,22 +88,22 @@ class _MainScreenState extends State<MainScreen> {
                             borderRadius: BorderRadius.circular(12.0),
                           ),
                           child: Icon(
-                            icon_name[index],
+                            iconName[index],
                             size: 60,
                             color: goldenColor,
                           ),
                         ),
                       ),
                       Text(
-                        section_name[index],
-                        style: TextStyle(
+                        sectionName[index],
+                        style: const TextStyle(
                           color: goldenColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 30,
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
                         child: Icon(
                           Icons.arrow_forward_ios,
                           color: goldenColor,
@@ -148,14 +141,14 @@ class _MainScreenState extends State<MainScreen> {
                         color: primaryColor,
                         borderRadius: BorderRadius.circular(12.0),
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.computer_sharp,
                         color: goldenColor,
                         size: 60,
                       ),
                     ),
                   ),
-                  Text(
+                  const Text(
                     'CS',
                     style: TextStyle(
                       color: goldenColor,
@@ -163,8 +156,8 @@ class _MainScreenState extends State<MainScreen> {
                       fontSize: 30,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Icon(
                       Icons.arrow_forward_ios,
                       color: goldenColor,
@@ -196,13 +189,13 @@ class _MainScreenState extends State<MainScreen> {
                         color: lightColor,
                         borderRadius: BorderRadius.circular(12.0),
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.data_array_rounded,
                         size: 60,
                       ),
                     ),
                   ),
-                  Text(
+                  const Text(
                     'IS',
                     style: TextStyle(
                       color: goldenColor,
@@ -210,8 +203,8 @@ class _MainScreenState extends State<MainScreen> {
                       fontSize: 30,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Icon(
                       Icons.arrow_forward_ios,
                       color: lightColor,
@@ -243,13 +236,13 @@ class _MainScreenState extends State<MainScreen> {
                         color: lightColor,
                         borderRadius: BorderRadius.circular(12.0),
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.display_settings,
                         size: 60,
                       ),
                     ),
                   ),
-                  Text(
+                  const Text(
                     'MM',
                     style: TextStyle(
                       color: goldenColor,
@@ -257,8 +250,8 @@ class _MainScreenState extends State<MainScreen> {
                       fontSize: 30,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Icon(
                       Icons.arrow_forward_ios,
                       color: lightColor,
