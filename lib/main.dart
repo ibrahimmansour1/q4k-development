@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:q4k/audio_player.dart';
 import 'package:q4k/constants.dart';
 import 'package:q4k/cs/cs_screen.dart';
 import 'package:q4k/is/is_screen.dart';
@@ -39,7 +40,9 @@ class MyApp extends StatelessWidget {
           future: _initializeFirebase(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              return const MainScreen();
+              return const Audio(
+                subjectAudioName: 'try',
+              );
             }
             return const Center(
               child: CircularProgressIndicator(),
