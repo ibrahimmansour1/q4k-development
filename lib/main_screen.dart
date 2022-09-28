@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:q4k/cs/cs_screen.dart';
 import 'package:q4k/is/is_screen.dart';
 import 'package:q4k/it/it_screen.dart';
+
+import 'package:google_fonts/google_fonts.dart';
+
+
 import 'constants.dart';
 import 'mm/mm_screen.dart';
 
@@ -69,6 +74,9 @@ class _MainScreenState extends State<MainScreen> {
               fontWeight: FontWeight.bold,
             ),
           ),
+
+          Text('All you want is here',
+              style: GoogleFonts.cookie(fontSize: 48, color: goldenColor)),
           const SizedBox(
             height: 30,
           ),
@@ -131,17 +139,67 @@ class DepartmentCard extends StatelessWidget {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
+
+              itemBuilder: (context, index) => Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 child: Container(
                   width: 80,
                   height: 80,
                   decoration: BoxDecoration(
                     color: primaryColor,
                     borderRadius: BorderRadius.circular(12.0),
+                      color: primaryColor,
+                      borderRadius: BorderRadius.circular(12.0),
+                      border: Border.all(
+                        color: goldenColor,
+                        width: 2,
+                        style: BorderStyle.solid,
+                      )),
+                  height: 100,
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          width: 80,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            color: primaryColor,
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          child: Icon(
+                            iconName[index],
+                            size: 60,
+                            color: goldenColor,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        sectionName[index],
+                        style: const TextStyle(
+                          color: goldenColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 30,
+                        ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.arrow_forward_ios,
+                          color: goldenColor,
+                          size: 30,
+                        ),
+                      ),
+                    ],
                   ),
                   child: Icon(
                     icon_name[index],
                     size: 60,
                     color: goldenColor,
+
                   ),
                 ),
               ),
@@ -153,13 +211,6 @@ class DepartmentCard extends StatelessWidget {
                   fontSize: 30,
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Icon(
-                  Icons.arrow_forward_ios,
-                  color: goldenColor,
-                  size: 30,
-                ),
               ),
             ],
           ),
