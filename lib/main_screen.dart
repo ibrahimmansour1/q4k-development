@@ -4,9 +4,8 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:q4k/cs/cs_screen.dart';
 import 'package:q4k/is/is_screen.dart';
 import 'package:q4k/it/it_screen.dart';
-import 'package:q4k/mm/mm.dart';
-
 import 'constants.dart';
+import 'mm/mm_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

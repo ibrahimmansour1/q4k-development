@@ -3,22 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:q4k/cs/cs_screen.dart';
 import 'package:q4k/is/is_screen.dart';
 import 'package:q4k/main_screen.dart';
-import 'package:q4k/mm/mm.dart';
 import 'package:q4k/test.dart';
 import 'firebase_options.dart';
 import 'it/it_screen.dart';
-import 'it/web_programming.dart';
 
 void main() async {
-  print("testing");
-  print("testing2");
-  print('ibrahim edit');
-  print('ibrahim edit');
-  print('ibrahim edit');
-  print('im-1');
-  print('im-3');
-  print('im-4');
-
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
