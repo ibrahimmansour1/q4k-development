@@ -2,15 +2,18 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:q4k/it/distibuted_and_object/image_processing_audio.dart';
-import 'package:q4k/it/distibuted_and_object/image_processing_pdf.dart';
+import 'package:q4k/audio_screen.dart';
+import 'package:q4k/it/image_processing/image_processing_audio.dart';
+import 'package:q4k/it/image_processing/image_processing_pdf.dart';
+import 'package:q4k/pdf_screen.dart';
 
 import '../../constants.dart';
 import 'it/computer_graphics/computer_graphics_audio.dart';
 import 'it/computer_graphics/computer_graphics_pdf.dart';
 
 class CategoriesScreen extends StatefulWidget {
-  const CategoriesScreen({super.key});
+  const CategoriesScreen({super.key, required this.subjectName});
+  final String subjectName;
 
   @override
   State<CategoriesScreen> createState() => _CategoriesScreenState();
@@ -59,7 +62,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => materails_widget[index]));
+                              builder: (context) => AudioScreen(
+                                  subjectAudioName: widget.subjectName)));
                     },
                   )),
         ),
