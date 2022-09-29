@@ -27,7 +27,7 @@ class DepartmentCard extends StatelessWidget {
               color: primaryColor,
               borderRadius: BorderRadius.circular(12.0),
               border: Border.all(
-                color: goldenColor,
+                color: babyBlueColor,
                 width: 2,
                 style: BorderStyle.solid,
               )),
@@ -48,14 +48,14 @@ class DepartmentCard extends StatelessWidget {
                   child: Icon(
                     icon_name[index],
                     size: 60,
-                    color: goldenColor,
+                    color: babyBlueColor,
                   ),
                 ),
               ),
               Text(
                 section_name[index],
                 style: const TextStyle(
-                  color: goldenColor,
+                  color: babyBlueColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 30,
                 ),
@@ -64,7 +64,7 @@ class DepartmentCard extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 child: Icon(
                   Icons.arrow_forward_ios,
-                  color: goldenColor,
+                  color: babyBlueColor,
                   size: 30,
                 ),
               ),

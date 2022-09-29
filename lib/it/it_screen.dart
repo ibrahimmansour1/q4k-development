@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:q4k/categories_screen.dart';
-import 'package:q4k/it/web_programming/web_programming_pdf.dart';
 import 'package:q4k/test.dart';
 import 'package:q4k/constants.dart';
 
@@ -26,13 +25,14 @@ class _ITState extends State<IT> {
     ];
 
     return Scaffold(
-      backgroundColor: lightColor,
+      backgroundColor: primaryColor,
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: primaryColor,
         title: const Text(
           'IT',
           style: TextStyle(
-              color: goldenColor, fontSize: 30, fontWeight: FontWeight.bold),
+              color: babyBlueColor, fontSize: 30, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -48,13 +48,14 @@ class _ITState extends State<IT> {
                       subject_name: subject_name,
                       onPressed: (() {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => CategoriesScreen(
-                                      subjectName: subject_name[index]
-                                          .toLowerCase()
-                                          .replaceAll(" ", "_"),
-                                    )));
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CategoriesScreen(
+                                    subjectName: subject_name[index]
+                                        .toLowerCase()
+                                        .replaceAll(" ", "_"),
+                                  )),
+                        );
                       }),
                       index: index,
                     )),
@@ -89,7 +90,7 @@ class ItSubjectCard extends StatelessWidget {
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12.0),
               border: Border.all(
-                color: primaryColor,
+                color: babyBlueColor,
                 width: 3,
                 style: BorderStyle.solid,
               )),
@@ -105,7 +106,7 @@ class ItSubjectCard extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 24,
-                    color: primaryColor,
+                    color: babyBlueColor,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,

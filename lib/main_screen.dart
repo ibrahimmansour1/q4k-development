@@ -56,7 +56,7 @@ class _MainScreenState extends State<MainScreen> {
           const Text(
             'Q4K',
             style: TextStyle(
-              color: goldenColor,
+              color: babyBlueColor,
               fontSize: 40,
               fontWeight: FontWeight.bold,
             ),
@@ -67,7 +67,7 @@ class _MainScreenState extends State<MainScreen> {
           const Text(
             'All you want is here',
             style: TextStyle(
-              color: goldenColor,
+              color: babyBlueColor,
               fontSize: 30,
               fontWeight: FontWeight.bold,
             ),

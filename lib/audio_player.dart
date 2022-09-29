@@ -25,7 +25,7 @@ class _AudioState extends State<Audio> {
   @override
   void initState() {
     super.initState();
-    // setAudio();
+    setAudio();
     futureFiles = FirebaseStorage.instance
         .ref('/material/software_engineering/audio')
         .listAll();

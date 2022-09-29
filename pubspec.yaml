@@ -34,10 +34,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   dio: ^4.0.6
   firebase_core: ^1.23.0
+  firebase_dynamic_links: ^4.3.9
   firebase_storage: ^10.3.9
   flutter:
     sdk: flutter
   google_fonts: ^3.0.1
+  intl: ^0.17.0
   path_provider: ^2.0.11
 
 dev_dependencies:

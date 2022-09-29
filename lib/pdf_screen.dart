@@ -30,7 +30,14 @@ class _PdfScreenState extends State<PdfScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('cgp'),
+        backgroundColor: primaryColor,
+        title: const Text(
+          'PDF',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: babyBlueColor,
+          ),
+        ),
       ),
       body: FutureBuilder<ListResult>(
           future: futureFiles,
@@ -59,7 +66,9 @@ class _PdfScreenState extends State<PdfScreen> {
                           return ListTile(
                             title: Text(file.name),
                             trailing: IconButton(
-                              icon: Icon(Icons.download),
+                              icon: Icon(
+                                Icons.download,
+                              ),
                               onPressed: () => downloadFile(index, file),
                             ),
                           );
@@ -75,13 +84,13 @@ class _PdfScreenState extends State<PdfScreen> {
   }
 
   Widget buildHeader(int length) => ListTile(
-        tileColor: Colors.blue,
+        tileColor: primaryColor,
         title: Text(
           '$length Files',
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
-            color: Colors.white,
+            color: babyBlueColor,
           ),
         ),
         leading: Container(
@@ -89,7 +98,7 @@ class _PdfScreenState extends State<PdfScreen> {
           height: 52,
           child: const Icon(
             Icons.copy,
-            color: Colors.white,
+            color: babyBlueColor,
           ),
         ),
       );
