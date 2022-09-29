@@ -22,11 +22,25 @@ class CategoriesScreen extends StatefulWidget {
 class _CategoriesScreenState extends State<CategoriesScreen> {
   @override
   Widget build(BuildContext context) {
-    List<Widget> materails_widget = [
-      ComputerGraphicsPdf(),
-      ComputerGraphicsAudio(),
-      ImageProcessingPdf(),
-      ImageProcessingAudio(),
+    void tapped(int index) {
+      if (index == 1) {
+        PdfScreen(
+          subjectPdfName: widget.subjectName,
+        );
+      } else {
+        AudioScreen(
+          subjectAudioName: widget.subjectName,
+        );
+      }
+    }
+
+    List<Widget> test = [
+      PdfScreen(
+        subjectPdfName: widget.subjectName,
+      ),
+      AudioScreen(
+        subjectAudioName: widget.subjectName,
+      ),
     ];
     List<String> section_name = [
       'PDF',
@@ -54,17 +68,22 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               itemCount: 2,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, crossAxisSpacing: 16),
-              itemBuilder: (context, index) => CategoriesCardWidget(
-                    pictures_url: pictures_url,
-                    section_name: section_name,
-                    index: index,
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AudioScreen(
-                                  subjectAudioName: widget.subjectName)));
+              itemBuilder: (context, index) => GestureDetector(
+                    onTap: () {
+                      tapped(index);
                     },
+                    child: CategoriesCardWidget(
+                      pictures_url: pictures_url,
+                      section_name: section_name,
+                      index: index,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PdfScreen(
+                                    subjectPdfName: widget.subjectName)));
+                      },
+                    ),
                   )),
         ),
       ]),
@@ -104,7 +123,7 @@ class CategoriesCardWidget extends StatelessWidget {
               )),
           child: Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               CachedNetworkImage(
@@ -114,7 +133,7 @@ class CategoriesCardWidget extends StatelessWidget {
               ),
               Text(
                 section_name[index],
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 24,
                   color: primaryColor,

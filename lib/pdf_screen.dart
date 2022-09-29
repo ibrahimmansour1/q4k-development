@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../constants.dart';
 
@@ -55,6 +58,10 @@ class _PdfScreenState extends State<PdfScreen> {
 
                           return ListTile(
                             title: Text(file.name),
+                            trailing: IconButton(
+                              icon: Icon(Icons.download),
+                              onPressed: () => downloadFile(index, file),
+                            ),
                           );
                         },
                         itemCount: files.length,
@@ -86,4 +93,18 @@ class _PdfScreenState extends State<PdfScreen> {
           ),
         ),
       );
+  Future downloadFile(int index, Reference ref) async {
+    final ref = FirebaseStorage.instance.ref();
+
+    final dir = await getApplicationDocumentsDirectory();
+    final file = File('${dir.path}/${ref.name}');
+    await ref.writeToFile(file);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+          content: Text(
+        'Downloaded ${ref.name}',
+      )),
+    );
+  }
 }

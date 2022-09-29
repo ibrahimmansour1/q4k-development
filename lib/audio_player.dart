@@ -25,7 +25,7 @@ class _AudioState extends State<Audio> {
   @override
   void initState() {
     super.initState();
-    setAudio();
+    // setAudio();
     futureFiles = FirebaseStorage.instance
         .ref('/material/software_engineering/audio')
         .listAll();
@@ -52,7 +52,7 @@ class _AudioState extends State<Audio> {
   Future setAudio() async {
     audioPlayer.setReleaseMode(ReleaseMode.loop);
     String url = 'https://server6.mp3quran.net/thubti/001.mp3';
-    await audioPlayer.setSourceUrl(url.toString());
+    await audioPlayer.release();
   }
 
   @override
