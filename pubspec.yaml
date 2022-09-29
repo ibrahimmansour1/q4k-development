@@ -29,9 +29,6 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  audio_session: ^0.1.10
-  audio_video_progress_bar: ^0.10.0
-  audioplayer: ^0.8.1
   audioplayers: ^1.1.0
   cached_network_image: ^3.2.2
   cupertino_icons: ^1.0.2
@@ -41,7 +38,6 @@ dependencies:
   flutter:
     sdk: flutter
   google_fonts: ^3.0.1
-  just_audio: ^0.9.29
   path_provider: ^2.0.11
 
 dev_dependencies:
