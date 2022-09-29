@@ -52,7 +52,7 @@ class _AudioState extends State<Audio> {
   Future setAudio() async {
     audioPlayer.setReleaseMode(ReleaseMode.loop);
     String url = 'https://server6.mp3quran.net/thubti/001.mp3';
-    await audioPlayer.release();
+    await audioPlayer.setSourceUrl(url);
   }
 
   @override
