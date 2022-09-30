@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:q4k/audio_player.dart';
 import 'package:q4k/constants.dart';
 import 'package:q4k/main_screen.dart';
+import 'package:q4k/welcome_screen.dart';
 import 'firebase_options.dart';
 import 'hadith_screen.dart';
 
@@ -65,7 +66,7 @@ class _MyAppState extends State<MyApp> {
           future: _initializeFirebase(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              return const MainScreen();
+              return const WelcomeScreen();
             }
             return const Center(
               child: CircularProgressIndicator(),
