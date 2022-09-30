@@ -1,8 +1,12 @@
+import 'dart:io';
+import 'package:path/path.dart';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:path_provider/path_provider.dart';
 
 class Audio extends StatefulWidget {
   final String subjectAudioName;
@@ -57,19 +61,31 @@ class _AudioState extends State<Audio> {
     });
   }
 
+  static Future<File> loadFirebase(String url) async {
+    final refAudio = FirebaseStorage.instance.ref().child(url);
+    final bytes = await refAudio.getData();
+
+    return _storeFile(url, bytes!);
+  }
+
+  static Future<File> _storeFile(String url, List<int> bytes) async {
+    final filename = basename(url);
+    final dir = await getApplicationDocumentsDirectory();
+
+    final file = File('${dir.path}/$filename');
+    await file.writeAsBytes(bytes, flush: true);
+    return file;
+  }
+
   Future setAudio() async {
-    Reference ref = FirebaseStorage.instance.ref().child('/material/');
     try {
+      audioPlayer.setReleaseMode(ReleaseMode.loop);
+      final url = '112.mp3';
+      final file = await loadFirebase(url);
+      await audioPlayer.setSourceUrl(url);
+
       // String url = await ref.getDownloadURL();
       // print('Url' + url);
-      Future<String> downloadedUrl(String imageName) async {
-        String downloadedUrl =
-            await FirebaseStorage.instance.ref('/material/').getDownloadURL();
-        audioPlayer.setReleaseMode(ReleaseMode.loop);
-        await audioPlayer.setSourceUrl(downloadedUrl);
-        print(downloadedUrl);
-        return downloadedUrl;
-      }
     } on FirebaseException catch (e) {
       print(e);
     }
