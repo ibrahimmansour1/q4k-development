@@ -1,15 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:q4k/audio_screen.dart';
-import 'package:q4k/it/image_processing/image_processing_audio.dart';
-import 'package:q4k/it/image_processing/image_processing_pdf.dart';
+import 'package:q4k/capitalize_extention.dart';
 import 'package:q4k/pdf_screen.dart';
+import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 
 import '../../constants.dart';
-import 'it/computer_graphics/computer_graphics_audio.dart';
-import 'it/computer_graphics/computer_graphics_pdf.dart';
 
 class CategoriesScreen extends StatefulWidget {
   const CategoriesScreen({super.key, required this.subjectName});
@@ -22,18 +18,6 @@ class CategoriesScreen extends StatefulWidget {
 class _CategoriesScreenState extends State<CategoriesScreen> {
   @override
   Widget build(BuildContext context) {
-    void tapped(int index) {
-      if (index == 1) {
-        PdfScreen(
-          subjectPdfName: widget.subjectName,
-        );
-      } else {
-        AudioScreen(
-          subjectAudioName: widget.subjectName,
-        );
-      }
-    }
-
     List<Widget> test = [
       PdfScreen(
         subjectPdfName: widget.subjectName,
@@ -53,10 +37,10 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
-        title: const Text(
-          'IT',
+        title: Text(
+          capitalizeAllWord(widget.subjectName.replaceAll("_", " ")),
           style: TextStyle(
-              color: goldenColor, fontSize: 30, fontWeight: FontWeight.bold),
+              color: babyBlueColor, fontSize: 30, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -68,27 +52,31 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               itemCount: 2,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, crossAxisSpacing: 16),
-              itemBuilder: (context, index) => GestureDetector(
-                    onTap: () {
-                      tapped(index);
+              itemBuilder: (context, index) => CategoriesCardWidget(
+                    pictures_url: pictures_url,
+                    section_name: section_name,
+                    index: index,
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => test[index]));
                     },
-                    child: CategoriesCardWidget(
-                      pictures_url: pictures_url,
-                      section_name: section_name,
-                      index: index,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => PdfScreen(
-                                    subjectPdfName: widget.subjectName)));
-                      },
-                    ),
                   )),
         ),
       ]),
     );
   }
+}
+
+String capitalizeAllWord(String value) {
+  var result = value[0].toUpperCase();
+  for (int i = 1; i < value.length; i++) {
+    if (value[i - 1] == " ") {
+      result = result + value[i].toUpperCase();
+    } else {
+      result = result + value[i];
+    }
+  }
+  return result;
 }
 
 class CategoriesCardWidget extends StatelessWidget {

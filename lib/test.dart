@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:q4k/constants.dart';
 
 class test extends StatefulWidget {
   const test({super.key});
@@ -35,7 +36,10 @@ class _testState extends State<test> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: primaryColor,
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: primaryColor,
         title: const Text('Download'),
       ),
       body: FutureBuilder<ListResult>(

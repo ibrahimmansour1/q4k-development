@@ -30,7 +30,14 @@ class _AudioScreenState extends State<AudioScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('cgp'),
+        backgroundColor: primaryColor,
+        title: const Text(
+          'Audio',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: babyBlueColor,
+          ),
+        ),
       ),
       body: FutureBuilder<ListResult>(
           future: futureFiles,
@@ -75,13 +82,13 @@ class _AudioScreenState extends State<AudioScreen> {
   }
 
   Widget buildHeader(int length) => ListTile(
-        tileColor: Colors.blue,
+        tileColor: primaryColor,
         title: Text(
           '$length Files',
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
-            color: Colors.white,
+            color: babyBlueColor,
           ),
         ),
         leading: Container(
@@ -89,7 +96,7 @@ class _AudioScreenState extends State<AudioScreen> {
           height: 52,
           child: const Icon(
             Icons.copy,
-            color: Colors.white,
+            color: babyBlueColor,
           ),
         ),
       );
