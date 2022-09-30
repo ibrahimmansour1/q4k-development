@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:q4k/audio_player.dart';
 import 'package:q4k/constants.dart';
 import 'package:q4k/main_screen.dart';
+import 'package:q4k/pdf_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -10,6 +11,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  print('...');
   runApp(MyApp());
 }
 
@@ -35,7 +37,9 @@ class MyApp extends StatelessWidget {
           future: _initializeFirebase(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              return MainScreen();
+              return Audio(
+                subjectAudioName: '',
+              );
             }
             return const Center(
               child: CircularProgressIndicator(),

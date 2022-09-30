@@ -1,9 +1,10 @@
 import 'dart:io';
-
+import 'dart:async';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../constants.dart';
@@ -63,14 +64,33 @@ class _PdfScreenState extends State<PdfScreen> {
                         itemBuilder: (context, index) {
                           final file = files[index];
 
-                          return ListTile(
-                            title: Text(file.name),
-                            trailing: IconButton(
-                              icon: Icon(
-                                Icons.download,
+                          return Column(
+                            children: [
+                              ListTile(
+                                title: Text(file.name),
+                                trailing: IconButton(
+                                  icon: Icon(
+                                    Icons.download,
+                                  ),
+                                  onPressed: () => downloadFile(index, file),
+                                ),
                               ),
-                              onPressed: () => downloadFile(index, file),
-                            ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              SizedBox(
+                                width: 370,
+                                height: 400,
+                                child: PDF(
+                                  enableSwipe: true,
+                                  swipeHorizontal: true,
+                                  autoSpacing: false,
+                                  pageFling: true,
+                                  pageSnap: true,
+                                ).fromUrl(
+                                    'https://www.cia.gov/library/abbottabad-compound/C2/C2FB97ADC83D3461648EA07238CA296E%CE%A9%C3%B3%CE%B4%20%C6%92%CE%98%C3%9C%E2%8C%90%C3%A1%CF%80%E2%88%A9%CE%B4%20%C6%92%CE%98%CE%B4%CF%86%CF%86%E2%88%A9%C3%AD.pdf'),
+                              )
+                            ],
                           );
                         },
                         itemCount: files.length,

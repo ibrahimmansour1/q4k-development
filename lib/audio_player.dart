@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -22,13 +20,15 @@ class _AudioState extends State<Audio> {
   var position = Duration.zero;
 
   late Future<ListResult> futureFiles;
+
   @override
   void initState() {
     super.initState();
     setAudio();
-    futureFiles = FirebaseStorage.instance
-        .ref('/material/software_engineering/audio')
-        .listAll();
+
+    // futureFiles = FirebaseStorage.instance
+    //     .ref('/material/software_engineering/audio')
+    //     .listAll();
 
     /// listen to states: playing, paused, stopped
     audioPlayer.onPlayerStateChanged.listen((state) {
@@ -36,6 +36,14 @@ class _AudioState extends State<Audio> {
         isPlaying = state == PlayerState.playing;
       });
     });
+
+    // Future <String> _uploadphotofile(mFileImage) async {
+    //     final  Reference storageReference = FirebaseStorage.instance.ref('/material/software_engineering/audio').child("products");
+    //     UploadTask uploadTask = storageReference.child('/material/software_engineering/audio').;
+
+    //     String url = await (await uploadTask).ref.getDownloadURL();
+    //     return url;
+    //   }
     // listion to audio duration
     audioPlayer.onDurationChanged.listen((newDuration) {
       setState(() {
@@ -50,9 +58,21 @@ class _AudioState extends State<Audio> {
   }
 
   Future setAudio() async {
-    audioPlayer.setReleaseMode(ReleaseMode.loop);
-    String url = 'https://server6.mp3quran.net/thubti/001.mp3';
-    await audioPlayer.setSourceUrl(url);
+    Reference ref = FirebaseStorage.instance.ref().child('/material/');
+    try {
+      // String url = await ref.getDownloadURL();
+      // print('Url' + url);
+      Future<String> downloadedUrl(String imageName) async {
+        String downloadedUrl =
+            await FirebaseStorage.instance.ref('/material/').getDownloadURL();
+        audioPlayer.setReleaseMode(ReleaseMode.loop);
+        await audioPlayer.setSourceUrl(downloadedUrl);
+        print(downloadedUrl);
+        return downloadedUrl;
+      }
+    } on FirebaseException catch (e) {
+      print(e);
+    }
   }
 
   @override
