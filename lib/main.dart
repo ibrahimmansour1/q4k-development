@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:q4k/constants.dart';
+import 'package:q4k/main_screen.dart';
+import 'package:q4k/pdf_screen.dart';
 import 'package:q4k/welcome_screen.dart';
 import 'audio_player.dart';
 import 'firebase_options.dart';

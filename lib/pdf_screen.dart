@@ -1,12 +1,18 @@
 import 'dart:io';
-
+import 'dart:async';
+import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:q4k/firebase_api.dart';
+import 'package:q4k/firebase_file.dart';
+import 'package:q4k/pdf_viewer.dart';
 
 import '../../constants.dart';
+import 'api/pdf_api.dart';
 
 class PdfScreen extends StatefulWidget {
   const PdfScreen({super.key, required this.subjectPdfName});
@@ -18,9 +24,12 @@ class PdfScreen extends StatefulWidget {
 
 class _PdfScreenState extends State<PdfScreen> {
   late Future<ListResult> futureFiles;
+  late Future<List<FirebaseFile>> download;
   @override
   void initState() {
     super.initState();
+    download = FirebaseApi.listAll('/material/${widget.subjectPdfName}/pdf');
+
     futureFiles = FirebaseStorage.instance
         .ref('/material/${widget.subjectPdfName}/pdf')
         .listAll();
@@ -63,14 +72,29 @@ class _PdfScreenState extends State<PdfScreen> {
                         itemBuilder: (context, index) {
                           final file = files[index];
 
-                          return ListTile(
-                            title: Text(file.name),
-                            trailing: IconButton(
-                              icon: Icon(
-                                Icons.download,
+                          return Column(
+                            children: [
+                              InkWell(
+                                onTap: () async {
+                                  final url =
+                                      '/material/${widget.subjectPdfName}/pdf/${files[index].name}';
+                                  final file = await PDFApi.loadFirebase(url);
+
+                                  if (file == null) return;
+
+                                  openPDF(context, file);
+                                },
+                                child: ListTile(
+                                  title: Text(file.name),
+                                  trailing: IconButton(
+                                    icon: Icon(
+                                      Icons.download,
+                                    ),
+                                    onPressed: () => downloadFile(index, file),
+                                  ),
+                                ),
                               ),
-                              onPressed: () => downloadFile(index, file),
-                            ),
+                            ],
                           );
                         },
                         itemCount: files.length,
@@ -83,6 +107,9 @@ class _PdfScreenState extends State<PdfScreen> {
     );
   }
 
+  void openPDF(BuildContext context, File file) => Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => PDFViewerPage(file: file)),
+      );
   Widget buildHeader(int length) => ListTile(
         tileColor: primaryColor,
         title: Text(
@@ -103,12 +130,13 @@ class _PdfScreenState extends State<PdfScreen> {
         ),
       );
   Future downloadFile(int index, Reference ref) async {
-    final ref = FirebaseStorage.instance.ref();
-
-    final dir = await getApplicationDocumentsDirectory();
-    final file = File('${dir.path}/${ref.name}');
-    await ref.writeToFile(file);
-
+    final url = await ref.getDownloadURL();
+    final tempDir = await getTemporaryDirectory();
+    final path = '${tempDir.path}/${ref.name}';
+    await Dio().download(
+      url,
+      path,
+    );
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
           content: Text(

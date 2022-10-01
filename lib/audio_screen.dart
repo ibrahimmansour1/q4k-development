@@ -1,10 +1,14 @@
 import 'dart:io';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:q4k/api/audio_api.dart';
+import 'package:q4k/audio_player.dart';
+import 'package:path/path.dart';
 
 import '../../constants.dart';
 
@@ -18,6 +22,11 @@ class AudioScreen extends StatefulWidget {
 
 class _AudioScreenState extends State<AudioScreen> {
   late Future<ListResult> futureFiles;
+  final audioPlayer = AudioPlayer();
+  bool isPlaying = false;
+  Duration duration = Duration.zero;
+  Duration position = Duration.zero;
+
   @override
   void initState() {
     super.initState();
@@ -63,12 +72,24 @@ class _AudioScreenState extends State<AudioScreen> {
                         itemBuilder: (context, index) {
                           final file = files[index];
 
-                          return ListTile(
-                            title: Text(file.name),
-                            trailing: IconButton(
-                              icon: Icon(Icons.download),
-                              onPressed: () => downloadFile(index, file),
-                            ),
+                          return Column(
+                            children: [
+                              InkWell(
+                                onTap: (() => Navigator.push(
+                                    context,
+                                    (MaterialPageRoute(
+                                        builder: (context) => Audio(
+                                            subjectAudioName:
+                                                widget.subjectAudioName))))),
+                                child: ListTile(
+                                  title: Text(file.name),
+                                  trailing: IconButton(
+                                    icon: Icon(Icons.download),
+                                    onPressed: () => downloadFile(index, file),
+                                  ),
+                                ),
+                              ),
+                            ],
                           );
                         },
                         itemCount: files.length,
@@ -100,6 +121,13 @@ class _AudioScreenState extends State<AudioScreen> {
           ),
         ),
       );
+  void openAudio(BuildContext context, String subjectAudioName) =>
+      Navigator.of(context).push(
+        MaterialPageRoute(
+            builder: (context) => AudioScreen(
+                  subjectAudioName: widget.subjectAudioName,
+                )),
+      );
   Future downloadFile(int index, Reference ref) async {
     final ref = FirebaseStorage.instance.ref();
 
@@ -107,7 +135,7 @@ class _AudioScreenState extends State<AudioScreen> {
     final file = File('${dir.path}/${ref.name}');
     await ref.writeToFile(file);
 
-    ScaffoldMessenger.of(context).showSnackBar(
+    ScaffoldMessenger.of(context as BuildContext).showSnackBar(
       SnackBar(
           content: Text(
         'Downloaded ${ref.name}',
