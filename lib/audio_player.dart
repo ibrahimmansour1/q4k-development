@@ -1,10 +1,8 @@
-import 'dart:ffi';
+import 'dart:developer';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class Audio extends StatefulWidget {
   final String subjectAudioName;
@@ -16,30 +14,65 @@ class Audio extends StatefulWidget {
 }
 
 class _AudioState extends State<Audio> {
-  AudioPlayer audioPlayer = new AudioPlayer();
+  AudioPlayer audioPlayer = AudioPlayer();
   bool isPlaying = false;
   late var duration = Duration.zero;
   var position = Duration.zero;
+  int currentFileIndex = -1;
 
-  late Future<ListResult> futureFiles;
+  final List<String> files = [
+    // "https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3",
+    // "https://cdn.islamic.network/quran/audio/128/ar.alafasy/2.mp3",
+    // "https://cdn.islamic.network/quran/audio/128/ar.alafasy/3.mp3",
+    // "https://cdn.islamic.network/quran/audio/128/ar.alafasy/4.mp3",
+    // "https://cdn.islamic.network/quran/audio/128/ar.alafasy/5.mp3",
+    // "https://cdn.islamic.network/quran/audio/128/ar.alafasy/6.mp3",
+    // "https://cdn.islamic.network/quran/audio/128/ar.alafasy/7.mp3",
+    // "https://cdn.islamic.network/quran/audio/128/ar.alafasy/8.mp3",
+    // "https://cdn.islamic.network/quran/audio/128/ar.alafasy/9.mp3",
+    // "https://cdn.islamic.network/quran/audio/128/ar.alafasy/10.mp3",
+    // "https://cdn.islamic.network/quran/audio/128/ar.alafasy/11.mp3",
+  ];
+
+  int getNextIndex() {
+    if (files.length - 1 > currentFileIndex) {
+      currentFileIndex++;
+      log(currentFileIndex.toString(), name: "currentFileIndex");
+
+      return currentFileIndex;
+    } else {
+      currentFileIndex = 0;
+      log(currentFileIndex.toString(), name: "currentFileIndex");
+      return currentFileIndex;
+    }
+  }
+
+  Future<void> loadFiles() async {
+    final futureFiles = (await FirebaseStorage.instance
+        .ref("/material/${widget.subjectAudioName}/audio/")
+        .listAll());
+    log(futureFiles.items.length.toString(), name: "futureFiles.items.length");
+
+    for (Reference fileRef in futureFiles.items) {
+      log(fileRef.fullPath, name: "e.fullPath");
+      files.add(await fileRef.getDownloadURL());
+    }
+    setAudio();
+    log(files.length.toString(), name: "files.length");
+  }
+
   @override
   void initState() {
     super.initState();
-    setAudio();
-    futureFiles = FirebaseStorage.instance
-        .ref('/material/software_engineering/audio')
-        .listAll();
+    loadFiles();
 
     /// listen to states: playing, paused, stopped
     audioPlayer.onPlayerStateChanged.listen((state) {
       setState(() {
         isPlaying = state == PlayerState.playing;
-      });
-    });
-    // listion to audio duration
-    audioPlayer.onDurationChanged.listen((newDuration) {
-      setState(() {
-        duration = newDuration;
+        if (state == PlayerState.completed) {
+          setAudio();
+        }
       });
     });
 
@@ -47,17 +80,25 @@ class _AudioState extends State<Audio> {
     audioPlayer.onPositionChanged.listen((newPosition) {
       position = newPosition;
     });
+
+    // listion to audio duration
+    audioPlayer.onDurationChanged.listen((newDuration) {
+      setState(() {
+        duration = newDuration;
+        audioPlayer.resume();
+      });
+    });
   }
 
   Future setAudio() async {
-    audioPlayer.setReleaseMode(ReleaseMode.loop);
-    String url = 'https://server6.mp3quran.net/thubti/001.mp3';
-    await audioPlayer.setSourceUrl(url);
+    audioPlayer.setVolume(1);
+    final file = files[getNextIndex()];
+    await audioPlayer.setSourceUrl(file);
   }
 
   @override
-  void dispose() {
-    audioPlayer.dispose();
+  void dispose() async {
+    await audioPlayer.dispose();
 
     super.dispose();
   }
@@ -65,41 +106,50 @@ class _AudioState extends State<Audio> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Slider(
-            min: 0,
-            max: duration.inSeconds.toDouble(),
-            value: position.inSeconds.toDouble(),
-            onChanged: (value) async {
-              final position = Duration(seconds: value.toInt());
-              await audioPlayer.seek(position);
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      body: Builder(
+        builder: (context) {
+          if (currentFileIndex >= 0) {
+            return Column(
               children: [
-                Text(formatTime(position)),
-                Text(formatTime(duration - position)),
+                Slider(
+                  min: 0,
+                  max: duration.inSeconds.toDouble(),
+                  value: position.inSeconds
+                      .clamp(0, position.inSeconds)
+                      .toDouble(),
+                  onChanged: (value) async {
+                    final position = Duration(seconds: value.toInt());
+                    await audioPlayer.seek(position);
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(formatTime(position)),
+                      Text(formatTime(duration - position)),
+                    ],
+                  ),
+                ),
+                CircleAvatar(
+                    radius: 35,
+                    child: IconButton(
+                      icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow),
+                      iconSize: 50,
+                      onPressed: () async {
+                        if (isPlaying) {
+                          await audioPlayer.pause();
+                        } else {
+                          await audioPlayer.resume();
+                        }
+                      },
+                    )),
               ],
-            ),
-          ),
-          CircleAvatar(
-              radius: 35,
-              child: IconButton(
-                icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow),
-                iconSize: 50,
-                onPressed: () async {
-                  if (isPlaying) {
-                    await audioPlayer.pause();
-                  } else {
-                    await audioPlayer.resume();
-                  }
-                },
-              )),
-        ],
+            );
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
       ),
     );
   }
