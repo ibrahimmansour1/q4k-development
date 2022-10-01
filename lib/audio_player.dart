@@ -23,24 +23,39 @@ class _AudioState extends State<Audio> {
   var position = Duration.zero;
   int currentFileIndex = -1;
 
-  late List<String> files = ["https://server6.mp3quran.net/thubti/001.mp3"];
+  final List<String> files = [
+    "https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3",
+    "https://cdn.islamic.network/quran/audio/128/ar.alafasy/2.mp3",
+    "https://cdn.islamic.network/quran/audio/128/ar.alafasy/3.mp3",
+    "https://cdn.islamic.network/quran/audio/128/ar.alafasy/4.mp3",
+    "https://cdn.islamic.network/quran/audio/128/ar.alafasy/5.mp3",
+    "https://cdn.islamic.network/quran/audio/128/ar.alafasy/6.mp3",
+    "https://cdn.islamic.network/quran/audio/128/ar.alafasy/7.mp3",
+    "https://cdn.islamic.network/quran/audio/128/ar.alafasy/8.mp3",
+    "https://cdn.islamic.network/quran/audio/128/ar.alafasy/9.mp3",
+    "https://cdn.islamic.network/quran/audio/128/ar.alafasy/10.mp3",
+    "https://cdn.islamic.network/quran/audio/128/ar.alafasy/11.mp3",
+  ];
 
   int getNextIndex() {
     if (files.length - 1 > currentFileIndex) {
       currentFileIndex++;
+      log(currentFileIndex.toString(), name: "currentFileIndex");
+
       return currentFileIndex;
     } else {
       currentFileIndex = 0;
+      log(currentFileIndex.toString(), name: "currentFileIndex");
       return currentFileIndex;
     }
   }
 
   Future<void> loadFiles() async {
-    final futureFiles = await FirebaseStorage.instance
-        .ref('/material/software_engineering/audio')
-        .listAll();
+    final futureFiles = await FirebaseStorage.instance.ref().listAll();
 
     futureFiles.items.map((e) async {
+      log(e.fullPath, name: "e.fullPath");
+
       files.add(await e.getDownloadURL());
     });
     log(files.length.toString(), name: "files.length");
@@ -61,21 +76,26 @@ class _AudioState extends State<Audio> {
         }
       });
     });
-    // listion to audio duration
-    audioPlayer.onDurationChanged.listen((newDuration) {
-      setState(() {
-        duration = newDuration;
-      });
-    });
+
 
     // listen to audio position
     audioPlayer.onPositionChanged.listen((newPosition) {
       position = newPosition;
     });
+
+    // listion to audio duration
+    audioPlayer.onDurationChanged.listen((newDuration) {
+      setState(() {
+        duration = newDuration;
+        audioPlayer.resume();
+      });
+    });
+
+
   }
 
   Future setAudio() async {
-    audioPlayer.setReleaseMode(ReleaseMode.loop);
+   // audioPlayer.setReleaseMode(ReleaseMode.loop);
     String url = 'https://server6.mp3quran.net/thubti/001.mp3';
     audioPlayer.setVolume(1);
     final file = files[getNextIndex()];
@@ -83,8 +103,8 @@ class _AudioState extends State<Audio> {
   }
 
   @override
-  void dispose() {
-    audioPlayer.dispose();
+  void dispose() async {
+    await audioPlayer.dispose();
 
     super.dispose();
   }
@@ -97,7 +117,8 @@ class _AudioState extends State<Audio> {
           Slider(
             min: 0,
             max: duration.inSeconds.toDouble(),
-            value: position.inSeconds.toDouble(),
+            value: position.inSeconds
+                .clamp(0, position.inSeconds).toDouble(),
             onChanged: (value) async {
               final position = Duration(seconds: value.toInt());
               await audioPlayer.seek(position);
