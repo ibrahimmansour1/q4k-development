@@ -18,10 +18,10 @@ class Audio extends StatefulWidget {
 }
 
 class _AudioState extends State<Audio> {
-  AudioPlayer audioPlayer = new AudioPlayer();
+  final audioPlayer = AudioPlayer();
   bool isPlaying = false;
-  late var duration = Duration.zero;
-  var position = Duration.zero;
+  Duration duration = Duration.zero;
+  Duration position = Duration.zero;
 
   late Future<ListResult> futureFiles;
 
@@ -30,10 +30,6 @@ class _AudioState extends State<Audio> {
     super.initState();
     setAudio();
 
-    // futureFiles = FirebaseStorage.instance
-    //     .ref('/material/software_engineering/audio')
-    //     .listAll();
-
     /// listen to states: playing, paused, stopped
     audioPlayer.onPlayerStateChanged.listen((state) {
       setState(() {
@@ -41,13 +37,6 @@ class _AudioState extends State<Audio> {
       });
     });
 
-    // Future <String> _uploadphotofile(mFileImage) async {
-    //     final  Reference storageReference = FirebaseStorage.instance.ref('/material/software_engineering/audio').child("products");
-    //     UploadTask uploadTask = storageReference.child('/material/software_engineering/audio').;
-
-    //     String url = await (await uploadTask).ref.getDownloadURL();
-    //     return url;
-    //   }
     // listion to audio duration
     audioPlayer.onDurationChanged.listen((newDuration) {
       setState(() {
@@ -80,12 +69,10 @@ class _AudioState extends State<Audio> {
   Future setAudio() async {
     try {
       audioPlayer.setReleaseMode(ReleaseMode.loop);
+      // final url = 'https://server6.mp3quran.net/thubti/001.mp3';
       final url = '112.mp3';
       final file = await loadFirebase(url);
       await audioPlayer.setSourceUrl(url);
-
-      // String url = await ref.getDownloadURL();
-      // print('Url' + url);
     } on FirebaseException catch (e) {
       print(e);
     }
@@ -110,6 +97,8 @@ class _AudioState extends State<Audio> {
             onChanged: (value) async {
               final position = Duration(seconds: value.toInt());
               await audioPlayer.seek(position);
+
+              await audioPlayer.resume();
             },
           ),
           Padding(
@@ -151,5 +140,9 @@ class _AudioState extends State<Audio> {
       minutes,
       seconds,
     ].join(':');
+  }
+
+  Future<void> _refresh() {
+    return Future.delayed(Duration(seconds: 0));
   }
 }

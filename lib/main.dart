@@ -37,9 +37,7 @@ class MyApp extends StatelessWidget {
           future: _initializeFirebase(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              return Audio(
-                subjectAudioName: '',
-              );
+              return MainScreen();
             }
             return const Center(
               child: CircularProgressIndicator(),
