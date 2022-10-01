@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ffi';
 
 import 'package:audioplayers/audioplayers.dart';
@@ -16,24 +17,48 @@ class Audio extends StatefulWidget {
 }
 
 class _AudioState extends State<Audio> {
-  AudioPlayer audioPlayer = new AudioPlayer();
+  AudioPlayer audioPlayer = AudioPlayer();
   bool isPlaying = false;
   late var duration = Duration.zero;
   var position = Duration.zero;
+  int currentFileIndex = -1;
 
-  late Future<ListResult> futureFiles;
+  late List<String> files = ["https://server6.mp3quran.net/thubti/001.mp3"];
+
+  int getNextIndex() {
+    if (files.length - 1 > currentFileIndex) {
+      currentFileIndex++;
+      return currentFileIndex;
+    } else {
+      currentFileIndex = 0;
+      return currentFileIndex;
+    }
+  }
+
+  Future<void> loadFiles() async {
+    final futureFiles = await FirebaseStorage.instance
+        .ref('/material/software_engineering/audio')
+        .listAll();
+
+    futureFiles.items.map((e) async {
+      files.add(await e.getDownloadURL());
+    });
+    log(files.length.toString(), name: "files.length");
+  }
+
   @override
   void initState() {
     super.initState();
     setAudio();
-    futureFiles = FirebaseStorage.instance
-        .ref('/material/software_engineering/audio')
-        .listAll();
+    loadFiles();
 
     /// listen to states: playing, paused, stopped
     audioPlayer.onPlayerStateChanged.listen((state) {
       setState(() {
         isPlaying = state == PlayerState.playing;
+        if (state == PlayerState.completed) {
+          setAudio();
+        }
       });
     });
     // listion to audio duration
@@ -52,7 +77,9 @@ class _AudioState extends State<Audio> {
   Future setAudio() async {
     audioPlayer.setReleaseMode(ReleaseMode.loop);
     String url = 'https://server6.mp3quran.net/thubti/001.mp3';
-    await audioPlayer.setSourceUrl(url);
+    audioPlayer.setVolume(1);
+    final file = files[getNextIndex()];
+    await audioPlayer.setSourceUrl(file);
   }
 
   @override
