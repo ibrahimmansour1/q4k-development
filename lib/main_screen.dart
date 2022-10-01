@@ -8,6 +8,7 @@ import 'compnents.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'constants.dart';
+import 'dialog.dart';
 import 'mm/mm_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -18,6 +19,18 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await showDialog(
+        context: context,
+        builder: (BuildContext context) => const MyDialog(),
+      );
+    });
+
+  }
   @override
   Widget build(BuildContext context) {
     List<String> sectionName = [
@@ -53,24 +66,23 @@ class _MainScreenState extends State<MainScreen> {
           const SizedBox(
             height: 50,
           ),
-          const Text(
+          Text(
             'Q4K',
-            style: TextStyle(
-              color: babyBlueColor,
+            style: GoogleFonts.cookie(
               fontSize: 40,
-              fontWeight: FontWeight.bold,
-            ),
+              color: babyBlueColor
+            )
           ),
           const SizedBox(
             height: 5,
           ),
-          const Text(
+          Text(
             'All you want is here',
-            style: TextStyle(
-              color: babyBlueColor,
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-            ),
+            style: GoogleFonts.nunito(
+                fontSize: 40,
+                fontWeight: FontWeight.w700,
+                color: babyBlueColor
+            )
           ),
           const SizedBox(
             height: 30,

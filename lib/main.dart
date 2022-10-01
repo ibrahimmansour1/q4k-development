@@ -1,9 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:q4k/audio_player.dart';
 import 'package:q4k/constants.dart';
 import 'package:q4k/main_screen.dart';
 import 'package:q4k/pdf_screen.dart';
+import 'package:q4k/welcome_screen.dart';
+import 'audio_player.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -11,40 +13,53 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  print('...');
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  // Intialize Firevase app
-  Future<FirebaseApp> _initializeFirebase() async {
-    FirebaseApp firebaseApp = await Firebase.initializeApp();
-    return firebaseApp;
-  }
+  const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
+      home: Audio(subjectAudioName: "distributed_and_object_databases") ,
+    );
+  }
+}
 
-      // theme: lightThemeData(context),
-      // darkTheme: darkThemeData(context),
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
 
-      home: Scaffold(
-        backgroundColor: lightColor,
-        body: FutureBuilder(
-          future: _initializeFirebase(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return MainScreen();
-            }
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
-        ),
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+
+
+
+Future<FirebaseApp> _initializeFirebase() async {
+  FirebaseApp firebaseApp = await Firebase.initializeApp();
+  return firebaseApp;
+}
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: lightColor,
+      body: FutureBuilder(
+        future: _initializeFirebase(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return const WelcomeScreen();
+          }
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
       ),
     );
   }
 }
+

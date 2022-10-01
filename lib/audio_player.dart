@@ -64,7 +64,6 @@ class _AudioState extends State<Audio> {
   @override
   void initState() {
     super.initState();
-
     loadFiles();
 
     /// listen to states: playing, paused, stopped
