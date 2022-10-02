@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:q4k/audio_player.dart';
 import 'package:q4k/constants.dart';
+import 'package:q4k/main_screen.dart';
 import 'package:q4k/shared/styles/theme.dart';
 import 'package:q4k/welcome_screen.dart';
 import 'firebase_options.dart';
@@ -22,7 +24,7 @@ class MyApp extends StatelessWidget {
       darkTheme: darkThemeData(context),
       theme: lightThemeData(context),
       debugShowCheckedModeBanner: false,
-      home: const WelcomeScreen(),
+      home: MainScreen(),
     );
   }
 }
