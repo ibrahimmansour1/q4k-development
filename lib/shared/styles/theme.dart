@@ -35,7 +35,7 @@ ThemeData darkThemeData(BuildContext context) {
     scaffoldBackgroundColor: kContentColorLightTheme,
     appBarTheme: appBarTheme,
     iconTheme: const IconThemeData(color: kContentColorDarkTheme),
-    textTheme: GoogleFonts.interTextTheme(Theme.of(context).textTheme)
+    textTheme: GoogleFonts.nunitoTextTheme(Theme.of(context).textTheme)
         .apply(bodyColor: kContentColorDarkTheme),
     colorScheme: const ColorScheme.dark().copyWith(
       primary: kPrimaryColor,

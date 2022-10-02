@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:q4k/welcome_screen.dart';
 import '../../constants.dart';
+import '../../screens/sign_up/sign_up_screen.dart';
 import '../styles/size_config.dart';
 
 class NoAccountText extends StatelessWidget {
@@ -22,7 +22,7 @@ class NoAccountText extends StatelessWidget {
         GestureDetector(
           onTap: () =>
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return const WelcomeScreen();
+            return const SignUpScreen();
           })),
           child: Text(
             "Sign Up",
