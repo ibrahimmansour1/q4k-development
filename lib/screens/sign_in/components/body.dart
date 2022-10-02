@@ -78,9 +78,7 @@ class Body extends StatelessWidget {
                             const Text("Remember me"),
                             const Spacer(),
                             GestureDetector(
-                              onTap: () => Navigator.push(
-                                context,MaterialPageRoute(builder: (context)=>const MainScreen())
-                              ),
+                              onTap: (){},
                               child: const Text(
                                 "Forgot Password",
                                 style:

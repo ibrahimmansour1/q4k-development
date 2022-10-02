@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:q4k/constants.dart';
-import 'package:q4k/main_screen.dart';
-
-import 'sign_in_or_sign_up/sign_in_or_sign_up_screen.dart';
+import 'package:q4k/screens/sign_in/sign_in.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
@@ -15,7 +13,6 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: primaryColor,
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -40,9 +37,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const SignInOrSignUpScreen()));
+                          builder: (context) =>  SignInScreen()));
                 },
-                color: babyBlueColor,
+                color: kPrimaryColor,
                 child: const Text(
                   "Continue",
                   style: TextStyle(fontSize: (18), color: Colors.white),
