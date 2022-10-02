@@ -88,7 +88,7 @@ class SignUpForm extends StatelessWidget {
         enabledBorder: outlineInputBorder(),
         focusedBorder: outlineInputBorder(),
         border: outlineInputBorder(),
-        labelText: "Name",
+        labelText: "First Name",
         hintText: "Enter your name",
         floatingLabelBehavior: FloatingLabelBehavior.always,
         suffixIcon: const CustomSuffixIcon(svgIcon: "assets/icons/User.svg"),

@@ -36,7 +36,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     ];
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: primaryColor,
+        backgroundColor: kContentColorLightTheme,
         title: Text(
           capitalizeAllWord(widget.subjectName.replaceAll("_", " ")),
           style: TextStyle(
