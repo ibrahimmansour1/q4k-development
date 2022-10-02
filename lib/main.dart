@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:q4k/audio_screen.dart';
 import 'package:q4k/constants.dart';
 import 'package:q4k/main_screen.dart';
 import 'package:q4k/pdf_screen.dart';
@@ -21,9 +23,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.cyan,
+        // fontFamily: GoogleFonts.nunito(),
+      ),
       debugShowCheckedModeBanner: false,
-      home: Audio(subjectAudioName: "distributed_and_object_databases") ,
+      home: MainScreen(),
     );
   }
 }
@@ -36,13 +42,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-
-
-
-Future<FirebaseApp> _initializeFirebase() async {
-  FirebaseApp firebaseApp = await Firebase.initializeApp();
-  return firebaseApp;
-}
+  Future<FirebaseApp> _initializeFirebase() async {
+    FirebaseApp firebaseApp = await Firebase.initializeApp();
+    return firebaseApp;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,4 +65,3 @@ Future<FirebaseApp> _initializeFirebase() async {
     );
   }
 }
-

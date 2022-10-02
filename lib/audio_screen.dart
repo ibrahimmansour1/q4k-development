@@ -3,12 +3,8 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:q4k/api/audio_api.dart';
 import 'package:q4k/audio_player.dart';
-import 'package:path/path.dart';
 
 import '../../constants.dart';
 
