@@ -1,13 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:q4k/audio_screen.dart';
 import 'package:q4k/constants.dart';
-import 'package:q4k/main_screen.dart';
-import 'package:q4k/pdf_screen.dart';
+import 'package:q4k/shared/styles/theme.dart';
 import 'package:q4k/welcome_screen.dart';
-import 'audio_player.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -24,12 +19,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.cyan,
-        // fontFamily: GoogleFonts.nunito(),
-      ),
+      darkTheme: darkThemeData(context),
+      theme: lightThemeData(context),
       debugShowCheckedModeBanner: false,
-      home: MainScreen(),
+      home: const WelcomeScreen(),
     );
   }
 }

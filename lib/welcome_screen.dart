@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:q4k/constants.dart';
 import 'package:q4k/main_screen.dart';
 
+import 'sign_in_or_sign_up/sign_in_or_sign_up_screen.dart';
+
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
 
@@ -38,7 +40,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const MainScreen()));
+                          builder: (context) => const SignInOrSignUpScreen()));
                 },
                 color: babyBlueColor,
                 child: const Text(
