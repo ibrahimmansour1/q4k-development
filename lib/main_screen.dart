@@ -19,7 +19,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -29,8 +28,8 @@ class _MainScreenState extends State<MainScreen> {
         builder: (BuildContext context) => const MyDialog(),
       );
     });
-
   }
+
   @override
   Widget build(BuildContext context) {
     List<String> sectionName = [
@@ -66,24 +65,21 @@ class _MainScreenState extends State<MainScreen> {
           const SizedBox(
             height: 50,
           ),
-          Text(
-            'Q4K',
-            style: GoogleFonts.cookie(
-              fontSize: 40,
-              color: babyBlueColor
-            )
-          ),
+          Text('Q4K',
+              style: GoogleFonts.nunito(
+                fontSize: 60,
+                color: babyBlueColor,
+                fontWeight: FontWeight.bold,
+              )),
           const SizedBox(
             height: 5,
           ),
-          Text(
-            'All you want is here',
-            style: GoogleFonts.nunito(
-                fontSize: 40,
-                fontWeight: FontWeight.w700,
-                color: babyBlueColor
-            )
-          ),
+          Text('All you want is here',
+              style: GoogleFonts.cookie(
+                  fontSize: 40,
+                  letterSpacing: 2,
+                  fontWeight: FontWeight.w700,
+                  color: babyBlueColor)),
           const SizedBox(
             height: 30,
           ),
