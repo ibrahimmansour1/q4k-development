@@ -26,7 +26,8 @@ class _MyDialogState extends State<MyDialog> {
   Future<void> _getCounter() async {
     const key = "counter";
     final SharedPreferences prefs = await  SharedPreferences.getInstance();
-    final int counter = prefs.getInt(key) ?? 0;
+    int counter = prefs.getInt(key) ?? 0;
+    if(counter >= hadith.length) counter = 0;
     prefs.setInt(key, counter+1);
 
     setState(() {
