@@ -1,8 +1,10 @@
 import 'dart:developer';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:q4k/constants.dart';
 
 class Audio extends StatefulWidget {
   final String subjectAudioName;
@@ -111,6 +113,29 @@ class _AudioState extends State<Audio> {
           if (currentFileIndex >= 0) {
             return Column(
               children: [
+                SizedBox(
+                  height: 100,
+                ),
+                Container(
+                  height: 300,
+                  width: 300,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.0),
+                      border: Border.all(
+                        color: kPrimaryColor,
+                        width: 3,
+                        style: BorderStyle.solid,
+                      )),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12.0),
+                    child: CachedNetworkImage(
+                        imageUrl:
+                            'https://i.pinimg.com/originals/10/07/4a/10074a71a0790c316b3b07d0bed67a6d.png'),
+                  ),
+                ),
+                SizedBox(
+                  height: 60,
+                ),
                 Slider(
                   min: 0,
                   max: duration.inSeconds.toDouble(),
