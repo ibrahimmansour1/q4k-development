@@ -22,30 +22,29 @@ class SignUpForm extends StatelessWidget {
       key: _formKey,
       child: Column(
         children: [
+          buildNameField(),
+          SizedBox(height: getProportionateScreenHeight(40)),
+          buildLastNameField(),
+          SizedBox(height: getProportionateScreenHeight(40)),
           buildEmailFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
           buildPasswordFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
-          //buildConfirmFormField(),
-          buildNameField(),
-          SizedBox(height: getProportionateScreenHeight(40)),
-         // buildPhoneNumberFormField(),
+          buildConfirmFormField(),
+          // buildPhoneNumberFormField(),
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
             text: "Continue",
             press: () {
               if (_formKey.currentState!.validate()) {
                 Q4kRegisterCubit.get(context).userRegister(
-                  email: emailController!.text,
-                  password: passwordController!.text,
-                  //phone: phoneController.text,
-                  name: nameController.text
-                );
-                Navigator.push(
-                  context,MaterialPageRoute(builder: (context){
-                    return const MainScreen();
-                })
-                );
+                    email: emailController!.text,
+                    password: passwordController!.text,
+                    //phone: phoneController.text,
+                    name: nameController.text);
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return const MainScreen();
+                }));
               }
             },
           ),
@@ -54,27 +53,27 @@ class SignUpForm extends StatelessWidget {
     );
   }
 
-  TextFormField buildPhoneNumberFormField() {
-    return TextFormField(
-      //controller: phoneController,
-      keyboardType: TextInputType.number,
-      validator: (value) {
-        if (value!.isEmpty) {
-          return kPhoneNumberNullError;
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        enabledBorder: outlineInputBorder(),
-        focusedBorder: outlineInputBorder(),
-        border: outlineInputBorder(),
-        labelText: "Phone number",
-        hintText: "Enter your phone number",
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: const CustomSuffixIcon(svgIcon: "assets/icons/Phone.svg"),
-      ),
-    );
-  }
+  // TextFormField buildPhoneNumberFormField() {
+  //   return TextFormField(
+  //     //controller: phoneController,
+  //     keyboardType: TextInputType.number,
+  //     validator: (value) {
+  //       if (value!.isEmpty) {
+  //         return kPhoneNumberNullError;
+  //       }
+  //       return null;
+  //     },
+  //     decoration: InputDecoration(
+  //       enabledBorder: outlineInputBorder(),
+  //       focusedBorder: outlineInputBorder(),
+  //       border: outlineInputBorder(),
+  //       labelText: "Phone number",
+  //       hintText: "Enter your phone number",
+  //       floatingLabelBehavior: FloatingLabelBehavior.always,
+  //       suffixIcon: const CustomSuffixIcon(svgIcon: "assets/icons/Phone.svg"),
+  //     ),
+  //   );
+  // }
 
   TextFormField buildNameField() {
     return TextFormField(
@@ -96,6 +95,28 @@ class SignUpForm extends StatelessWidget {
       ),
     );
   }
+
+  TextFormField buildLastNameField() {
+    return TextFormField(
+      controller: nameController,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return kNameNullError;
+        }
+        return null;
+      },
+      decoration: InputDecoration(
+        enabledBorder: outlineInputBorder(),
+        focusedBorder: outlineInputBorder(),
+        border: outlineInputBorder(),
+        labelText: "Last Name",
+        hintText: "Enter Last your name",
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        suffixIcon: const CustomSuffixIcon(svgIcon: "assets/icons/User.svg"),
+      ),
+    );
+  }
+
   TextFormField buildConfirmFormField() {
     return TextFormField(
       controller: confirmPasswordController,
