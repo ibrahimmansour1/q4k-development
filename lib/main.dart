@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:q4k/audio_player.dart';
 import 'package:q4k/constants.dart';
 import 'package:q4k/main_screen.dart';
+import 'package:q4k/shared/local/cache_helper.dart';
 import 'package:q4k/shared/styles/theme.dart';
 import 'package:q4k/welcome_screen.dart';
 import 'firebase_options.dart';
@@ -12,6 +13,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await CacheHelper.init();
   runApp(const MyApp());
 }
 
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
       darkTheme: darkThemeData(context),
       theme: lightThemeData(context),
       debugShowCheckedModeBanner: false,
-      home: WelcomeScreen(),
+      home: const WelcomeScreen(),
     );
   }
 }
