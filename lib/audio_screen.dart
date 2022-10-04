@@ -125,7 +125,7 @@ class _AudioScreenState extends State<AudioScreen> {
                 )),
       );
   Future downloadFile(int index, Reference ref) async {
-    final ref = FirebaseStorage.instance.ref();
+    // final ref = FirebaseStorage.instance.ref();
 
     final dir = await getApplicationDocumentsDirectory();
     final file = File('${dir.path}/${ref.name}');

@@ -13,7 +13,8 @@ class SignUpForm extends StatelessWidget {
   TextEditingController? emailController = TextEditingController();
   TextEditingController? passwordController = TextEditingController();
   TextEditingController? confirmPasswordController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
   // TextEditingController phoneController = TextEditingController();
 
   @override
@@ -41,7 +42,7 @@ class SignUpForm extends StatelessWidget {
                     email: emailController!.text,
                     password: passwordController!.text,
                     //phone: phoneController.text,
-                    name: nameController.text);
+                    name: firstNameController.text);
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return const MainScreen();
                 }));
@@ -77,7 +78,7 @@ class SignUpForm extends StatelessWidget {
 
   TextFormField buildNameField() {
     return TextFormField(
-      controller: nameController,
+      controller: firstNameController,
       validator: (value) {
         if (value!.isEmpty) {
           return kNameNullError;
@@ -98,7 +99,7 @@ class SignUpForm extends StatelessWidget {
 
   TextFormField buildLastNameField() {
     return TextFormField(
-      controller: nameController,
+      controller: lastNameController,
       validator: (value) {
         if (value!.isEmpty) {
           return kNameNullError;

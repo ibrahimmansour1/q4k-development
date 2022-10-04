@@ -14,7 +14,7 @@ class NoAccountText extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Don't have an account?",
+          "Don't have an account? ",
           style: TextStyle(
             fontSize: getProportionateScreenWidth(16),
           ),
@@ -27,8 +27,10 @@ class NoAccountText extends StatelessWidget {
           child: Text(
             "Sign Up",
             style: TextStyle(
-                fontSize: getProportionateScreenWidth(16),
-                color: kPrimaryColor),
+              fontSize: getProportionateScreenWidth(16),
+              color: kPrimaryColor,
+              decoration: TextDecoration.underline,
+            ),
           ),
         ),
       ],

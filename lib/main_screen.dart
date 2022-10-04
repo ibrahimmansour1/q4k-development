@@ -5,6 +5,8 @@ import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:q4k/cs/cs_screen.dart';
 import 'package:q4k/is/is_screen.dart';
 import 'package:q4k/it/it_screen.dart';
+import 'package:q4k/screens/info_screen.dart';
+import 'package:q4k/screens/settings_screen.dart';
 import 'compnents.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -62,7 +64,7 @@ class _MainScreenState extends State<MainScreen> {
                 style: const TextStyle(
                     fontSize: 22, fontWeight: FontWeight.w700))),
         key: _key,
-        sliderOpenSize: 179,
+        sliderOpenSize: 190,
         slider: _SliderView(
           onItemClick: (title) {
             _key.currentState!.closeSlider();
@@ -76,7 +78,7 @@ class _MainScreenState extends State<MainScreen> {
             Text('Q4K',
                 style: GoogleFonts.nunito(
                   fontSize: 60,
-                  color: babyBlueColor,
+                  color: primaryColor,
                   fontWeight: FontWeight.bold,
                 )),
             const SizedBox(
@@ -87,7 +89,7 @@ class _MainScreenState extends State<MainScreen> {
                     fontSize: 40,
                     letterSpacing: 2,
                     fontWeight: FontWeight.w700,
-                    color: babyBlueColor)),
+                    color: primaryColor.withOpacity(0.5))),
             const SizedBox(
               height: 30,
             ),
@@ -123,7 +125,7 @@ class _SliderView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: primaryColor,
       padding: const EdgeInsets.only(top: 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -131,21 +133,13 @@ class _SliderView extends StatelessWidget {
           SizedBox(
             height: 30,
           ),
-          CircleAvatar(
-            radius: 65,
-            backgroundColor: Colors.grey,
-            child: CircleAvatar(
-              radius: 60,
-              // backgroundImage: AssetImage('assets/images/user_profile.jpg'),
-            ),
-          ),
           SizedBox(
             height: 20,
           ),
           Text(
             'Profile Name',
             style: TextStyle(
-                color: Colors.black,
+                color: lightColor,
                 fontWeight: FontWeight.bold,
                 fontSize: 30,
                 fontFamily: 'BalsamiqSans'),
@@ -156,7 +150,21 @@ class _SliderView extends StatelessWidget {
           _SliderMenuItem(
               title: 'Home', iconData: Icons.home, onTap: onItemClick),
           _SliderMenuItem(
-              title: 'Setting', iconData: Icons.settings, onTap: onItemClick),
+            onTap: (p0) {},
+            title: 'Setting',
+            iconData: Icons.settings,
+            // onTap: Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //         builder: (context) => const SettingsScreen())),
+          ),
+          _SliderMenuItem(
+            title: 'About',
+            iconData: Icons.info,
+            onTap: (p0) {},
+            // onTap: Navigator.push(
+            //     context, MaterialPageRoute(builder: (context) => InfoScreen())),
+          ),
           _SliderMenuItem(
               title: 'LogOut',
               iconData: Icons.arrow_back_ios,
@@ -182,12 +190,12 @@ class _SliderMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        title: Text(title,
-            style: TextStyle(
-              color: Colors.black,
-              // fontFamily: 'BalsamiqSans_Regular',
-            )),
-        leading: Icon(iconData, color: kPrimaryColor),
-        onTap: () => onTap?.call(title));
+      title: Text(title,
+          style: TextStyle(
+            color: lightColor,
+            // fontFamily: 'BalsamiqSans_Regular',
+          )),
+      leading: Icon(iconData, color: lightColor),
+    );
   }
 }

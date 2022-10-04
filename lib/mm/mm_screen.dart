@@ -33,7 +33,7 @@ class _MMState extends State<MM> {
         title: const Text(
           'MM',
           style: TextStyle(
-              color: babyBlueColor, fontSize: 30, fontWeight: FontWeight.bold),
+              color: lightColor, fontSize: 30, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -53,8 +53,8 @@ class _MMState extends State<MM> {
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12.0),
                             border: Border.all(
-                              color: babyBlueColor,
-                              width: 3,
+                              color: lightColor,
+                              width: 1,
                               style: BorderStyle.solid,
                             )),
                         child: Column(
@@ -111,7 +111,7 @@ class MMSubjectCard extends StatelessWidget {
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 24,
-            color: babyBlueColor,
+            color: lightColor,
           ),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,

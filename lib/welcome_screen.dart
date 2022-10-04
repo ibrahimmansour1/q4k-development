@@ -34,12 +34,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   borderRadius: BorderRadius.circular(20.0),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>  SignInScreen()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SignInScreen()));
                 },
-                color: kPrimaryColor,
+                color: primaryColor,
                 child: const Text(
                   "Continue",
                   style: TextStyle(fontSize: (18), color: Colors.white),

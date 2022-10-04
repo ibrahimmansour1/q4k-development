@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:q4k/audio_player.dart';
 import 'package:q4k/constants.dart';
 import 'package:q4k/main_screen.dart';
+import 'package:q4k/screens/info_screen.dart';
 import 'package:q4k/shared/local/cache_helper.dart';
 import 'package:q4k/shared/styles/theme.dart';
 import 'package:q4k/welcome_screen.dart';
@@ -25,8 +26,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       darkTheme: darkThemeData(context),
       theme: lightThemeData(context),
+      themeMode: ThemeMode.light,
       debugShowCheckedModeBanner: false,
-      home: const WelcomeScreen(),
+      home: const InfoScreen(),
     );
   }
 }

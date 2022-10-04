@@ -27,9 +27,10 @@ class Body extends StatelessWidget {
                   color: kPrimaryColor,
                   fontSize: getProportionateScreenWidth(28),
                   fontWeight: FontWeight.bold,
-                ),              ),
+                ),
+              ),
               const Text(
-                "Complete your details or continue \n with social media",
+                "Complete your Information",
                 textAlign: TextAlign.center,
               ),
               SizedBox(
@@ -39,29 +40,7 @@ class Body extends StatelessWidget {
               SizedBox(
                 height: SizeConfig.screenHeight * 0.07,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SocialCard(
-                    icon: 'assets/icons/google-icon.svg',
-                    press: () {},
-                  ),
-                  SocialCard(
-                    icon: 'assets/icons/facebook-2.svg',
-                    press: () {},
-                  ),
-                  SocialCard(
-                    icon: 'assets/icons/twitter.svg',
-                    press: () {},
-                  ),
-                ],
-              ),
               SizedBox(height: getProportionateScreenHeight(20)),
-              Text(
-                'By continuing your confirm that you agree \nwith our Term and Condition',
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.caption,
-              ),
             ],
           ),
         ),

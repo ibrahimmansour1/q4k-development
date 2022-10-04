@@ -23,118 +23,99 @@ class Body extends StatelessWidget {
   final GlobalKey<FormState> _formKey;
   final TextEditingController? emailController;
   final TextEditingController? passwordController;
-  final SocialLoginStates? state ;
-
+  final SocialLoginStates? state;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: SizedBox(
-          width: double.infinity,
-          child: Padding(
-            padding:
+      width: double.infinity,
+      child: Padding(
+        padding:
             EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: SizeConfig.screenHeight * 0.04,
-                  ),
-                  Text(
-                    "Welcome back",
-                    style: TextStyle(
-                      color: kPrimaryColor,
-                      fontSize: getProportionateScreenWidth(28),
-                      fontWeight: FontWeight.bold,
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              SizedBox(
+                height: SizeConfig.screenHeight * 0.04,
+              ),
+              Text(
+                "Welcome back",
+                style: TextStyle(
+                  color: kPrimaryColor,
+                  fontSize: getProportionateScreenWidth(28),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Text(
+                "Sign in with your email and password ",
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: SizeConfig.screenHeight * 0.08,
+              ),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    buildEmailTextFormField(),
+                    SizedBox(
+                      height: getProportionateScreenHeight(30),
                     ),
-                  ),
-                  const Text(
-                    "Sign in with your email and password  \nor continue with social media",
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    height: SizeConfig.screenHeight * 0.08,
-                  ),
-                  Form(
-                    key: _formKey,
-                    child: Column(
+                    buildPassTextFormField(),
+                    SizedBox(
+                      height: getProportionateScreenHeight(30),
+                    ),
+                    Row(
                       children: [
-                        buildEmailTextFormField(),
-                        SizedBox(
-                          height: getProportionateScreenHeight(30),
+                        Checkbox(
+                          value: true,
+                          activeColor: kPrimaryColor,
+                          onChanged: (value) {},
                         ),
-                        buildPassTextFormField(),
-                        SizedBox(
-                          height: getProportionateScreenHeight(30),
-                        ),
-                        Row(
-                          children: [
-                            Checkbox(
-                              value: true,
-                              activeColor: kPrimaryColor,
-                              onChanged: (value) {},
-                            ),
-                            const Text("Remember me"),
-                            const Spacer(),
-                            GestureDetector(
-                              onTap: (){},
-                              child: const Text(
-                                "Forgot Password",
-                                style:
+                        const Text("Remember me"),
+                        const Spacer(),
+                        GestureDetector(
+                          onTap: () {},
+                          child: const Text(
+                            "Forgot Password",
+                            style:
                                 TextStyle(decoration: TextDecoration.underline),
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                        SizedBox(
-                          height: getProportionateScreenHeight(20),
-                        ),
-                        ConditionalBuilder(
-                          condition: state is! SocialLoginLoadingState,
-                          builder: (context) => DefaultButton(
-                              text: "Continue",
-                              press: () {
-                                if (_formKey.currentState!.validate()) {
-                                  SocialLoginCubit.get(context).userLogin(
-                                      email: emailController!.text,
-                                      password: passwordController!.text);
-                                }
-                              }),
-                          fallback: (context) => const CircularProgressIndicator(color: kPrimaryColor,),
-                        )
                       ],
                     ),
-                  ),
-                  SizedBox(
-                    height: SizeConfig.screenHeight * 0.08,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SocialCard(
-                        icon: 'assets/icons/google-icon.svg',
-                        press: () {},
+                    SizedBox(
+                      height: getProportionateScreenHeight(20),
+                    ),
+                    ConditionalBuilder(
+                      condition: state is! SocialLoginLoadingState,
+                      builder: (context) => DefaultButton(
+                          text: "Continue",
+                          press: () {
+                            if (_formKey.currentState!.validate()) {
+                              SocialLoginCubit.get(context).userLogin(
+                                  email: emailController!.text,
+                                  password: passwordController!.text);
+                            }
+                          }),
+                      fallback: (context) => const CircularProgressIndicator(
+                        color: kPrimaryColor,
                       ),
-                      SocialCard(
-                        icon: 'assets/icons/facebook-2.svg',
-                        press: () {},
-                      ),
-                      SocialCard(
-                        icon: 'assets/icons/twitter.svg',
-                        press: () {},
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: getProportionateScreenHeight(20),
-                  ),
-                  const NoAccountText(),
-                ],
+                    )
+                  ],
+                ),
               ),
-            ),
+              SizedBox(
+                height: getProportionateScreenHeight(40),
+              ),
+              const NoAccountText(),
+            ],
           ),
-        ));
+        ),
+      ),
+    ));
   }
 
   TextFormField buildPassTextFormField() {
@@ -171,7 +152,7 @@ class Body extends StatelessWidget {
         }
         return null;
       },
-      decoration:  InputDecoration(
+      decoration: InputDecoration(
           enabledBorder: outlineInputBorder(),
           focusedBorder: outlineInputBorder(),
           border: outlineInputBorder(),

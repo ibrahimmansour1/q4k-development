@@ -24,10 +24,10 @@ class DepartmentCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         child: Container(
           decoration: BoxDecoration(
-              color: primaryColor,
+              color: lightColor,
               borderRadius: BorderRadius.circular(12.0),
               border: Border.all(
-                color: babyBlueColor,
+                color: primaryColor,
                 width: 2,
                 style: BorderStyle.solid,
               )),
@@ -42,20 +42,20 @@ class DepartmentCard extends StatelessWidget {
                   width: 80,
                   height: 80,
                   decoration: BoxDecoration(
-                    color: primaryColor,
+                    color: lightColor,
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   child: Icon(
                     icon_name[index],
                     size: 60,
-                    color: babyBlueColor,
+                    color: primaryColor,
                   ),
                 ),
               ),
               Text(
                 section_name[index],
                 style: const TextStyle(
-                  color: babyBlueColor,
+                  color: primaryColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 30,
                 ),
@@ -64,7 +64,7 @@ class DepartmentCard extends StatelessWidget {
                 padding: EdgeInsets.all(8.0),
                 child: Icon(
                   Icons.arrow_forward_ios,
-                  color: babyBlueColor,
+                  color: primaryColor,
                   size: 30,
                 ),
               ),

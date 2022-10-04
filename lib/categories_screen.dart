@@ -4,6 +4,7 @@ import 'package:q4k/audio_screen.dart';
 import 'package:q4k/capitalize_extention.dart';
 import 'package:q4k/pdf_screen.dart';
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
+import 'package:q4k/youtube_video_player.dart';
 
 import '../../constants.dart';
 
@@ -25,14 +26,13 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       AudioScreen(
         subjectAudioName: widget.subjectName,
       ),
+      YoutubePlayerScreen(),
     ];
-    List<String> section_name = [
-      'PDF',
-      'Audio',
-    ];
+    List<String> section_name = ['PDF', 'Audio', 'Video'];
     List<String> pictures_url = [
-      'https://www.pngitem.com/pimgs/m/534-5347598_pdf-icon-png-transparent-png.png',
-      'https://d1nhio0ox7pgb.cloudfront.net/_img/g_collection_png/standard/512x512/headphones.png',
+      'https://cdn0.iconfinder.com/data/icons/font-awesome-solid-vol-2/512/file-pdf-512.png',
+      'https://cdn4.iconfinder.com/data/icons/remixicon-media/24/headphone-fill-512.png',
+      'https://cdn4.iconfinder.com/data/icons/48-bubbles/48/23.Videos-512.png',
     ];
     return Scaffold(
       appBar: AppBar(
@@ -40,18 +40,16 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
         title: Text(
           capitalizeAllWord(widget.subjectName.replaceAll("_", " ")),
           style: TextStyle(
-              color: babyBlueColor, fontSize: 30, fontWeight: FontWeight.bold),
+              color: lightColor, fontSize: 30, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
       body: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
         SizedBox(
           width: 400,
-          child: GridView.builder(
+          child: ListView.builder(
               shrinkWrap: true,
-              itemCount: 2,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, crossAxisSpacing: 16),
+              itemCount: 3,
               itemBuilder: (context, index) => CategoriesCardWidget(
                     pictures_url: pictures_url,
                     section_name: section_name,
@@ -100,24 +98,32 @@ class CategoriesCardWidget extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Container(
-          height: 140,
+          height: 100,
           width: 140,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12.0),
               border: Border.all(
                 color: primaryColor,
-                width: 3,
+                width: 1,
                 style: BorderStyle.solid,
               )),
-          child: Column(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const SizedBox(
-                height: 5,
+                width: 5,
               ),
-              CachedNetworkImage(
-                imageUrl: pictures_url[index],
-                height: 110,
-                width: 110,
+              Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: CachedNetworkImage(
+                  imageUrl: pictures_url[index],
+                  color: primaryColor,
+                  height: 60,
+                  width: 60,
+                ),
+              ),
+              SizedBox(
+                width: 20,
               ),
               Text(
                 section_name[index],
@@ -127,6 +133,11 @@ class CategoriesCardWidget extends StatelessWidget {
                   color: primaryColor,
                 ),
               ),
+              Spacer(),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Icon(Icons.arrow_forward_ios),
+              )
             ],
           ),
         ),
