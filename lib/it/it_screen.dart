@@ -25,7 +25,7 @@ class _ITState extends State<IT> {
     ];
 
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: lightColor,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: primaryColor,
@@ -88,9 +88,10 @@ class ItSubjectCard extends StatelessWidget {
           height: 60,
           width: double.infinity,
           decoration: BoxDecoration(
+              color: primaryColor,
               borderRadius: BorderRadius.circular(12.0),
               border: Border.all(
-                color: lightColor,
+                color: primaryColor,
                 width: 1,
                 style: BorderStyle.solid,
               )),
@@ -104,7 +105,7 @@ class ItSubjectCard extends StatelessWidget {
                 child: Text(
                   subject_name[index],
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                    // fontWeight: FontWeight.bold,
                     fontSize: 24,
                     color: lightColor,
                   ),

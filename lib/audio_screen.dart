@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:q4k/audio_player.dart';
 
 import '../../constants.dart';
@@ -23,9 +25,14 @@ class _AudioScreenState extends State<AudioScreen> {
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
 
+  void requestPermission() async {
+    await Permission.storage.request();
+  }
+
   @override
   void initState() {
     super.initState();
+    requestPermission();
     futureFiles = FirebaseStorage.instance
         .ref('/material/${widget.subjectAudioName}/audio')
         .listAll();
@@ -81,7 +88,7 @@ class _AudioScreenState extends State<AudioScreen> {
                                   title: Text(file.name),
                                   trailing: IconButton(
                                     icon: Icon(Icons.download),
-                                    onPressed: () => downloadFile(index, file),
+                                    onPressed: () async {},
                                   ),
                                 ),
                               ),
@@ -124,18 +131,18 @@ class _AudioScreenState extends State<AudioScreen> {
                   subjectAudioName: widget.subjectAudioName,
                 )),
       );
-  Future downloadFile(int index, Reference ref) async {
-    // final ref = FirebaseStorage.instance.ref();
+  // Future downloadFile(int index, Reference ref) async {
+  //   // final ref = FirebaseStorage.instance.ref();
 
-    final dir = await getApplicationDocumentsDirectory();
-    final file = File('${dir.path}/${ref.name}');
-    await ref.writeToFile(file);
+  //   final dir = await getApplicationDocumentsDirectory();
+  //   final file = File('/storage/emulated/0/Download/${ref.name}');
+  //   await ref.writeToFile(file);
 
-    ScaffoldMessenger.of(context as BuildContext).showSnackBar(
-      SnackBar(
-          content: Text(
-        'Downloaded ${ref.name}',
-      )),
-    );
-  }
+  //   ScaffoldMessenger.of(context as BuildContext).showSnackBar(
+  //     SnackBar(
+  //         content: Text(
+  //       'Downloaded ${ref.name}',
+  //     )),
+  //   );
+  // }
 }

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -59,10 +60,21 @@ class _MainScreenState extends State<MainScreen> {
       backgroundColor: primaryColor,
       body: SliderDrawer(
         appBar: SliderAppBar(
-            appBarColor: Colors.white,
-            title: Text("",
-                style: const TextStyle(
-                    fontSize: 22, fontWeight: FontWeight.w700))),
+          appBarColor: Colors.white,
+          title: Text("",
+              style:
+                  const TextStyle(fontSize: 22, fontWeight: FontWeight.w700)),
+          trailing: InkWell(
+            onTap: () => Navigator.push(
+                context, MaterialPageRoute(builder: (context) => InfoScreen())),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CachedNetworkImage(
+                  imageUrl:
+                      'https://cdn1.iconfinder.com/data/icons/bootstrap-vol-3/16/info-circle-512.png'),
+            ),
+          ),
+        ),
         key: _key,
         sliderOpenSize: 190,
         slider: _SliderView(
@@ -97,6 +109,8 @@ class _MainScreenState extends State<MainScreen> {
               width: 400,
               height: 1000,
               child: ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
                 itemCount: sectionName.length,
                 itemBuilder: (context, index) => DepartmentCard(
                     onPress: () {
@@ -139,36 +153,58 @@ class _SliderView extends StatelessWidget {
           Text(
             'Profile Name',
             style: TextStyle(
-                color: lightColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 30,
-                fontFamily: 'BalsamiqSans'),
+              color: lightColor,
+              fontWeight: FontWeight.bold,
+              fontSize: 30,
+            ),
           ),
           SizedBox(
             height: 20,
           ),
-          _SliderMenuItem(
-              title: 'Home', iconData: Icons.home, onTap: onItemClick),
-          _SliderMenuItem(
-            onTap: (p0) {},
-            title: 'Setting',
-            iconData: Icons.settings,
-            // onTap: Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //         builder: (context) => const SettingsScreen())),
+          InkWell(
+            onTap: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const MainScreen())),
+            child: _SliderMenuItem(
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SettingsScreen())),
+              title: 'Home',
+              iconData: Icons.home,
+            ),
+          ),
+          InkWell(
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const SettingsScreen())),
+            child: _SliderMenuItem(
+              title: 'Setting',
+              iconData: Icons.settings,
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SettingsScreen())),
+            ),
+          ),
+          InkWell(
+            onTap: () => Navigator.push(
+                context, MaterialPageRoute(builder: (context) => InfoScreen())),
+            child: _SliderMenuItem(
+              title: 'About',
+              iconData: Icons.info,
+              onTap: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => InfoScreen())),
+            ),
           ),
           _SliderMenuItem(
-            title: 'About',
-            iconData: Icons.info,
-            onTap: (p0) {},
-            // onTap: Navigator.push(
-            //     context, MaterialPageRoute(builder: (context) => InfoScreen())),
+            title: 'LogOut',
+            iconData: Icons.arrow_back_ios,
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const SettingsScreen())),
           ),
-          _SliderMenuItem(
-              title: 'LogOut',
-              iconData: Icons.arrow_back_ios,
-              onTap: onItemClick),
         ],
       ),
     );
@@ -178,14 +214,14 @@ class _SliderView extends StatelessWidget {
 class _SliderMenuItem extends StatelessWidget {
   final String title;
   final IconData iconData;
-  final Function(String)? onTap;
+  final Function onTap;
 
-  const _SliderMenuItem(
-      {Key? key,
-      required this.title,
-      required this.iconData,
-      required this.onTap})
-      : super(key: key);
+  const _SliderMenuItem({
+    Key? key,
+    required this.title,
+    required this.iconData,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

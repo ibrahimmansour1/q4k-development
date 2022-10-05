@@ -1,11 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:q4k/audio_player.dart';
 import 'package:q4k/constants.dart';
 import 'package:q4k/main_screen.dart';
 import 'package:q4k/screens/info_screen.dart';
 import 'package:q4k/shared/local/cache_helper.dart';
 import 'package:q4k/shared/styles/theme.dart';
+import 'package:q4k/themes.dart';
 import 'package:q4k/welcome_screen.dart';
 import 'firebase_options.dart';
 
@@ -23,13 +25,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      darkTheme: darkThemeData(context),
-      theme: lightThemeData(context),
-      themeMode: ThemeMode.light,
-      debugShowCheckedModeBanner: false,
-      home: const InfoScreen(),
-    );
+    return ChangeNotifierProvider(
+        create: (context) => ThemeProvider(),
+        builder: (context, _) {
+          final themeProvider = Provider.of<ThemeProvider>(context);
+
+          return MaterialApp(
+            theme: MyThemes.lightTheme,
+            themeMode: themeProvider.themeMode,
+            debugShowCheckedModeBanner: false,
+            darkTheme: MyThemes.darkTheme,
+            home: MainScreen(),
+          );
+        });
   }
 }
 

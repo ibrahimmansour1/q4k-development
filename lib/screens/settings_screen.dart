@@ -19,14 +19,21 @@ class SettingsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: primaryColor,
         title: Text(
-          "Info",
+          "Settings",
           style: TextStyle(
               color: lightColor, fontSize: 30, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
       body: Column(
-        children: [],
+        children: [
+          Row(
+            children: [
+              Text("Dark Mode"),
+              // ChangeThemeButtonWidget(),
+            ],
+          ),
+        ],
       ),
     );
   }
