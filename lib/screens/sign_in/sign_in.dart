@@ -20,10 +20,10 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return BlocProvider(
-      create: (BuildContext context) => SocialLoginCubit(),
-      child: BlocConsumer<SocialLoginCubit, SocialLoginStates>(
+      create: (BuildContext context) => Q4kLoginCubit(),
+      child: BlocConsumer<Q4kLoginCubit, Q4kLoginStates>(
         listener: (context, state) {
-          if (state is SocialLoginErrorState) {
+          if (state is Q4kLoginErrorState) {
             Fluttertoast.showToast(
                 msg: state.error,
                 toastLength: Toast.LENGTH_LONG,
@@ -33,7 +33,7 @@ class SignInScreen extends StatelessWidget {
                 textColor: Colors.white,
                 fontSize: 16.0);
           }
-          if (state is SocialLoginSuccessState) {
+          if (state is Q4kLoginSuccessState) {
             CacheHelper.saveData(
                 key: 'uId',
                 value: state.uId
