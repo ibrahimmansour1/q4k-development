@@ -211,7 +211,7 @@ class _SliderView extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => SignInScreen()));
             },
             child: _SliderMenuItem(
-              title: 'LogOut',
+              title: 'Sign Out',
               iconData: Icons.arrow_back_ios,
               onTap: () => Navigator.push(
                   context,
