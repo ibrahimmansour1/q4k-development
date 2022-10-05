@@ -1,17 +1,17 @@
 
-abstract class SocialLoginStates{}
+abstract class Q4kLoginStates{}
 
-class SocialLoginInitialState extends SocialLoginStates{}
+class Q4kLoginInitialState extends Q4kLoginStates{}
 
-class SocialLoginLoadingState extends SocialLoginStates{}
+class Q4kLoginLoadingState extends Q4kLoginStates{}
 
-class SocialLoginSuccessState extends SocialLoginStates{
+class Q4kLoginSuccessState extends Q4kLoginStates{
   final String uId;
-  SocialLoginSuccessState(this.uId);
+  Q4kLoginSuccessState(this.uId);
 }
 
-class SocialLoginErrorState extends SocialLoginStates{
+class Q4kLoginErrorState extends Q4kLoginStates{
   final String error;
 
-  SocialLoginErrorState(this.error);
+  Q4kLoginErrorState(this.error);
 }

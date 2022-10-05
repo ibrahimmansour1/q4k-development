@@ -23,7 +23,7 @@ class Body extends StatelessWidget {
   final GlobalKey<FormState> _formKey;
   final TextEditingController? emailController;
   final TextEditingController? passwordController;
-  final SocialLoginStates? state;
+  final Q4kLoginStates? state;
 
   @override
   Widget build(BuildContext context) {
@@ -90,12 +90,12 @@ class Body extends StatelessWidget {
                       height: getProportionateScreenHeight(20),
                     ),
                     ConditionalBuilder(
-                      condition: state is! SocialLoginLoadingState,
+                      condition: state is! Q4kLoginLoadingState,
                       builder: (context) => DefaultButton(
                           text: "Continue",
                           press: () {
                             if (_formKey.currentState!.validate()) {
-                              SocialLoginCubit.get(context).userLogin(
+                              Q4kLoginCubit.get(context).userLogin(
                                   email: emailController!.text,
                                   password: passwordController!.text);
                             }

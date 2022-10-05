@@ -10,6 +10,7 @@ import 'package:q4k/it/it_screen.dart';
 import 'package:q4k/screens/info_screen.dart';
 import 'package:q4k/screens/settings_screen.dart';
 import 'package:q4k/screens/sign_in/sign_in.dart';
+import 'package:q4k/shared/local/cache_helper.dart';
 import 'compnents.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -148,11 +149,15 @@ class _SliderView extends StatelessWidget {
           const SizedBox(
             height: 30,
           ),
+          const CircleAvatar(
+            radius: 48,
+            backgroundImage: NetworkImage("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"),
+          ),
           const SizedBox(
             height: 20,
           ),
           const Text(
-            'Profile Name',
+            'Welcome',
             style: TextStyle(
               color: lightColor,
               fontWeight: FontWeight.bold,
@@ -201,11 +206,12 @@ class _SliderView extends StatelessWidget {
           InkWell(
             onTap: () async{
               await FirebaseAuth.instance.signOut();
+              await CacheHelper.clearCacheStorage();
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => SignInScreen()));
             },
             child: _SliderMenuItem(
-              title: 'LogOut',
+              title: 'Sign Out',
               iconData: Icons.arrow_back_ios,
               onTap: () => Navigator.push(
                   context,
