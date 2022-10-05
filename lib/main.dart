@@ -25,19 +25,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (context) => ThemeProvider(),
-        builder: (context, _) {
-          final themeProvider = Provider.of<ThemeProvider>(context);
-
-          return MaterialApp(
-            theme: MyThemes.lightTheme,
-            themeMode: themeProvider.themeMode,
-            debugShowCheckedModeBanner: false,
-            darkTheme: MyThemes.darkTheme,
-            home: MainScreen(),
-          );
-        });
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: const Home(),
+      darkTheme: darkThemeData(context),
+      theme: lightThemeData(context),
+    );
   }
 }
 
