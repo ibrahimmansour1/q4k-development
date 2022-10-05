@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -8,6 +9,7 @@ import 'package:q4k/is/is_screen.dart';
 import 'package:q4k/it/it_screen.dart';
 import 'package:q4k/screens/info_screen.dart';
 import 'package:q4k/screens/settings_screen.dart';
+import 'package:q4k/screens/sign_in/sign_in.dart';
 import 'compnents.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -57,13 +59,12 @@ class _MainScreenState extends State<MainScreen> {
       const MM(),
     ];
     return Scaffold(
-      backgroundColor: primaryColor,
+      //backgroundColor: primaryColor,
       body: SliderDrawer(
         appBar: SliderAppBar(
           appBarColor: Colors.white,
-          title: Text("",
-              style:
-                  const TextStyle(fontSize: 22, fontWeight: FontWeight.w700)),
+          title: const Text("",
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700)),
           trailing: InkWell(
             onTap: () => Navigator.push(
                 context, MaterialPageRoute(builder: (context) => InfoScreen())),
@@ -144,13 +145,13 @@ class _SliderView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Text(
+          const Text(
             'Profile Name',
             style: TextStyle(
               color: lightColor,
@@ -158,7 +159,7 @@ class _SliderView extends StatelessWidget {
               fontSize: 30,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           InkWell(
@@ -197,13 +198,20 @@ class _SliderView extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => InfoScreen())),
             ),
           ),
-          _SliderMenuItem(
-            title: 'LogOut',
-            iconData: Icons.arrow_back_ios,
-            onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const SettingsScreen())),
+          InkWell(
+            onTap: () async{
+              await FirebaseAuth.instance.signOut();
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SignInScreen()));
+            },
+            child: _SliderMenuItem(
+              title: 'LogOut',
+              iconData: Icons.arrow_back_ios,
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SettingsScreen())),
+            ),
           ),
         ],
       ),
