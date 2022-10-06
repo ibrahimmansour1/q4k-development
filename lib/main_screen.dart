@@ -96,7 +96,7 @@ class _MainScreenState extends State<MainScreen> {
                   fontWeight: FontWeight.bold,
                 )),
             const SizedBox(
-              height: 5,
+              height: 1,
             ),
             Text('All you want is here',
                 style: GoogleFonts.cookie(
@@ -104,9 +104,9 @@ class _MainScreenState extends State<MainScreen> {
                     letterSpacing: 2,
                     fontWeight: FontWeight.w700,
                     color: primaryColor.withOpacity(0.5))),
-            const SizedBox(
-              height: 30,
-            ),
+            // const SizedBox(
+            //   height: 10,
+            // ),
             SizedBox(
               width: 400,
               height: 1000,
@@ -151,7 +151,8 @@ class _SliderView extends StatelessWidget {
           ),
           const CircleAvatar(
             radius: 48,
-            backgroundImage: NetworkImage("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"),
+            backgroundImage: NetworkImage(
+                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"),
           ),
           const SizedBox(
             height: 20,
@@ -204,7 +205,7 @@ class _SliderView extends StatelessWidget {
             ),
           ),
           InkWell(
-            onTap: () async{
+            onTap: () async {
               await FirebaseAuth.instance.signOut();
               await CacheHelper.clearCacheStorage();
               Navigator.push(context,

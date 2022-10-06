@@ -44,7 +44,7 @@ class _PdfScreenState extends State<PdfScreen> {
           'PDF',
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            color: babyBlueColor,
+            color: lightColor,
           ),
         ),
       ),
@@ -84,13 +84,27 @@ class _PdfScreenState extends State<PdfScreen> {
 
                                   openPDF(context, file);
                                 },
-                                child: ListTile(
-                                  title: Text(file.name),
-                                  trailing: IconButton(
-                                    icon: Icon(
-                                      Icons.download,
-                                    ),
-                                    onPressed: () => downloadFile(index, file),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    // mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        file.name,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Spacer(),
+                                      Icon(
+                                        Icons.menu_book_outlined,
+                                      ),
+                                      IconButton(
+                                        icon: Icon(
+                                          Icons.download,
+                                        ),
+                                        onPressed: () =>
+                                            downloadFile(index, file),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -117,7 +131,7 @@ class _PdfScreenState extends State<PdfScreen> {
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
-            color: babyBlueColor,
+            color: lightColor,
           ),
         ),
         leading: Container(
@@ -125,7 +139,7 @@ class _PdfScreenState extends State<PdfScreen> {
           height: 52,
           child: const Icon(
             Icons.copy,
-            color: babyBlueColor,
+            color: lightColor,
           ),
         ),
       );

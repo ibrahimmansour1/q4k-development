@@ -27,13 +27,14 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: lightColor,
       appBar: AppBar(
         title: Text("video"),
         backgroundColor: primaryColor,
       ),
       body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        FittedBox(
+        SafeArea(
           child: YoutubePlayer(
             controller: _controller,
             showVideoProgressIndicator: true,

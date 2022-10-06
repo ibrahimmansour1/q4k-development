@@ -1,4 +1,5 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:q4k/main_screen.dart';
 import '../../../constants.dart';
@@ -75,15 +76,15 @@ class Body extends StatelessWidget {
                           onChanged: (value) {},
                         ),
                         const Text("Remember me"),
-                        const Spacer(),
-                        GestureDetector(
-                          onTap: () {},
-                          child: const Text(
-                            "Forgot Password",
-                            style:
-                                TextStyle(decoration: TextDecoration.underline),
-                          ),
-                        ),
+                        // const Spacer(),
+                        // GestureDetector(
+                        //   onTap: () {},
+                        //   child: const Text(
+                        //     "Forgot Password",
+                        //     style:
+                        //         TextStyle(decoration: TextDecoration.underline),
+                        //   ),
+                        // ),
                       ],
                     ),
                     SizedBox(
@@ -98,6 +99,12 @@ class Body extends StatelessWidget {
                               Q4kLoginCubit.get(context).userLogin(
                                   email: emailController!.text,
                                   password: passwordController!.text);
+                            } else if (FirebaseAuth.instance.currentUser !=
+                                null) {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MainScreen()));
                             }
                           }),
                       fallback: (context) => const CircularProgressIndicator(

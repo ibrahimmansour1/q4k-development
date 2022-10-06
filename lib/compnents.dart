@@ -24,6 +24,23 @@ class DepartmentCard extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         child: Container(
           decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: primaryColor.withOpacity(.3),
+                  offset: const Offset(
+                    5.0,
+                    5.0,
+                  ),
+                  blurRadius: 2.0,
+                  spreadRadius: 1.0,
+                ), //BoxShadow
+                BoxShadow(
+                  color: Colors.white,
+                  offset: const Offset(0.0, 0.0),
+                  blurRadius: 0.0,
+                  spreadRadius: 0.0,
+                ), //BoxShadow
+              ],
               color: lightColor,
               borderRadius: BorderRadius.circular(12.0),
               border: Border.all(
@@ -31,7 +48,7 @@ class DepartmentCard extends StatelessWidget {
                 width: 2,
                 style: BorderStyle.solid,
               )),
-          height: 100,
+          height: 95,
           width: double.infinity,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

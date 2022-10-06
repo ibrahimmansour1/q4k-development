@@ -108,13 +108,16 @@ class _AudioState extends State<Audio> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Audio Player"),
+      ),
       body: Builder(
         builder: (context) {
           if (currentFileIndex >= 0) {
             return Column(
               children: [
                 SizedBox(
-                  height: 100,
+                  height: 50,
                 ),
                 Container(
                   height: 300,
@@ -122,7 +125,7 @@ class _AudioState extends State<Audio> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12.0),
                       border: Border.all(
-                        color: kPrimaryColor,
+                        color: primaryColor,
                         width: 3,
                         style: BorderStyle.solid,
                       )),
@@ -137,6 +140,7 @@ class _AudioState extends State<Audio> {
                   height: 60,
                 ),
                 Slider(
+                  thumbColor: primaryColor,
                   min: 0,
                   max: duration.inSeconds.toDouble(),
                   value: position.inSeconds
@@ -158,9 +162,13 @@ class _AudioState extends State<Audio> {
                   ),
                 ),
                 CircleAvatar(
+                    backgroundColor: primaryColor,
                     radius: 35,
                     child: IconButton(
-                      icon: Icon(isPlaying ? Icons.pause : Icons.play_arrow),
+                      icon: Icon(
+                        isPlaying ? Icons.pause : Icons.play_arrow,
+                        color: lightColor,
+                      ),
                       iconSize: 50,
                       onPressed: () async {
                         if (isPlaying) {

@@ -39,6 +39,11 @@ class _AudioScreenState extends State<AudioScreen> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -47,7 +52,7 @@ class _AudioScreenState extends State<AudioScreen> {
           'Audio',
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            color: babyBlueColor,
+            color: lightColor,
           ),
         ),
       ),
@@ -84,11 +89,26 @@ class _AudioScreenState extends State<AudioScreen> {
                                         builder: (context) => Audio(
                                             subjectAudioName:
                                                 widget.subjectAudioName))))),
-                                child: ListTile(
-                                  title: Text(file.name),
-                                  trailing: IconButton(
-                                    icon: Icon(Icons.download),
-                                    onPressed: () async {},
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    // mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      Text(
+                                        file.name,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Spacer(),
+                                      Icon(
+                                        Icons.play_arrow_rounded,
+                                      ),
+                                      IconButton(
+                                        icon: Icon(
+                                          Icons.download,
+                                        ),
+                                        onPressed: () {},
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -112,7 +132,7 @@ class _AudioScreenState extends State<AudioScreen> {
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
-            color: babyBlueColor,
+            color: lightColor,
           ),
         ),
         leading: Container(
@@ -120,7 +140,7 @@ class _AudioScreenState extends State<AudioScreen> {
           height: 52,
           child: const Icon(
             Icons.copy,
-            color: babyBlueColor,
+            color: lightColor,
           ),
         ),
       );

@@ -26,7 +26,7 @@ class _MMState extends State<MM> {
     ];
 
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: lightColor,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: primaryColor,
@@ -45,41 +45,20 @@ class _MMState extends State<MM> {
             child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: subject_name.length,
-                itemBuilder: (context, index) => Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Container(
-                        height: 60,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12.0),
-                            border: Border.all(
-                              color: lightColor,
-                              width: 1,
-                              style: BorderStyle.solid,
-                            )),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 5,
-                            ),
-                            MMSubjectCard(
-                              subject_name: subject_name,
-                              index: index,
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => CategoriesScreen(
-                                            subjectName: subject_name[index]
-                                                .toLowerCase()
-                                                .replaceAll(" ", "_"),
-                                          )),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
+                itemBuilder: (context, index) => ItSubjectCard(
+                      subject_name: subject_name,
+                      onPressed: (() {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CategoriesScreen(
+                                    subjectName: subject_name[index]
+                                        .toLowerCase()
+                                        .replaceAll(" ", "_"),
+                                  )),
+                        );
+                      }),
+                      index: index,
                     )),
           ),
         ]),
@@ -88,8 +67,8 @@ class _MMState extends State<MM> {
   }
 }
 
-class MMSubjectCard extends StatelessWidget {
-  const MMSubjectCard({
+class ItSubjectCard extends StatelessWidget {
+  const ItSubjectCard({
     super.key,
     required this.subject_name,
     required this.index,
@@ -105,16 +84,55 @@ class MMSubjectCard extends StatelessWidget {
     return InkWell(
       onTap: onPressed,
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(
-          subject_name[index],
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
-            color: lightColor,
+        padding: const EdgeInsets.all(12.0),
+        child: Container(
+          height: 60,
+          width: double.infinity,
+          decoration: BoxDecoration(
+              color: primaryColor,
+              boxShadow: [
+                BoxShadow(
+                  color: primaryColor.withOpacity(.3),
+                  offset: const Offset(
+                    5.0,
+                    5.0,
+                  ),
+                  blurRadius: 2.0,
+                  spreadRadius: 1.0,
+                ), //BoxShadow
+                BoxShadow(
+                  color: Colors.white,
+                  offset: const Offset(0.0, 0.0),
+                  blurRadius: 0.0,
+                  spreadRadius: 0.0,
+                ), //BoxShadow
+              ],
+              borderRadius: BorderRadius.circular(12.0),
+              border: Border.all(
+                color: primaryColor,
+                width: 1,
+                style: BorderStyle.solid,
+              )),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 5,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  subject_name[index],
+                  style: TextStyle(
+                    // fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                    color: lightColor,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
           ),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
         ),
       ),
     );

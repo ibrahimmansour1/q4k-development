@@ -25,15 +25,11 @@ class SettingsScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          Row(
-            children: [
-              Text("Dark Mode"),
-              // ChangeThemeButtonWidget(),
-            ],
-          ),
-        ],
+      body: Center(
+        child: Text(
+          "Soon..",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+        ),
       ),
     );
   }

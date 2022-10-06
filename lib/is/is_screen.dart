@@ -26,7 +26,7 @@ class _ISState extends State<IS> {
     ];
 
     return Scaffold(
-      backgroundColor: primaryColor,
+      backgroundColor: lightColor,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: primaryColor,
@@ -45,10 +45,9 @@ class _ISState extends State<IS> {
             child: ListView.builder(
                 shrinkWrap: true,
                 itemCount: subject_name.length,
-                itemBuilder: (context, index) => ISSubjectCard(
+                itemBuilder: (context, index) => ItSubjectCard(
                       subject_name: subject_name,
-                      index: index,
-                      onPressed: () {
+                      onPressed: (() {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -58,7 +57,8 @@ class _ISState extends State<IS> {
                                         .replaceAll(" ", "_"),
                                   )),
                         );
-                      },
+                      }),
+                      index: index,
                     )),
           ),
         ]),
@@ -67,8 +67,8 @@ class _ISState extends State<IS> {
   }
 }
 
-class ISSubjectCard extends StatelessWidget {
-  const ISSubjectCard({
+class ItSubjectCard extends StatelessWidget {
+  const ItSubjectCard({
     super.key,
     required this.subject_name,
     required this.index,
@@ -89,9 +89,27 @@ class ISSubjectCard extends StatelessWidget {
           height: 60,
           width: double.infinity,
           decoration: BoxDecoration(
+              color: primaryColor,
+              boxShadow: [
+                BoxShadow(
+                  color: primaryColor.withOpacity(.3),
+                  offset: const Offset(
+                    5.0,
+                    5.0,
+                  ),
+                  blurRadius: 2.0,
+                  spreadRadius: 1.0,
+                ), //BoxShadow
+                BoxShadow(
+                  color: Colors.white,
+                  offset: const Offset(0.0, 0.0),
+                  blurRadius: 0.0,
+                  spreadRadius: 0.0,
+                ), //BoxShadow
+              ],
               borderRadius: BorderRadius.circular(12.0),
               border: Border.all(
-                color: lightColor,
+                color: primaryColor,
                 width: 1,
                 style: BorderStyle.solid,
               )),
@@ -105,7 +123,7 @@ class ISSubjectCard extends StatelessWidget {
                 child: Text(
                   subject_name[index],
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                    // fontWeight: FontWeight.bold,
                     fontSize: 24,
                     color: lightColor,
                   ),

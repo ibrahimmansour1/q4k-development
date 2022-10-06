@@ -89,6 +89,23 @@ class ItSubjectCard extends StatelessWidget {
           width: double.infinity,
           decoration: BoxDecoration(
               color: primaryColor,
+              boxShadow: [
+                BoxShadow(
+                  color: primaryColor.withOpacity(.3),
+                  offset: const Offset(
+                    5.0,
+                    5.0,
+                  ),
+                  blurRadius: 2.0,
+                  spreadRadius: 1.0,
+                ), //BoxShadow
+                BoxShadow(
+                  color: Colors.white,
+                  offset: const Offset(0.0, 0.0),
+                  blurRadius: 0.0,
+                  spreadRadius: 0.0,
+                ), //BoxShadow
+              ],
               borderRadius: BorderRadius.circular(12.0),
               border: Border.all(
                 color: primaryColor,
