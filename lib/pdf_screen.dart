@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:path_provider/path_provider.dart' as path;
 import 'package:q4k/firebase_api.dart';
 import 'package:q4k/firebase_file.dart';
 import 'package:q4k/pdf_viewer.dart';
@@ -145,8 +145,8 @@ class _PdfScreenState extends State<PdfScreen> {
       );
   Future downloadFile(int index, Reference ref) async {
     final url = await ref.getDownloadURL();
-    final tempDir = await getTemporaryDirectory();
-    final path = '${tempDir.path}/${ref.name}';
+    final downloadDir = await getDownloadPath();
+    final path = '${downloadDir.path}/${ref.name}';
     await Dio().download(
       url,
       path,
@@ -158,4 +158,21 @@ class _PdfScreenState extends State<PdfScreen> {
       )),
     );
   }
+}
+
+Future<Directory> getDownloadPath() async {
+  Directory? directory;
+  try {
+    if (Platform.isIOS) {
+      directory = await path.getApplicationDocumentsDirectory();
+    } else {
+      directory = Directory('/storage/emulated/0/Download');
+      // Put file in global download folder, if for an unknown reason it didn't exist, we fallback
+      // ignore: avoid_slow_async_io
+      if (!await directory.exists()) directory = (await path.getExternalStorageDirectory())!;
+    }
+  } catch (err, stack) {
+    print("Cannot get download folder path");
+  }
+  return directory!;
 }
