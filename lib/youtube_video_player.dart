@@ -5,18 +5,18 @@ import 'package:q4k/constants.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class YoutubePlayerScreen extends StatefulWidget {
-  const YoutubePlayerScreen({super.key});
+  const YoutubePlayerScreen({super.key, required this.url});
+  final String url;
 
   @override
   State<YoutubePlayerScreen> createState() => _YoutubePlayerScreenState();
 }
 
 class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
-  final viduoUrl = "https://www.youtube.com/watch?v=1zzBK1RqdEI";
   late YoutubePlayerController _controller;
   @override
   void initState() {
-    final videoID = YoutubePlayer.convertUrlToId(viduoUrl);
+    final videoID = YoutubePlayer.convertUrlToId(widget.url);
 
     _controller = YoutubePlayerController(
         initialVideoId: videoID!,

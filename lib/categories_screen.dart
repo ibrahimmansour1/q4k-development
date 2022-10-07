@@ -4,6 +4,7 @@ import 'package:q4k/audio_screen.dart';
 import 'package:q4k/capitalize_extention.dart';
 import 'package:q4k/pdf_screen.dart';
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
+import 'package:q4k/video_screen.dart';
 import 'package:q4k/youtube_video_player.dart';
 
 import '../../constants.dart';
@@ -26,7 +27,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       AudioScreen(
         subjectAudioName: widget.subjectName,
       ),
-      YoutubePlayerScreen(),
+      VideoScreen(
+        subjectName: widget.subjectName,
+      ),
     ];
     List<String> section_name = ['PDF', 'Audio', 'Video'];
     List<String> pictures_url = [
