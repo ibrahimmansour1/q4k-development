@@ -1,17 +1,7 @@
-import 'dart:io';
-import 'dart:ui';
-
-import 'package:audioplayers/audioplayers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:q4k/audio_player.dart';
 import 'package:q4k/models/video_model.dart';
 import 'package:q4k/youtube_video_player.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../constants.dart';
 
@@ -30,7 +20,7 @@ class _VideoScreenState extends State<VideoScreen> {
         .collection('materials')
         .doc(widget.subjectName)
         .get();
-    final Videos = data.data()!['videos'];
+    final Videos = data.data()?['videos'];
     for (var video in Videos) {
       final videoModel = VideoModel(name: video['name'], url: video['url']);
       videoModels.add(videoModel);
@@ -62,8 +52,7 @@ class _VideoScreenState extends State<VideoScreen> {
             ),
           ),
         ),
-        body: Expanded(
-            child: ListView.builder(
+        body: ListView.builder(
           itemBuilder: (context, index) {
             return Column(
               children: [
@@ -101,7 +90,7 @@ class _VideoScreenState extends State<VideoScreen> {
             );
           },
           itemCount: videoModels.length,
-        )));
+        ));
   }
 
   Widget buildHeader(int length) => ListTile(
