@@ -1,12 +1,14 @@
 import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:path_provider/path_provider.dart' as path;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:q4k/audio_player.dart';
+import 'package:q4k/pdf_screen.dart';
 
 import '../../constants.dart';
 
@@ -106,7 +108,8 @@ class _AudioScreenState extends State<AudioScreen> {
                                         icon: Icon(
                                           Icons.download,
                                         ),
-                                        onPressed: () {},
+                                        onPressed: () =>
+                                            downloadFile(index, file),
                                       ),
                                     ],
                                   ),
@@ -123,6 +126,40 @@ class _AudioScreenState extends State<AudioScreen> {
             }
           }),
     );
+  }
+
+  Future downloadFile(int index, Reference ref) async {
+    final url = await ref.getDownloadURL();
+    final downloadDir = await getDownloadPath();
+    final path = '${downloadDir.path}/${ref.name}';
+    await Dio().download(
+      url,
+      path,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+          content: Text(
+        'Downloaded ${ref.name}',
+      )),
+    );
+  }
+
+  Future<Directory> getDownloadPath() async {
+    Directory? directory;
+    try {
+      if (Platform.isIOS) {
+        directory = await path.getApplicationDocumentsDirectory();
+      } else {
+        directory = Directory('/storage/emulated/0/Download');
+        // Put file in global download folder, if for an unknown reason it didn't exist, we fallback
+        // ignore: avoid_slow_async_io
+        if (!await directory.exists())
+          directory = (await path.getExternalStorageDirectory())!;
+      }
+    } catch (err, stack) {
+      print("Cannot get download folder path");
+    }
+    return directory!;
   }
 
   Widget buildHeader(int length) => ListTile(

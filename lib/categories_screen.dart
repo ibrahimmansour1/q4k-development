@@ -31,12 +31,9 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       VideoScreen(
         subjectName: widget.subjectName,
       ),
-      VideoScreen(
-        subjectName: widget.subjectName,
+      OtherFilesScreen(
+        subjectFileName: widget.subjectName,
       ),
-      // OtherFilesScreen(
-      //   subjectFileName: widget.subjectName,
-      // ),
     ];
     List<String> section_name = ['PDF', 'Audio', 'Video', 'Others'];
     List<String> pictures_url = [
@@ -60,7 +57,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           width: 400,
           child: ListView.builder(
               shrinkWrap: true,
-              itemCount: 3,
+              itemCount: 4,
               itemBuilder: (context, index) => CategoriesCardWidget(
                     pictures_url: pictures_url,
                     section_name: section_name,
