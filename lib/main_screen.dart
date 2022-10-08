@@ -143,9 +143,10 @@ class _SliderView extends StatefulWidget {
 }
 
 class _SliderViewState extends State<_SliderView> {
-  final String firstLetter = FirebaseAuth.instance.currentUser!.displayName!
-      .substring(0, 1)
-      .toUpperCase();
+  // final String firstLetter = FirebaseAuth.instance.currentUser!.displayName!
+  //     .substring(0, 1)
+  //     .toUpperCase();
+  //   print(firstLetter);
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +162,7 @@ class _SliderViewState extends State<_SliderView> {
           ),
           CircleAvatar(
             radius: 48,
-            child: Text(firstLetter),
+            child: Text("firstLetter"),
           ),
           const SizedBox(
             height: 20,

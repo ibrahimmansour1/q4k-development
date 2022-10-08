@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'dart:async';
 import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart' as path;
 import 'package:q4k/firebase_api.dart';
 import 'package:q4k/firebase_file.dart';
@@ -20,6 +22,25 @@ class OtherFilesScreen extends StatefulWidget {
 class _OtherFilesScreenState extends State<OtherFilesScreen> {
   late Future<ListResult> futureFiles;
   late Future<List<FirebaseFile>> download;
+  Future<void> openFile() async {
+    var filePath =
+        '/material/${widget.subjectFileName}/others/${widget.subjectFileName}';
+
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+    if (result != null) {
+      filePath = result.files.single.path!;
+    } else {
+      // User canceled the picker
+    }
+    final _result = await OpenFile.open(filePath);
+    print(_result.message);
+
+    setState(() {
+      // _openResult = "type=${_result.type}  message=${_result.message}";
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -71,10 +92,7 @@ class _OtherFilesScreenState extends State<OtherFilesScreen> {
                           return Column(
                             children: [
                               InkWell(
-                                onTap: () async {
-                                  final url =
-                                      '/material/${widget.subjectFileName}/others/${files[index].name}';
-                                },
+                                onTap: () => openFile(),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Row(
