@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:q4k/audio_screen.dart';
 import 'package:q4k/capitalize_extention.dart';
+import 'package:q4k/other_files_screen.dart';
 import 'package:q4k/pdf_screen.dart';
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
 import 'package:q4k/video_screen.dart';
@@ -30,11 +31,18 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       VideoScreen(
         subjectName: widget.subjectName,
       ),
+      VideoScreen(
+        subjectName: widget.subjectName,
+      ),
+      // OtherFilesScreen(
+      //   subjectFileName: widget.subjectName,
+      // ),
     ];
-    List<String> section_name = ['PDF', 'Audio', 'Video'];
+    List<String> section_name = ['PDF', 'Audio', 'Video', 'Others'];
     List<String> pictures_url = [
       'https://cdn0.iconfinder.com/data/icons/font-awesome-solid-vol-2/512/file-pdf-512.png',
       'https://cdn4.iconfinder.com/data/icons/remixicon-media/24/headphone-fill-512.png',
+      'https://cdn4.iconfinder.com/data/icons/48-bubbles/48/23.Videos-512.png',
       'https://cdn4.iconfinder.com/data/icons/48-bubbles/48/23.Videos-512.png',
     ];
     return Scaffold(

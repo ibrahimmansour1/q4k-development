@@ -34,13 +34,10 @@ class SignInScreen extends StatelessWidget {
                 fontSize: 16.0);
           }
           if (state is Q4kLoginSuccessState) {
-            CacheHelper.saveData(
-                key: 'uId',
-                value: state.uId
-            ).then((value) {
-             Navigator.push(context, MaterialPageRoute(builder: (context){
-               return const MainScreen();
-             }));
+            CacheHelper.saveData(key: 'uId', value: state.uId).then((value) {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return const MainScreen();
+              }));
             });
           }
         },

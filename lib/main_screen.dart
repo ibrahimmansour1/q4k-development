@@ -133,13 +133,24 @@ class _MainScreenState extends State<MainScreen> {
   }
 }
 
-class _SliderView extends StatelessWidget {
+class _SliderView extends StatefulWidget {
   final Function(String)? onItemClick;
 
-  const _SliderView({Key? key, this.onItemClick}) : super(key: key);
+  _SliderView({Key? key, this.onItemClick}) : super(key: key);
 
   @override
+  State<_SliderView> createState() => _SliderViewState();
+}
+
+class _SliderViewState extends State<_SliderView> {
+  // final String firstLetter = FirebaseAuth.instance.currentUser!.displayName!
+  //     .substring(0, 1)
+  //     .toUpperCase();
+  String firstLetter =
+      FirebaseAuth.instance.currentUser!.displayName!.substring(0);
+  @override
   Widget build(BuildContext context) {
+    // print(firstLetter);
     return Container(
       color: primaryColor,
       padding: const EdgeInsets.only(top: 30),
@@ -151,8 +162,7 @@ class _SliderView extends StatelessWidget {
           ),
           const CircleAvatar(
             radius: 48,
-            backgroundImage: NetworkImage(
-                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"),
+            child: Text("firstLetter"),
           ),
           const SizedBox(
             height: 20,

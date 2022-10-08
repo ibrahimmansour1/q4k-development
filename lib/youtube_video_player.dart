@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:q4k/constants.dart';
@@ -14,6 +15,7 @@ class YoutubePlayerScreen extends StatefulWidget {
 
 class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
   late YoutubePlayerController _controller;
+
   @override
   void initState() {
     final videoID = YoutubePlayer.convertUrlToId(widget.url);
@@ -26,34 +28,44 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: lightColor,
-      appBar: AppBar(
-        title: Text("video"),
-        backgroundColor: primaryColor,
-      ),
-      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        SafeArea(
-          child: YoutubePlayer(
-            controller: _controller,
-            showVideoProgressIndicator: true,
-            onReady: () => debugPrint('Ready'),
-            bottomActions: [
-              ProgressBar(
-                isExpanded: true,
-                colors: const ProgressBarColors(
-                  playedColor: Colors.black,
-                  handleColor: Colors.white,
-                  backgroundColor: Colors.white,
-                ),
+    void vidHeight = MediaQuery.of(context).size.height;
+
+    return WillPopScope(
+        onWillPop: () async {
+          await SystemChrome.setPreferredOrientations(
+              [DeviceOrientation.portraitUp, DeviceOrientation.portraitUp]);
+          return true;
+        },
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          backgroundColor: lightColor,
+          appBar: FullScreenButton == true
+              ? AppBar(
+                  title: Text("video"),
+                  backgroundColor: primaryColor,
+                )
+              : null,
+          body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            SafeArea(
+              child: YoutubePlayer(
+                controller: _controller,
+                showVideoProgressIndicator: true,
+                onReady: () => debugPrint('Ready'),
+                bottomActions: [
+                  ProgressBar(
+                    isExpanded: true,
+                    colors: const ProgressBarColors(
+                      playedColor: Colors.black,
+                      handleColor: Colors.white,
+                      backgroundColor: Colors.white,
+                    ),
+                  ),
+                  const PlaybackSpeedButton(),
+                  FullScreenButton(),
+                ],
               ),
-              const PlaybackSpeedButton(),
-              FullScreenButton(),
-            ],
-          ),
-        )
-      ]),
-    );
+            )
+          ]),
+        ));
   }
 }
