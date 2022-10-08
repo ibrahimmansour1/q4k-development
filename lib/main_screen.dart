@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
@@ -143,13 +146,25 @@ class _SliderView extends StatefulWidget {
 }
 
 class _SliderViewState extends State<_SliderView> {
-  // final String firstLetter = FirebaseAuth.instance.currentUser!.displayName!
-  //     .substring(0, 1)
-  //     .toUpperCase();
-  //   print(firstLetter);
-
+String firstLetter = '';
+      Future<void> getUserName ()async{
+        final userId = FirebaseAuth.instance.currentUser!.uid;
+        final String userName =(await FirebaseFirestore.instance.collection('users')
+            .doc(userId).get()).data()?['name'];
+        if(userName.length > 1 ){
+          firstLetter = userName.substring(0,1).toUpperCase();
+          setState(() {});
+        }
+      }
+      @override
+  void initState() {
+    super.initState();
+    getUserName();
+  }
   @override
   Widget build(BuildContext context) {
+    log(firstLetter);
+
     // print(firstLetter);
     return Container(
       color: primaryColor,
@@ -162,7 +177,7 @@ class _SliderViewState extends State<_SliderView> {
           ),
           CircleAvatar(
             radius: 48,
-            child: Text("firstLetter"),
+            child: Text(firstLetter,style: const TextStyle(fontSize: 50),),
           ),
           const SizedBox(
             height: 20,
