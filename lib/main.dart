@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:q4k/audio_player.dart';
 import 'package:q4k/constants.dart';
@@ -17,7 +18,11 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await CacheHelper.init();
-  runApp(const MyApp());
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then(
+    (_) => runApp(MyApp()),
+  );
+  // runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
