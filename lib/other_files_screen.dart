@@ -13,6 +13,7 @@ import '../../constants.dart';
 
 class OtherFilesScreen extends StatefulWidget {
   const OtherFilesScreen({super.key, required this.subjectFileName});
+
   final String subjectFileName;
 
   @override
@@ -22,23 +23,14 @@ class OtherFilesScreen extends StatefulWidget {
 class _OtherFilesScreenState extends State<OtherFilesScreen> {
   late Future<ListResult> futureFiles;
   late Future<List<FirebaseFile>> download;
-  Future<void> openFile() async {
-    var filePath =
-        '/material/${widget.subjectFileName}/others/${widget.subjectFileName}';
 
-    FilePickerResult? result = await FilePicker.platform.pickFiles();
+  Future<void> openFile({required Reference file}) async {
+    final tempPath = await path.getTemporaryDirectory();
+    final File tempFile = File("${tempPath.path}/${file.name}");
+    await file.writeToFile(tempFile);
+    final result = await OpenFile.open(tempFile.path);
+    print(result.message);
 
-    if (result != null) {
-      filePath = result.files.single.path!;
-    } else {
-      // User canceled the picker
-    }
-    final _result = await OpenFile.open(filePath);
-    print(_result.message);
-
-    setState(() {
-      // _openResult = "type=${_result.type}  message=${_result.message}";
-    });
   }
 
   @override
@@ -92,7 +84,7 @@ class _OtherFilesScreenState extends State<OtherFilesScreen> {
                           return Column(
                             children: [
                               InkWell(
-                                onTap: () => openFile(),
+                                onTap: () => openFile(file: file),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Row(
@@ -149,6 +141,7 @@ class _OtherFilesScreenState extends State<OtherFilesScreen> {
           ),
         ),
       );
+
   Future downloadFile(int index, Reference ref) async {
     final url = await ref.getDownloadURL();
     final downloadDir = await getDownloadPath();
@@ -175,8 +168,9 @@ Future<Directory> getDownloadPath() async {
       directory = Directory('/storage/emulated/0/Download');
       // Put file in global download folder, if for an unknown reason it didn't exist, we fallback
       // ignore: avoid_slow_async_io
-      if (!await directory.exists())
+      if (!await directory.exists()) {
         directory = (await path.getExternalStorageDirectory())!;
+      }
     }
   } catch (err, stack) {
     print("Cannot get download folder path");
