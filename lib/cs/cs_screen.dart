@@ -17,7 +17,7 @@ class _CSState extends State<CS> {
   Widget build(BuildContext context) {
     List<String> subject_name = [
       'Algorithm Design and Analysis',
-      'Soft-Computing',
+      'Soft Computing',
       'Computer Graphics',
       'Image Processing',
       'Software Engineering',

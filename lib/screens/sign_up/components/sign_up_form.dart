@@ -125,6 +125,9 @@ class SignUpForm extends StatelessWidget {
       validator: (value) {
         if (value!.isEmpty) {
           return kPassNullError;
+        } else if (confirmPasswordController!.text !=
+            passwordController!.text) {
+          return kMatchPassError;
         }
         return null;
       },

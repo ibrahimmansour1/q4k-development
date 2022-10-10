@@ -19,9 +19,9 @@ class _ITState extends State<IT> {
       'Computer Graphics',
       'Image Processing',
       'Software Engineering',
+      'Wireless and Mobile Computing',
       'Distributed and Object Databases',
       'Web Programming',
-      'Wireless and Mobile Computing',
     ];
 
     return Scaffold(

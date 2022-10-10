@@ -1,4 +1,3 @@
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:q4k/models/video_model.dart';
@@ -55,36 +54,36 @@ class _VideoScreenState extends State<VideoScreen> {
         ),
         body: ListView.builder(
           itemBuilder: (context, index) {
-        return InkWell(
-          onTap: (() => Navigator.push(
-              context,
-              (MaterialPageRoute(
-                  builder: (context) => YoutubePlayerScreen(
-                        url: videoModels[index].url,
-                      ))))),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              // mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  videoModels[index].name,
-                  overflow: TextOverflow.ellipsis,
+            return InkWell(
+              onTap: (() => Navigator.push(
+                  context,
+                  (MaterialPageRoute(
+                      builder: (context) => YoutubePlayerScreen(
+                            url: videoModels[index].url,
+                          ))))),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Row(
+                  // mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      videoModels[index].name,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Spacer(),
+                    Icon(
+                      Icons.play_arrow_rounded,
+                    ),
+                    // IconButton(
+                    //   icon: Icon(
+                    //     Icons.download,
+                    //   ),
+                    //   onPressed: () {},
+                    // ),
+                  ],
                 ),
-                Spacer(),
-                Icon(
-                  Icons.play_arrow_rounded,
-                ),
-                IconButton(
-                  icon: Icon(
-                    Icons.download,
-                  ),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ),
-        );
+              ),
+            );
           },
           itemCount: videoModels.length,
         ));

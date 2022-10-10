@@ -40,7 +40,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       'https://cdn0.iconfinder.com/data/icons/font-awesome-solid-vol-2/512/file-pdf-512.png',
       'https://cdn4.iconfinder.com/data/icons/remixicon-media/24/headphone-fill-512.png',
       'https://cdn4.iconfinder.com/data/icons/48-bubbles/48/23.Videos-512.png',
-      'https://cdn4.iconfinder.com/data/icons/48-bubbles/48/23.Videos-512.png',
+      'https://cdn0.iconfinder.com/data/icons/basic-user-interface-45/32/more-512.png',
     ];
     return Scaffold(
       appBar: AppBar(

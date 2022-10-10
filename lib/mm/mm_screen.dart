@@ -17,12 +17,12 @@ class _MMState extends State<MM> {
   @override
   Widget build(BuildContext context) {
     List<String> subject_name = [
-      'Game Programming',
-      'Principles of 2D Animation',
-      'Introduction to Digital Video',
-      'Cloud Computing',
-      'Enterprise Architecture',
-      'Interactive Multimedia Development',
+      'Web Programming',
+      '3D Modeling and Animation',
+      'Software Engineering',
+      'Computer Graphics',
+      'Introduction to Multimedia Technology',
+      'Image Processing',
     ];
 
     return Scaffold(
