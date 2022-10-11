@@ -11,8 +11,8 @@ import '../../../shared/styles/size_config.dart';
 import '../cubit/cubit.dart';
 import '../cubit/states.dart';
 
-class Body extends StatelessWidget {
-  const Body({
+class Body extends StatefulWidget {
+  Body({
     Key? key,
     required GlobalKey<FormState> formKey,
     required this.emailController,
@@ -26,6 +26,11 @@ class Body extends StatelessWidget {
   final TextEditingController? passwordController;
   final Q4kLoginStates? state;
 
+  @override
+  State<Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -57,7 +62,7 @@ class Body extends StatelessWidget {
                 height: SizeConfig.screenHeight * 0.08,
               ),
               Form(
-                key: _formKey,
+                key: widget._formKey,
                 child: Column(
                   children: [
                     buildEmailTextFormField(),
@@ -91,14 +96,14 @@ class Body extends StatelessWidget {
                       height: getProportionateScreenHeight(20),
                     ),
                     ConditionalBuilder(
-                      condition: state is! Q4kLoginLoadingState,
+                      condition: widget.state is! Q4kLoginLoadingState,
                       builder: (context) => DefaultButton(
                           text: "Continue",
                           press: () {
-                            if (_formKey.currentState!.validate()) {
+                            if (widget._formKey.currentState!.validate()) {
                               Q4kLoginCubit.get(context).userLogin(
-                                  email: emailController!.text,
-                                  password: passwordController!.text);
+                                  email: widget.emailController!.text,
+                                  password: widget.passwordController!.text);
                             } else if (FirebaseAuth.instance.currentUser !=
                                 null) {
                               Navigator.push(
@@ -125,10 +130,12 @@ class Body extends StatelessWidget {
     ));
   }
 
+  bool visiblePassword = true;
+
   TextFormField buildPassTextFormField() {
     return TextFormField(
-      obscureText: true,
-      controller: passwordController,
+      obscureText: visiblePassword,
+      controller: widget.passwordController,
       validator: (value) {
         if (value == null || value.isEmpty) {
           return kPassNullError;
@@ -142,14 +149,37 @@ class Body extends StatelessWidget {
           focusedBorder: outlineInputBorder(),
           border: outlineInputBorder(),
           labelText: "Password",
-          hintText: "Enter your password",
-          suffixIcon: const CustomSuffixIcon(svgIcon: 'assets/icons/Lock.svg')),
+          hintText: "Enter your Password",
+          // floatingLabelBehavior: FloatingLabelBehavior.always,
+          prefixIcon: Padding(
+            padding: const EdgeInsets.only(left: 15.0),
+            child: const CustomSuffixIcon(svgIcon: "assets/icons/Lock.svg"),
+          ),
+          suffixIcon: Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: IconButton(
+              icon: visiblePassword == true
+                  ? Icon(
+                      Icons.remove_red_eye_outlined,
+                      color: Colors.grey,
+                    )
+                  : Icon(
+                      Icons.visibility_off,
+                      color: Colors.grey,
+                    ),
+              onPressed: () {
+                setState(() {
+                  visiblePassword = !visiblePassword;
+                });
+              },
+            ),
+          )),
     );
   }
 
   TextFormField buildEmailTextFormField() {
     return TextFormField(
-      controller: emailController,
+      controller: widget.emailController,
       keyboardType: TextInputType.emailAddress,
       validator: (value) {
         if (value == null || value.isEmpty) {

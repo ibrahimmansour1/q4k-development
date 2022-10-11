@@ -146,21 +146,24 @@ class _SliderView extends StatefulWidget {
 }
 
 class _SliderViewState extends State<_SliderView> {
-String firstLetter = '';
-      Future<void> getUserName ()async{
-        final userId = FirebaseAuth.instance.currentUser!.uid;
-        final String userName =(await FirebaseFirestore.instance.collection('users')
-            .doc(userId).get()).data()?['name'];
-        if(userName.length > 1 ){
-          firstLetter = userName.substring(0,1).toUpperCase();
-          setState(() {});
-        }
-      }
-      @override
+  String firstLetter = '';
+  Future<void> getUserName() async {
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    final String userName =
+        (await FirebaseFirestore.instance.collection('users').doc(userId).get())
+            .data()?['name'];
+    if (userName.length > 1) {
+      firstLetter = userName.substring(0, 1).toUpperCase();
+      setState(() {});
+    }
+  }
+
+  @override
   void initState() {
     super.initState();
     getUserName();
   }
+
   @override
   Widget build(BuildContext context) {
     log(firstLetter);
@@ -177,7 +180,10 @@ String firstLetter = '';
           ),
           CircleAvatar(
             radius: 48,
-            child: Text(firstLetter,style: const TextStyle(fontSize: 50),),
+            child: Text(
+              firstLetter,
+              style: const TextStyle(fontSize: 50),
+            ),
           ),
           const SizedBox(
             height: 20,

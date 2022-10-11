@@ -28,152 +28,247 @@ class InfoScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: Column(
-        children: [
-          SizedBox(
-            height: 20,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Container(
-              width: 400,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(
-                    "السلام عليكم ورحمة الله وبركاته",
-                    textAlign: TextAlign.start,
-                    textDirection: TextDirection.rtl,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "الغرض من البرنامج إنك تلاقي كل اللي محتاجه علشان تذاكر، وأي ملحوظة أو إضافة أو مشكلة تواجهك في البرنامج كلمنى علشان نحلها إن شاء الله. أخيرًا، لو استفدت من البرنامج دعوة حلوة الله يكرمك 💖",
-                    textAlign: TextAlign.justify,
-                    textDirection: TextDirection.rtl,
-                    style: TextStyle(
-                      fontSize: 24,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    "",
-                    textAlign: TextAlign.justify,
-                    textDirection: TextDirection.rtl,
-                    style: TextStyle(
-                      fontSize: 24,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 60,
-                  ),
-                  Text(
-                    "المطورون:",
-                    textAlign: TextAlign.end,
-                    textDirection: TextDirection.rtl,
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.telegram_outlined,
-                        ),
-                        color: primaryColor,
-                        onPressed: () async {
-                          // _launchUrl();
-                          String url = "https://t.me/ibrahim58563";
-                          print("launchingUrl: $url");
-                          if (await canLaunch(url)) {
-                            await launch(url);
-                          }
-                        },
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.facebook,
-                        ),
-                        color: primaryColor,
-                        onPressed: () async {
-                          // _launchUrl();
-                          String url =
-                              "https://www.facebook.com/profile.php?id=100064525956308";
-                          print("launchingUrl: $url");
-                          if (await canLaunch(url)) {
-                            await launch(url);
-                          }
-                        },
-                      ),
-                      Spacer(),
-                      Text(
-                        "إبراهيم منصور",
-                        textAlign: TextAlign.end,
-                        textDirection: TextDirection.rtl,
-                        style: TextStyle(
-                          fontSize: 24,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          Icons.telegram_outlined,
-                        ),
-                        color: primaryColor,
-                        onPressed: () async {
-                          // _launchUrl();
-                          String url = "https://t.me/FYZOO";
-                          print("launchingUrl: $url");
-                          if (await canLaunch(url)) {
-                            await launch(url);
-                          }
-                        },
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          Icons.facebook,
-                        ),
-                        color: primaryColor,
-                        onPressed: () async {
-                          // _launchUrl();
-                          String url =
-                              "https://www.facebook.com/abdallah.fayez.946";
-                          print("launchingUrl: $url");
-                          if (await canLaunch(url)) {
-                            await launch(url);
-                          }
-                        },
-                      ),
-                      Spacer(),
-                      Text(
-                        "عبدالله فايز",
-                        textAlign: TextAlign.end,
-                        textDirection: TextDirection.rtl,
-                        style: TextStyle(
-                          fontSize: 24,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 10,
             ),
-          )
-        ],
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Container(
+                width: 400,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      "السلام عليكم ورحمة الله وبركاته",
+                      textAlign: TextAlign.start,
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "الغرض من البرنامج إنك تلاقي كل اللي محتاجه علشان تذاكر، وأي ملحوظة أو إضافة أو مشكلة تواجهك في البرنامج كلمنى علشان نحلها إن شاء الله. أخيرًا، لو استفدت من البرنامج دعوة حلوة الله يكرمك 💖",
+                      textAlign: TextAlign.justify,
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(
+                        fontSize: 24,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "",
+                      textAlign: TextAlign.justify,
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(
+                        fontSize: 24,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      "المطورون:",
+                      textAlign: TextAlign.end,
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.telegram_outlined,
+                          ),
+                          color: primaryColor,
+                          onPressed: () async {
+                            // _launchUrl();
+                            String url = "https://t.me/ibrahim58563";
+                            print("launchingUrl: $url");
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            }
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.facebook,
+                          ),
+                          color: primaryColor,
+                          onPressed: () async {
+                            // _launchUrl();
+                            String url =
+                                "https://www.facebook.com/profile.php?id=100064525956308";
+                            print("launchingUrl: $url");
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            }
+                          },
+                        ),
+                        Spacer(),
+                        Text(
+                          "إبراهيم منصور",
+                          textAlign: TextAlign.end,
+                          textDirection: TextDirection.rtl,
+                          style: TextStyle(
+                            fontSize: 24,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.telegram_outlined,
+                          ),
+                          color: primaryColor,
+                          onPressed: () async {
+                            // _launchUrl();
+                            String url = "https://t.me/FYZOO";
+                            print("launchingUrl: $url");
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            }
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.facebook,
+                          ),
+                          color: primaryColor,
+                          onPressed: () async {
+                            // _launchUrl();
+                            String url =
+                                "https://www.facebook.com/abdallah.fayez.946";
+                            print("launchingUrl: $url");
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            }
+                          },
+                        ),
+                        Spacer(),
+                        Text(
+                          "عبدالله فايز",
+                          textAlign: TextAlign.end,
+                          textDirection: TextDirection.rtl,
+                          style: TextStyle(
+                            fontSize: 24,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      "مؤسس:",
+                      textAlign: TextAlign.end,
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.telegram_outlined,
+                          ),
+                          color: primaryColor,
+                          onPressed: () async {
+                            // _launchUrl();
+                            String url = "https://t.me/+201220746095";
+                            print("launchingUrl: $url");
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            }
+                          },
+                        ),
+                        IconButton(
+                          icon: Icon(
+                            Icons.facebook,
+                          ),
+                          color: primaryColor,
+                          onPressed: () async {
+                            // _launchUrl();
+                            String url =
+                                "https://www.facebook.com/profile.php?id=100010073048538";
+                            print("launchingUrl: $url");
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            }
+                          },
+                        ),
+                        Spacer(),
+                        Text(
+                          "أسامة محمد",
+                          textAlign: TextAlign.end,
+                          textDirection: TextDirection.rtl,
+                          style: TextStyle(
+                            fontSize: 24,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      "مشرفون:",
+                      textAlign: TextAlign.end,
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      "أحمد طلعت",
+                      textAlign: TextAlign.end,
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(
+                        fontSize: 24,
+                      ),
+                    ),
+                    Text(
+                      "محمد ناصر",
+                      textAlign: TextAlign.end,
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(
+                        fontSize: 24,
+                      ),
+                    ),
+                    Text(
+                      "نورهان سلامه",
+                      textAlign: TextAlign.end,
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(
+                        fontSize: 24,
+                      ),
+                    ),
+                    Text(
+                      "مريم خالد",
+                      textAlign: TextAlign.end,
+                      textDirection: TextDirection.rtl,
+                      style: TextStyle(
+                        fontSize: 24,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

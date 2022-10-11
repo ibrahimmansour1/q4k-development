@@ -6,16 +6,16 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:q4k/constants.dart';
 
-class Audio extends StatefulWidget {
+class SectionAudio extends StatefulWidget {
   final String subjectAudioName;
 
-  const Audio({super.key, required this.subjectAudioName});
+  const SectionAudio({super.key, required this.subjectAudioName});
 
   @override
-  State<Audio> createState() => _AudioState();
+  State<SectionAudio> createState() => _SectionAudioState();
 }
 
-class _AudioState extends State<Audio> {
+class _SectionAudioState extends State<SectionAudio> {
   AudioPlayer audioPlayer = AudioPlayer();
   bool isPlaying = false;
   late var duration = Duration.zero;
@@ -51,7 +51,7 @@ class _AudioState extends State<Audio> {
 
   Future<void> loadFiles() async {
     final futureFiles = (await FirebaseStorage.instance
-        .ref("/material/${widget.subjectAudioName}/audio/")
+        .ref("/material/${widget.subjectAudioName}/section/audio")
         .listAll());
     log(futureFiles.items.length.toString(), name: "futureFiles.items.length");
 

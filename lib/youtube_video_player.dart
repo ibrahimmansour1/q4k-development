@@ -30,42 +30,38 @@ class _YoutubePlayerScreenState extends State<YoutubePlayerScreen> {
   Widget build(BuildContext context) {
     void vidHeight = MediaQuery.of(context).size.height;
 
-    return WillPopScope(
-        onWillPop: () async {
-          await SystemChrome.setPreferredOrientations(
-              [DeviceOrientation.portraitUp, DeviceOrientation.portraitUp]);
-          return true;
-        },
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: lightColor,
-          appBar: FullScreenButton == true
-              ? AppBar(
-                  title: Text("video"),
-                  backgroundColor: primaryColor,
-                )
-              : null,
-          body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            SafeArea(
-              child: YoutubePlayer(
-                controller: _controller,
-                showVideoProgressIndicator: true,
-                onReady: () => debugPrint('Ready'),
-                bottomActions: [
-                  ProgressBar(
-                    isExpanded: true,
-                    colors: const ProgressBarColors(
-                      playedColor: Colors.black,
-                      handleColor: Colors.white,
-                      backgroundColor: Colors.white,
-                    ),
-                  ),
-                  const PlaybackSpeedButton(),
-                  FullScreenButton(),
-                ],
-              ),
+    return Scaffold(
+      // resizeToAvoidBottomInset: false,
+      backgroundColor: lightColor,
+      appBar: FullScreenButton == false
+          ? AppBar(
+              title: Text("video"),
+              backgroundColor: primaryColor,
             )
-          ]),
-        ));
+          : null,
+      body: SafeArea(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Flexible(
+            child: YoutubePlayer(
+              controller: _controller,
+              showVideoProgressIndicator: true,
+              onReady: () => debugPrint('Ready'),
+              bottomActions: [
+                ProgressBar(
+                  isExpanded: true,
+                  colors: const ProgressBarColors(
+                    playedColor: Colors.black,
+                    handleColor: Colors.white,
+                    backgroundColor: Colors.white,
+                  ),
+                ),
+                const PlaybackSpeedButton(),
+                FullScreenButton(),
+              ],
+            ),
+          )
+        ]),
+      ),
+    );
   }
 }

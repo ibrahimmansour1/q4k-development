@@ -6,16 +6,29 @@ import '../../../shared/components/default_button.dart';
 import '../../../shared/styles/size_config.dart';
 import '../cubit/cubit.dart';
 
-class SignUpForm extends StatelessWidget {
+class SignUpForm extends StatefulWidget {
   SignUpForm({Key? key}) : super(key: key);
 
+  @override
+  State<SignUpForm> createState() => _SignUpFormState();
+}
+
+class _SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
+
   TextEditingController? emailController = TextEditingController();
+
   TextEditingController? passwordController = TextEditingController();
+
   TextEditingController? confirmPasswordController = TextEditingController();
+
   TextEditingController firstNameController = TextEditingController();
+
   TextEditingController lastNameController = TextEditingController();
+
   // TextEditingController phoneController = TextEditingController();
+  bool passwordVisible = true;
+  bool passwordVisible1 = true;
 
   @override
   Widget build(BuildContext context) {
@@ -55,27 +68,6 @@ class SignUpForm extends StatelessWidget {
   }
 
   // TextFormField buildPhoneNumberFormField() {
-  //   return TextFormField(
-  //     //controller: phoneController,
-  //     keyboardType: TextInputType.number,
-  //     validator: (value) {
-  //       if (value!.isEmpty) {
-  //         return kPhoneNumberNullError;
-  //       }
-  //       return null;
-  //     },
-  //     decoration: InputDecoration(
-  //       enabledBorder: outlineInputBorder(),
-  //       focusedBorder: outlineInputBorder(),
-  //       border: outlineInputBorder(),
-  //       labelText: "Phone number",
-  //       hintText: "Enter your phone number",
-  //       floatingLabelBehavior: FloatingLabelBehavior.always,
-  //       suffixIcon: const CustomSuffixIcon(svgIcon: "assets/icons/Phone.svg"),
-  //     ),
-  //   );
-  // }
-
   TextFormField buildNameField() {
     return TextFormField(
       controller: firstNameController,
@@ -121,49 +113,100 @@ class SignUpForm extends StatelessWidget {
   TextFormField buildConfirmFormField() {
     return TextFormField(
       controller: confirmPasswordController,
-      obscureText: true,
+      obscureText: passwordVisible,
+      onTap: () {
+        setState(() {
+          passwordVisible != passwordVisible;
+        });
+      },
       validator: (value) {
         if (value!.isEmpty) {
           return kPassNullError;
         } else if (confirmPasswordController!.text !=
             passwordController!.text) {
           return kMatchPassError;
+        } else if (value.contains(" ")) {
+          return "Don't Enter Spaces";
         }
         return null;
       },
       decoration: InputDecoration(
-        enabledBorder: outlineInputBorder(),
-        focusedBorder: outlineInputBorder(),
-        border: outlineInputBorder(),
-        labelText: "Confirm Password",
-        hintText: "Confirm your Password",
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: const CustomSuffixIcon(svgIcon: "assets/icons/Lock.svg"),
-      ),
+          enabledBorder: outlineInputBorder(),
+          focusedBorder: outlineInputBorder(),
+          border: outlineInputBorder(),
+          labelText: "Confirm Password",
+          hintText: "Confirm your Password",
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          prefixIcon: Padding(
+            padding: const EdgeInsets.only(left: 15.0),
+            child: const CustomSuffixIcon(svgIcon: "assets/icons/Lock.svg"),
+          ),
+          suffixIcon: Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: IconButton(
+              icon: passwordVisible == true
+                  ? Icon(
+                      Icons.remove_red_eye_outlined,
+                      color: Colors.grey,
+                    )
+                  : Icon(
+                      Icons.visibility_off,
+                      color: Colors.grey,
+                    ),
+              onPressed: () {
+                setState(() {
+                  passwordVisible = !passwordVisible;
+                });
+              },
+            ),
+          )),
     );
   }
 
   TextFormField buildPasswordFormField() {
     return TextFormField(
       controller: passwordController,
-      obscureText: true,
+      obscureText: passwordVisible1,
       validator: (value) {
         if (value!.isEmpty) {
           return kPassNullError;
         } else if (value.length < 6) {
           return kShortPassError;
+        } else if (value.contains(" ")) {
+          return "Don't Enter Spaces";
         }
         return null;
       },
       decoration: InputDecoration(
-        enabledBorder: outlineInputBorder(),
-        focusedBorder: outlineInputBorder(),
-        border: outlineInputBorder(),
-        labelText: "Password",
-        hintText: "Enter your password",
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: const CustomSuffixIcon(svgIcon: "assets/icons/Lock.svg"),
-      ),
+          enabledBorder: outlineInputBorder(),
+          focusedBorder: outlineInputBorder(),
+          border: outlineInputBorder(),
+          labelText: "Password",
+          hintText: "Enter your password",
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          prefixIcon: Padding(
+            padding: const EdgeInsets.only(left: 15.0),
+            child: const CustomSuffixIcon(svgIcon: "assets/icons/Lock.svg"),
+          ),
+          suffixIcon: Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: IconButton(
+              icon: passwordVisible1 == true
+                  ? Icon(
+                      Icons.remove_red_eye_outlined,
+                      color: Colors.grey,
+                    )
+                  : Icon(
+                      Icons.visibility_off,
+                      color: Colors.grey,
+                    ),
+              onPressed: () {
+                setState(() {
+                  passwordVisible1 = !passwordVisible1;
+                });
+              },
+            ),
+          )),
     );
   }
 

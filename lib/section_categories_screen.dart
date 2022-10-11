@@ -5,88 +5,83 @@ import 'package:q4k/capitalize_extention.dart';
 import 'package:q4k/other_files_screen.dart';
 import 'package:q4k/pdf_screen.dart';
 import 'package:intl/intl.dart' show toBeginningOfSentenceCase;
-import 'package:q4k/section_categories_screen.dart';
+import 'package:q4k/section_audio_player.dart';
+import 'package:q4k/section_audio_screen.dart';
+import 'package:q4k/section_other_files_screen.dart';
+import 'package:q4k/section_pdf_screen.dart';
 import 'package:q4k/section_screen.dart';
+import 'package:q4k/section_video_screen.dart';
 import 'package:q4k/video_screen.dart';
 import 'package:q4k/youtube_video_player.dart';
 
 import '../../constants.dart';
 
-class CategoriesScreen extends StatefulWidget {
-  const CategoriesScreen({super.key, required this.subjectName});
-  final String subjectName;
+class SectionCategoriesScreen extends StatefulWidget {
+  const SectionCategoriesScreen({super.key, required this.subjectSectionName});
+  final String subjectSectionName;
 
   @override
-  State<CategoriesScreen> createState() => _CategoriesScreenState();
+  State<SectionCategoriesScreen> createState() =>
+      _SectionCategoriesScreenState();
 }
 
-class _CategoriesScreenState extends State<CategoriesScreen> {
+class _SectionCategoriesScreenState extends State<SectionCategoriesScreen> {
   @override
   Widget build(BuildContext context) {
     List<Widget> test = [
-      PdfScreen(
-        subjectPdfName: widget.subjectName,
+      SectionPdfScreen(
+        subjectPdfName: widget.subjectSectionName,
       ),
-      AudioScreen(
-        subjectAudioName: widget.subjectName,
+      SectionAudioScreen(
+        subjectAudioName: widget.subjectSectionName,
       ),
-      VideoScreen(
-        subjectName: widget.subjectName,
+      SectionVideoScreen(
+        subjectName: widget.subjectSectionName,
       ),
-      SectionCategoriesScreen(
-        subjectSectionName: widget.subjectName,
-      ),
-      OtherFilesScreen(
-        subjectFileName: widget.subjectName,
+      SectionOtherFilesScreen(
+        subjectFileName: widget.subjectSectionName,
       ),
     ];
     List<String> section_name = [
       'PDF',
       'Audio',
       'Video',
-      'Section',
       'Others',
     ];
     List<String> pictures_url = [
       'https://cdn0.iconfinder.com/data/icons/font-awesome-solid-vol-2/512/file-pdf-512.png',
       'https://cdn4.iconfinder.com/data/icons/remixicon-media/24/headphone-fill-512.png',
       'https://cdn4.iconfinder.com/data/icons/48-bubbles/48/23.Videos-512.png',
-      'https://cdn0.iconfinder.com/data/icons/font-awesome-solid-vol-3/640/laptop-code-512.png',
       'https://cdn0.iconfinder.com/data/icons/basic-user-interface-45/32/more-512.png',
     ];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
         title: Text(
-          capitalizeAllWord(widget.subjectName.replaceAll("_", " ")),
+          capitalizeAllWord(
+              "Section ${widget.subjectSectionName.replaceAll("_", " ")}"),
           style: TextStyle(
-              color: lightColor, fontSize: 30, fontWeight: FontWeight.bold),
+              color: lightColor, fontSize: 24, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          SizedBox(
-            width: 500,
-            // height: 1000,
-            child: ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: 5,
-                itemBuilder: (context, index) => CategoriesCardWidget(
-                      pictures_url: pictures_url,
-                      section_name: section_name,
-                      index: index,
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => test[index]));
-                      },
-                    )),
-          ),
-        ]),
-      ),
+      body: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+        SizedBox(
+          width: 400,
+          child: ListView.builder(
+              shrinkWrap: true,
+              itemCount: 4,
+              itemBuilder: (context, index) => CategoriesCardWidget(
+                    pictures_url: pictures_url,
+                    section_name: section_name,
+                    index: index,
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => test[index]));
+                    },
+                  )),
+        ),
+      ]),
     );
   }
 }

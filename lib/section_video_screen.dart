@@ -2,29 +2,29 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:q4k/models/video_model.dart';
 import 'package:q4k/youtube_video_player.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../constants.dart';
 
-class VideoScreen extends StatefulWidget {
-  const VideoScreen({super.key, required this.subjectName});
+class SectionVideoScreen extends StatefulWidget {
+  const SectionVideoScreen({super.key, required this.subjectName});
   final String subjectName;
 
   @override
-  State<VideoScreen> createState() => _VideoScreenState();
+  State<SectionVideoScreen> createState() => _SectionVideoScreenState();
 }
 
-class _VideoScreenState extends State<VideoScreen> {
-  final List<VideoModel> videoModels = [];
+class _SectionVideoScreenState extends State<SectionVideoScreen> {
+  final List<SectionVideoModel> sectionVideoModels = [];
   Future<void> getData() async {
     final data = await FirebaseFirestore.instance
-        .collection('materials')
+        .collection('sections')
         .doc(widget.subjectName)
         .get();
     final videos = data.data()!['videos'];
     for (var video in videos) {
-      final videoModel = VideoModel(name: video['name'], url: video['url']);
-      videoModels.add(videoModel);
+      final sectionVideoModel =
+          SectionVideoModel(name: video['name'], url: video['url']);
+      sectionVideoModels.add(sectionVideoModel);
     }
     setState(() {});
   }
@@ -46,7 +46,7 @@ class _VideoScreenState extends State<VideoScreen> {
         appBar: AppBar(
           backgroundColor: primaryColor,
           title: const Text(
-            'Video',
+            'Section Video',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: lightColor,
@@ -60,7 +60,7 @@ class _VideoScreenState extends State<VideoScreen> {
                   context,
                   (MaterialPageRoute(
                       builder: (context) => YoutubePlayerScreen(
-                            url: videoModels[index].url,
+                            url: sectionVideoModels[index].url,
                           ))))),
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
@@ -68,27 +68,10 @@ class _VideoScreenState extends State<VideoScreen> {
                   // mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      videoModels[index].name,
+                      sectionVideoModels[index].name,
                       overflow: TextOverflow.ellipsis,
                     ),
                     Spacer(),
-                    IconButton(
-                      iconSize: 30,
-                      icon: Image.network(
-                        'https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Youtube2_colored_svg-512.png',
-                        height: 80,
-                        width: 100,
-                      ),
-                      color: primaryColor,
-                      onPressed: () async {
-                        // _launchUrl();
-                        String url = "${videoModels[index].url}";
-                        print("launchingUrl: $url");
-                        if (await canLaunch(url)) {
-                          await launch(url);
-                        }
-                      },
-                    ),
                     Icon(
                       Icons.play_arrow_rounded,
                     ),
@@ -103,7 +86,7 @@ class _VideoScreenState extends State<VideoScreen> {
               ),
             );
           },
-          itemCount: videoModels.length,
+          itemCount: sectionVideoModels.length,
         ));
   }
 

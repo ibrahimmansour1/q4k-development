@@ -19,10 +19,10 @@ class _ISState extends State<IS> {
     List<String> subject_name = [
       'Software Engineering',
       'Computer Graphics',
-      'Dession support system',
-      'Quality assurance of IS',
-      'IS strategy management & aculation',
-      'Distributed databases systems',
+      'Decision support systems',
+      'َQuality Assurance Of Information Systems',
+      'IS strategy management and acquisition',
+      'Distributed and Object databases',
     ];
 
     return Scaffold(

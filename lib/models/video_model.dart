@@ -7,3 +7,12 @@ class VideoModel {
     required this.url,
   });
 }
+
+class SectionVideoModel {
+  final String name;
+  final String url;
+  SectionVideoModel({
+    required this.name,
+    required this.url,
+  });
+}
