@@ -112,7 +112,7 @@ class _MainScreenState extends State<MainScreen> {
             // ),
             SizedBox(
               width: 400,
-              height: 1000,
+              height: 500,
               child: ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,

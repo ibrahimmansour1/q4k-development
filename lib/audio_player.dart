@@ -100,9 +100,24 @@ class _AudioState extends State<Audio> {
 
   @override
   void dispose() async {
-    await audioPlayer.dispose();
+    //   audioPlayer.onPlayerStateChanged.listen((state) async {
+    //     setState(() async {
+    //       isPlaying = state == PlayerState.playing;
+
+    //       if (state == PlayerState.playing) {
+    //         await audioPlayer.dispose();
+    //       }
+    //     });
+    //   });
 
     super.dispose();
+  }
+
+  @override
+  void setState(fn) {
+    if (this.mounted) {
+      super.setState(fn);
+    }
   }
 
   double dropdownvalue = 1;
@@ -164,6 +179,13 @@ class _AudioState extends State<Audio> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(formatTime(position)),
+                      InkWell(
+                        onTap: () async {
+                          await audioPlayer
+                              .seek(Duration(seconds: position.inSeconds - 10));
+                        },
+                        child: Text("-10s"),
+                      ),
                       DropdownButton(
                           items: speeds.map((double speeds) {
                             return DropdownMenuItem(
@@ -178,6 +200,13 @@ class _AudioState extends State<Audio> {
                               audioPlayer.setPlaybackRate(newValue);
                             });
                           }),
+                      InkWell(
+                        onTap: () async {
+                          await audioPlayer
+                              .seek(Duration(seconds: position.inSeconds + 10));
+                        },
+                        child: Text("+10s"),
+                      ),
                       Text(formatTime(duration - position)),
                     ],
                   ),

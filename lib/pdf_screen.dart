@@ -128,6 +128,7 @@ class _PdfScreenState extends State<PdfScreen> {
         tileColor: primaryColor,
         title: Text(
           '$length Files',
+          overflow: TextOverflow.ellipsis,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
@@ -169,7 +170,8 @@ Future<Directory> getDownloadPath() async {
       directory = Directory('/storage/emulated/0/Download');
       // Put file in global download folder, if for an unknown reason it didn't exist, we fallback
       // ignore: avoid_slow_async_io
-      if (!await directory.exists()) directory = (await path.getExternalStorageDirectory())!;
+      if (!await directory.exists())
+        directory = (await path.getExternalStorageDirectory())!;
     }
   } catch (err, stack) {
     print("Cannot get download folder path");

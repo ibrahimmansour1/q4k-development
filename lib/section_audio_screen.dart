@@ -9,6 +9,7 @@ import 'package:path_provider/path_provider.dart' as path;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:q4k/audio_player.dart';
 import 'package:q4k/pdf_screen.dart';
+import 'package:q4k/section_audio_player.dart';
 
 import '../../constants.dart';
 
@@ -88,7 +89,7 @@ class _SectionAudioScreenState extends State<SectionAudioScreen> {
                                 onTap: (() => Navigator.push(
                                     context,
                                     (MaterialPageRoute(
-                                        builder: (context) => Audio(
+                                        builder: (context) => SectionAudio(
                                             subjectAudioName:
                                                 widget.subjectAudioName))))),
                                 child: Padding(

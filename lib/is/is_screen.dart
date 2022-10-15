@@ -20,9 +20,9 @@ class _ISState extends State<IS> {
       'Software Engineering',
       'Computer Graphics',
       'Decision support systems',
-      'َQuality Assurance Of Information Systems',
       'IS strategy management and acquisition',
       'Distributed and Object databases',
+      'Quality Assurance Of Information Systems',
     ];
 
     return Scaffold(
@@ -119,12 +119,12 @@ class ItSubjectCard extends StatelessWidget {
                 height: 5,
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(7.0),
                 child: Text(
                   subject_name[index],
                   style: TextStyle(
                     // fontWeight: FontWeight.bold,
-                    fontSize: 24,
+                    fontSize: 23,
                     color: lightColor,
                   ),
                   maxLines: 1,

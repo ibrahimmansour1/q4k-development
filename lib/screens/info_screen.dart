@@ -31,9 +31,9 @@ class InfoScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
-              height: 10,
-            ),
+            // SizedBox(
+            //   height: 10,
+            // ),
             Padding(
               padding: const EdgeInsets.all(12.0),
               child: Container(
@@ -58,29 +58,67 @@ class InfoScreen extends StatelessWidget {
                       textAlign: TextAlign.justify,
                       textDirection: TextDirection.rtl,
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 22,
                       ),
+                    ),
+                    SizedBox(
+                      height: 5,
                     ),
                     SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      "",
-                      textAlign: TextAlign.justify,
-                      textDirection: TextDirection.rtl,
-                      style: TextStyle(
-                        fontSize: 24,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.telegram_outlined,
+                          ),
+                          color: primaryColor,
+                          onPressed: () async {
+                            // _launchUrl();
+                            String url = "https://t.me/Q4K_FCAI_CS";
+                            print("launchingUrl: $url");
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            }
+                          },
+                        ),
+                        IconButton(
+                          icon: Image.network(
+                            "https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-social-youtube-512.png",
+                            color: primaryColor,
+                            width: 28,
+                            height: 28,
+                          ),
+                          iconSize: 2,
+                          onPressed: () async {
+                            // _launchUrl();
+                            String url =
+                                "https://www.youtube.com/channel/UC-_5nLpvRsqpkSYe2YHws8g";
+                            print("launchingUrl: $url");
+                            if (await canLaunch(url)) {
+                              await launch(url);
+                            }
+                          },
+                        ),
+                        Spacer(),
+                        Text(
+                          "جروب Q4K",
+                          textAlign: TextAlign.end,
+                          textDirection: TextDirection.rtl,
+                          style: TextStyle(
+                            fontSize: 22,
+                          ),
+                        ),
+                      ],
                     ),
                     Text(
                       "المطورون:",
                       textAlign: TextAlign.end,
                       textDirection: TextDirection.rtl,
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 22,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -122,7 +160,7 @@ class InfoScreen extends StatelessWidget {
                           textAlign: TextAlign.end,
                           textDirection: TextDirection.rtl,
                           style: TextStyle(
-                            fontSize: 24,
+                            fontSize: 22,
                           ),
                         ),
                       ],
@@ -165,7 +203,7 @@ class InfoScreen extends StatelessWidget {
                           textAlign: TextAlign.end,
                           textDirection: TextDirection.rtl,
                           style: TextStyle(
-                            fontSize: 24,
+                            fontSize: 22,
                           ),
                         ),
                       ],
@@ -175,7 +213,7 @@ class InfoScreen extends StatelessWidget {
                       textAlign: TextAlign.end,
                       textDirection: TextDirection.rtl,
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 22,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -217,7 +255,7 @@ class InfoScreen extends StatelessWidget {
                           textAlign: TextAlign.end,
                           textDirection: TextDirection.rtl,
                           style: TextStyle(
-                            fontSize: 24,
+                            fontSize: 22,
                           ),
                         ),
                       ],
@@ -227,41 +265,51 @@ class InfoScreen extends StatelessWidget {
                       textAlign: TextAlign.end,
                       textDirection: TextDirection.rtl,
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 22,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text(
-                      "أحمد طلعت",
-                      textAlign: TextAlign.end,
-                      textDirection: TextDirection.rtl,
-                      style: TextStyle(
-                        fontSize: 24,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          "أحمد طلعت",
+                          textAlign: TextAlign.end,
+                          textDirection: TextDirection.rtl,
+                          style: TextStyle(
+                            fontSize: 24,
+                          ),
+                        ),
+                        Text(
+                          "محمد ناصر",
+                          textAlign: TextAlign.end,
+                          textDirection: TextDirection.rtl,
+                          style: TextStyle(
+                            fontSize: 24,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      "محمد ناصر",
-                      textAlign: TextAlign.end,
-                      textDirection: TextDirection.rtl,
-                      style: TextStyle(
-                        fontSize: 24,
-                      ),
-                    ),
-                    Text(
-                      "نورهان سلامه",
-                      textAlign: TextAlign.end,
-                      textDirection: TextDirection.rtl,
-                      style: TextStyle(
-                        fontSize: 24,
-                      ),
-                    ),
-                    Text(
-                      "مريم خالد",
-                      textAlign: TextAlign.end,
-                      textDirection: TextDirection.rtl,
-                      style: TextStyle(
-                        fontSize: 24,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text(
+                          "نورهان سلامه",
+                          textAlign: TextAlign.end,
+                          textDirection: TextDirection.rtl,
+                          style: TextStyle(
+                            fontSize: 24,
+                          ),
+                        ),
+                        Text(
+                          "مريم خالد",
+                          textAlign: TextAlign.end,
+                          textDirection: TextDirection.rtl,
+                          style: TextStyle(
+                            fontSize: 24,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
