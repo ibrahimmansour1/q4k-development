@@ -1,15 +1,23 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:developer';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+
 import 'package:q4k/constants.dart';
 
 class Audio extends StatefulWidget {
   final String subjectAudioName;
-
-  const Audio({super.key, required this.subjectAudioName});
+  final String url;
+  const Audio({
+    Key? key,
+    required this.subjectAudioName,
+    required this.url,
+  }) : super(key: key);
 
   @override
   State<Audio> createState() => _AudioState();
@@ -22,45 +30,36 @@ class _AudioState extends State<Audio> {
   var position = Duration.zero;
   int currentFileIndex = -1;
 
-  final List<String> files = [
-    // "https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3",
-    // "https://cdn.islamic.network/quran/audio/128/ar.alafasy/2.mp3",
-    // "https://cdn.islamic.network/quran/audio/128/ar.alafasy/3.mp3",
-    // "https://cdn.islamic.network/quran/audio/128/ar.alafasy/4.mp3",
-    // "https://cdn.islamic.network/quran/audio/128/ar.alafasy/5.mp3",
-    // "https://cdn.islamic.network/quran/audio/128/ar.alafasy/6.mp3",
-    // "https://cdn.islamic.network/quran/audio/128/ar.alafasy/7.mp3",
-    // "https://cdn.islamic.network/quran/audio/128/ar.alafasy/8.mp3",
-    // "https://cdn.islamic.network/quran/audio/128/ar.alafasy/9.mp3",
-    // "https://cdn.islamic.network/quran/audio/128/ar.alafasy/10.mp3",
-    // "https://cdn.islamic.network/quran/audio/128/ar.alafasy/11.mp3",
-  ];
+  // final List<String> files = [
+  //   "https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3",
+  //   "https://cdn.islamic.network/quran/audio/128/ar.alafasy/2.mp3",
+  //   "https://cdn.islamic.network/quran/audio/128/ar.alafasy/3.mp3",
+  //   "https://cdn.islamic.network/quran/audio/128/ar.alafasy/4.mp3",
+  //   "https://cdn.islamic.network/quran/audio/128/ar.alafasy/5.mp3",
+  //   "https://cdn.islamic.network/quran/audio/128/ar.alafasy/6.mp3",
+  //   "https://cdn.islamic.network/quran/audio/128/ar.alafasy/7.mp3",
+  //   "https://cdn.islamic.network/quran/audio/128/ar.alafasy/8.mp3",
+  //   "https://cdn.islamic.network/quran/audio/128/ar.alafasy/9.mp3",
+  //   "https://cdn.islamic.network/quran/audio/128/ar.alafasy/10.mp3",
+  //   "https://cdn.islamic.network/quran/audio/128/ar.alafasy/11.mp3",
+  // ];
 
-  int getNextIndex() {
-    if (files.length - 1 > currentFileIndex) {
-      currentFileIndex++;
-      log(currentFileIndex.toString(), name: "currentFileIndex");
+  // int getNextIndex() {
+  //   if (files.length - 1 > currentFileIndex) {
+  //     currentFileIndex++;
+  //     log(currentFileIndex.toString(), name: "currentFileIndex");
 
-      return currentFileIndex;
-    } else {
-      currentFileIndex = 0;
-      log(currentFileIndex.toString(), name: "currentFileIndex");
-      return currentFileIndex;
-    }
-  }
+  //     return currentFileIndex;
+  //   } else {
+  //     currentFileIndex = 0;
+  //     log(currentFileIndex.toString(), name: "currentFileIndex");
+  //     return currentFileIndex;
+  //   }
+  // }
 
   Future<void> loadFiles() async {
-    final futureFiles = (await FirebaseStorage.instance
-        .ref("/material/${widget.subjectAudioName}/audio/")
-        .listAll());
-    log(futureFiles.items.length.toString(), name: "futureFiles.items.length");
-
-    for (Reference fileRef in futureFiles.items) {
-      log(fileRef.fullPath, name: "e.fullPath");
-      files.add(await fileRef.getDownloadURL());
-    }
     setAudio();
-    log(files.length.toString(), name: "files.length");
+    // log(await audioPlayer.setSourceUrl(widget.url.toString()).toString(), name: "files.length");
   }
 
   @override
@@ -68,6 +67,7 @@ class _AudioState extends State<Audio> {
     super.initState();
     loadFiles();
 
+    
     /// listen to states: playing, paused, stopped
     audioPlayer.onPlayerStateChanged.listen((state) {
       setState(() {
@@ -94,21 +94,21 @@ class _AudioState extends State<Audio> {
 
   Future setAudio() async {
     audioPlayer.setVolume(1);
-    final file = files[getNextIndex()];
-    await audioPlayer.setSourceUrl(file);
+    // final file = files[getNextIndex()];
+    await audioPlayer.setSourceUrl(widget.url.toString());
   }
 
   @override
   void dispose() async {
-    //   audioPlayer.onPlayerStateChanged.listen((state) async {
-    //     setState(() async {
-    //       isPlaying = state == PlayerState.playing;
+    audioPlayer.onPlayerStateChanged.listen((state) async {
+      setState(() async {
+        isPlaying = state == PlayerState.playing;
 
-    //       if (state == PlayerState.playing) {
-    //         await audioPlayer.dispose();
-    //       }
-    //     });
-    //   });
+        if (state == PlayerState.playing) {
+          await audioPlayer.dispose();
+        }
+      });
+    });
 
     super.dispose();
   }
@@ -135,7 +135,7 @@ class _AudioState extends State<Audio> {
       ),
       body: Builder(
         builder: (context) {
-          if (currentFileIndex >= 0) {
+          // if (currentFileIndex >= 0) {
             return Column(
               children: [
                 SizedBox(
@@ -230,11 +230,12 @@ class _AudioState extends State<Audio> {
                     )),
               ],
             );
-          }
+          // }
           return const Center(child: CircularProgressIndicator());
         },
       ),
     );
+    
   }
 
   String formatTime(Duration position) {
@@ -249,4 +250,5 @@ class _AudioState extends State<Audio> {
       seconds,
     ].join(':');
   }
+  
 }

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +9,12 @@ import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart' as path;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:q4k/audio_player.dart';
+import 'package:q4k/models/video_model.dart';
 import 'package:q4k/pdf_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../constants.dart';
+import 'models/audio_model.dart';
 
 class AudioScreen extends StatefulWidget {
   const AudioScreen({super.key, required this.subjectAudioName});
@@ -21,23 +25,30 @@ class AudioScreen extends StatefulWidget {
 }
 
 class _AudioScreenState extends State<AudioScreen> {
+  final List<AudioModel> audioModels = [];
+  Future<void> getData() async {
+    final data = await FirebaseFirestore.instance
+        .collection('materials')
+        .doc(widget.subjectAudioName)
+        .get();
+    final audios = data.data()!['audios'];
+    for (var audio in audios) {
+      final audioModel = AudioModel(name: audio['name'], url: audio['url']);
+      audioModels.add(audioModel);
+    }
+    setState(() {});
+  }
+
   late Future<ListResult> futureFiles;
   final audioPlayer = AudioPlayer();
   bool isPlaying = false;
   Duration duration = Duration.zero;
   Duration position = Duration.zero;
 
-  void requestPermission() async {
-    await Permission.storage.request();
-  }
-
   @override
   void initState() {
     super.initState();
-    requestPermission();
-    futureFiles = FirebaseStorage.instance
-        .ref('/material/${widget.subjectAudioName}/audio')
-        .listAll();
+    getData();
   }
 
   @override
@@ -58,73 +69,59 @@ class _AudioScreenState extends State<AudioScreen> {
           ),
         ),
       ),
-      body: FutureBuilder<ListResult>(
-          future: futureFiles,
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return const Center(child: CircularProgressIndicator());
-              default:
-                if (snapshot.hasError) {
-                  return const Center(
-                    child: Text('Some error occured'),
-                  );
-                } else {
-                  final files = snapshot.data!.items;
-                  return Column(
-                    children: [
-                      buildHeader(files.length),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      Expanded(
-                          child: ListView.builder(
-                        itemBuilder: (context, index) {
-                          final file = files[index];
-
-                          return Column(
-                            children: [
-                              InkWell(
-                                onTap: (() => Navigator.push(
-                                    context,
-                                    (MaterialPageRoute(
-                                        builder: (context) => Audio(
-                                            subjectAudioName:
-                                                widget.subjectAudioName))))),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    // mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        file.name,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      Spacer(),
-                                      Icon(
-                                        Icons.play_arrow_rounded,
-                                      ),
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.download,
-                                        ),
-                                        onPressed: () =>
-                                            downloadFile(index, file),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                        itemCount: files.length,
-                      ))
-                    ],
-                  );
-                }
-            }
-          }),
+      body: ListView.builder(
+        itemBuilder: (context, index) {
+          return InkWell(
+            onTap: (() => Navigator.push(
+                context,
+                (MaterialPageRoute(
+                    builder: (context) => Audio(
+                          url: audioModels[index].url,
+                          subjectAudioName: widget.subjectAudioName,
+                        ))))),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Row(
+                // mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    audioModels[index].name,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Spacer(),
+                  IconButton(
+                    iconSize: 30,
+                    icon: Image.network(
+                      'https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Youtube2_colored_svg-512.png',
+                      height: 80,
+                      width: 100,
+                    ),
+                    color: primaryColor,
+                    onPressed: () async {
+                      // _launchUrl();
+                      String url = "${audioModels[index].url}";
+                      print("launchingUrl: $url");
+                      if (await canLaunch(url)) {
+                        await launch(url);
+                      }
+                    },
+                  ),
+                  Icon(
+                    Icons.play_arrow_rounded,
+                  ),
+                  // IconButton(
+                  //   icon: Icon(
+                  //     Icons.download,
+                  //   ),
+                  //   onPressed: () {},
+                  // ),
+                ],
+              ),
+            ),
+          );
+        },
+        itemCount: audioModels.length,
+      ),
     );
   }
 
@@ -202,4 +199,23 @@ class _AudioScreenState extends State<AudioScreen> {
   //     )),
   //   );
   // }
+}
+
+
+Future<Directory> getDownloadPath() async {
+  Directory? directory;
+  try {
+    if (Platform.isIOS) {
+      directory = await path.getApplicationDocumentsDirectory();
+    } else {
+      directory = Directory('/storage/emulated/0/Download');
+      // Put file in global download folder, if for an unknown reason it didn't exist, we fallback
+      // ignore: avoid_slow_async_io
+      if (!await directory.exists())
+        directory = (await path.getExternalStorageDirectory())!;
+    }
+  } catch (err, stack) {
+    print("Cannot get download folder path");
+  }
+  return directory!;
 }

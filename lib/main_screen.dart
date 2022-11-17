@@ -148,11 +148,18 @@ class _SliderView extends StatefulWidget {
 class _SliderViewState extends State<_SliderView> {
   String firstLetter = '';
   Future<void> getUserName() async {
-    final userId = FirebaseAuth.instance.currentUser!.uid;
-    final String userName =
+    final userId = FirebaseAuth.instance.currentUser?.uid;
+    final String? userName =
         (await FirebaseFirestore.instance.collection('users').doc(userId).get())
             .data()?['name'];
-    if (userName.length > 1) {
+    
+    if(userName == null){
+      //TODO: REWRITE THIS OBJECT
+      firstLetter = "A";
+      setState(() {}); 
+    }
+    else if (userName.length > 1) {
+
       firstLetter = userName.substring(0, 1).toUpperCase();
       setState(() {});
     }
