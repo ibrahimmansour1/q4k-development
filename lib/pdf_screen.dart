@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -7,8 +8,10 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 import 'package:path_provider/path_provider.dart' as path;
+import 'package:q4k/button_widget.dart';
 import 'package:q4k/firebase_api.dart';
 import 'package:q4k/firebase_file.dart';
+import 'package:q4k/models/pdf_model.dart';
 import 'package:q4k/pdf_viewer.dart';
 
 import '../../constants.dart';
@@ -23,16 +26,31 @@ class PdfScreen extends StatefulWidget {
 }
 
 class _PdfScreenState extends State<PdfScreen> {
-  late Future<ListResult> futureFiles;
-  late Future<List<FirebaseFile>> download;
+  // late Future<ListResult> futureFiles;
+  // late Future<List<FirebaseFile>> download;
+  final List<PDFModel> pdfModels = [];
+  Future<void> getData() async {
+    final data = await FirebaseFirestore.instance
+        .collection('materials')
+        .doc(widget.subjectPdfName)
+        .get();
+    final pdfs = data.data()!['pdfs'];
+    for (var pdf in pdfs) {
+      final pdfModel = PDFModel(name: pdf['name'], url: pdf['url']);
+      pdfModels.add(pdfModel);
+    }
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();
-    download = FirebaseApi.listAll('/material/${widget.subjectPdfName}/pdf');
-
-    futureFiles = FirebaseStorage.instance
-        .ref('/material/${widget.subjectPdfName}/pdf')
-        .listAll();
+    // download = FirebaseApi.listAll('/material/${widget.subjectPdfName}/pdf');
+    getData();
+    // var futureFiles = FirebaseFirestore.instance
+    //     .collection('materials')
+    //     .doc(widget.subjectPdfName)
+    //     .get();
   }
 
   @override
@@ -48,8 +66,8 @@ class _PdfScreenState extends State<PdfScreen> {
           ),
         ),
       ),
-      body: FutureBuilder<ListResult>(
-          future: futureFiles,
+      body: FutureBuilder<void>(
+          future: getData(),
           builder: (context, snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
@@ -60,7 +78,7 @@ class _PdfScreenState extends State<PdfScreen> {
                     child: Text('Some error occured'),
                   );
                 } else {
-                  final files = snapshot.data!.items;
+                  final files = pdfModels;
                   return Column(
                     children: [
                       buildHeader(files.length),
@@ -70,15 +88,15 @@ class _PdfScreenState extends State<PdfScreen> {
                       Expanded(
                           child: ListView.builder(
                         itemBuilder: (context, index) {
-                          final file = files[index];
+                          final file = pdfModels[index];
 
                           return Column(
                             children: [
                               InkWell(
                                 onTap: () async {
                                   final url =
-                                      '/material/${widget.subjectPdfName}/pdf/${files[index].name}';
-                                  final file = await PDFApi.loadFirebase(url);
+                                      pdfModels[index].url;
+                                  final file = await PDFApi.loadNetwork(url);
 
                                   if (file == null) return;
 
@@ -97,13 +115,13 @@ class _PdfScreenState extends State<PdfScreen> {
                                       Icon(
                                         Icons.menu_book_outlined,
                                       ),
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.download,
-                                        ),
-                                        onPressed: () =>
-                                            downloadFile(index, file),
-                                      ),
+                                      // IconButton(
+                                      //   icon: Icon(
+                                      //     Icons.download,
+                                      //   ),
+                                      //   onPressed: () =>
+                                      //       downloadFile(index, file),
+                                      // ),
                                     ],
                                   ),
                                 ),
@@ -122,7 +140,10 @@ class _PdfScreenState extends State<PdfScreen> {
   }
 
   void openPDF(BuildContext context, File file) => Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => PDFViewerPage(file: file)),
+        MaterialPageRoute(
+            builder: (context) => PDFViewerPage(
+                  file: file,
+                )),
       );
   Widget buildHeader(int length) => ListTile(
         tileColor: primaryColor,
@@ -178,3 +199,40 @@ Future<Directory> getDownloadPath() async {
   }
   return directory!;
 }
+
+
+
+
+// InkWell(
+//                                 onTap: () async {
+//                                   final url = pdfModels[index].url;
+//                                   final file = await PDFApi.loadNetwork(url);
+
+//                                   if (file == null) return;
+
+//                                   openPDF(context, file);
+//                                 },
+//                                 child: Padding(
+//                                   padding: const EdgeInsets.all(8.0),
+//                                   child: Row(
+//                                     // mainAxisAlignment: MainAxisAlignment.end,
+//                                     children: [
+//                                       Text(
+//                                         file.name,
+//                                         overflow: TextOverflow.ellipsis,
+//                                       ),
+//                                       Spacer(),
+//                                       Icon(
+//                                         Icons.menu_book_outlined,
+//                                       ),
+//                                       IconButton(
+//                                         icon: Icon(
+//                                           Icons.download,
+//                                         ),
+//                                         onPressed: () =>
+//                                             downloadFile(index, file),
+//                                       ),
+//                                     ],
+//                                   ),
+//                                 ),
+//                               ),

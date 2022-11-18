@@ -123,7 +123,7 @@ class _SectionPdfScreenState extends State<SectionPdfScreen> {
   }
 
   void openPDF(BuildContext context, File file) => Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => PDFViewerPage(file: file)),
+        MaterialPageRoute(builder: (context) => PDFViewerPage(file: file,)),
       );
   Widget buildHeader(int length) => ListTile(
         tileColor: primaryColor,

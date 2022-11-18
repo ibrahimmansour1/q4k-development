@@ -7,10 +7,11 @@ import 'package:path/path.dart';
 
 class PDFViewerPage extends StatefulWidget {
   final File file;
+  // final String url;
 
   const PDFViewerPage({
     Key? key,
-    required this.file,
+    required this.file, 
   }) : super(key: key);
 
   @override

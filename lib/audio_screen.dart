@@ -89,23 +89,6 @@ class _AudioScreenState extends State<AudioScreen> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Spacer(),
-                  IconButton(
-                    iconSize: 30,
-                    icon: Image.network(
-                      'https://cdn2.iconfinder.com/data/icons/social-media-2285/512/1_Youtube2_colored_svg-512.png',
-                      height: 80,
-                      width: 100,
-                    ),
-                    color: primaryColor,
-                    onPressed: () async {
-                      // _launchUrl();
-                      String url = "${audioModels[index].url}";
-                      print("launchingUrl: $url");
-                      if (await canLaunch(url)) {
-                        await launch(url);
-                      }
-                    },
-                  ),
                   Icon(
                     Icons.play_arrow_rounded,
                   ),
