@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
+import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:path_provider/path_provider.dart' as path;
 import 'package:q4k/button_widget.dart';
 import 'package:q4k/firebase_api.dart';
@@ -34,23 +35,32 @@ class _PdfScreenState extends State<PdfScreen> {
         .collection('materials')
         .doc(widget.subjectPdfName)
         .get();
+    print("doc well");
     final pdfs = data.data()!['pdfs'];
     for (var pdf in pdfs) {
       final pdfModel = PDFModel(name: pdf['name'], url: pdf['url']);
       pdfModels.add(pdfModel);
     }
-    setState(() {});
+    print("finished");
+
+    // setState(() {});
   }
 
   @override
   void initState() {
     super.initState();
     // download = FirebaseApi.listAll('/material/${widget.subjectPdfName}/pdf');
-    getData();
+    // getData();
+    print("created");
     // var futureFiles = FirebaseFirestore.instance
     //     .collection('materials')
     //     .doc(widget.subjectPdfName)
     //     .get();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -66,76 +76,85 @@ class _PdfScreenState extends State<PdfScreen> {
           ),
         ),
       ),
-      body: FutureBuilder<void>(
-          future: getData(),
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return const Center(child: CircularProgressIndicator());
-              default:
-                if (snapshot.hasError) {
-                  return const Center(
-                    child: Text('Some error occured'),
-                  );
-                } else {
-                  final files = pdfModels;
-                  return Column(
-                    children: [
-                      buildHeader(files.length),
-                      const SizedBox(
-                        height: 12,
-                      ),
-                      Expanded(
-                          child: ListView.builder(
-                        itemBuilder: (context, index) {
-                          final file = pdfModels[index];
+      body: ProgressHUD(
+        child: FutureBuilder<void>(
+            future: getData(),
+            builder: (context, snapshot) {
+              // switch (snapshot.connectionState) {
+              // case ConnectionState.waiting:
+              //   return const Center(child: CircularProgressIndicator());
+              // default:
+              if (snapshot.hasError) {
+                return const Center(
+                  child: Text('Empty Folder'),
+                );
+              } else {
+                final files = pdfModels;
+                return Column(
+                  children: [
+                    buildHeader(files.length),
+                    const SizedBox(
+                      height: 12,
+                    ),
+                    Expanded(
+                        child: ListView.builder(
+                      itemBuilder: (context, index) {
+                        final file = pdfModels[index];
 
-                          return Column(
-                            children: [
-                              InkWell(
-                                onTap: () async {
+                        return Column(
+                          children: [
+                            InkWell(
+                              onTap: () async {
+                                final progress = ProgressHUD.of(context);
+                                progress?.showWithText('Loading...');
+                                Future.delayed(Duration(seconds: 1), () async {
                                   final url =
-                                      pdfModels[index].url;
+                                      ("https://drive.google.com/uc?export=view&id=" +
+                                          pdfModels[index]
+                                              .url
+                                              .substring(32, 65));
+                                  print(url);
                                   final file = await PDFApi.loadNetwork(url);
-
                                   if (file == null) return;
-
                                   openPDF(context, file);
-                                },
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
-                                    // mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Text(
-                                        file.name,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      Spacer(),
-                                      Icon(
-                                        Icons.menu_book_outlined,
-                                      ),
-                                      // IconButton(
-                                      //   icon: Icon(
-                                      //     Icons.download,
-                                      //   ),
-                                      //   onPressed: () =>
-                                      //       downloadFile(index, file),
-                                      // ),
-                                    ],
-                                  ),
+                                  progress?.dismiss();
+                                });
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  // mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Text(
+                                      file.name,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Spacer(),
+                                    Icon(
+                                      Icons.menu_book_outlined,
+                                    ),
+                                    // IconButton(
+                                    //   icon: Icon(
+                                    //     Icons.download,
+                                    //   ),
+                                    //   onPressed: () =>
+                                    //       downloadFile(index, file),
+                                    // ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          );
-                        },
-                        itemCount: files.length,
-                      ))
-                    ],
-                  );
-                }
-            }
-          }),
+                            ),
+                          ],
+                        );
+                      },
+                      itemCount: files.length,
+                    ))
+                  ],
+                );
+              }
+              // }
+            }),
+      ),
     );
   }
 

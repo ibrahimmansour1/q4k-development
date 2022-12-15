@@ -68,7 +68,7 @@ class _SectionAudioScreenState extends State<SectionAudioScreen> {
               default:
                 if (snapshot.hasError) {
                   return const Center(
-                    child: Text('Some error occured'),
+                    child: Text('Empty Folder'),
                   );
                 } else {
                   final files = snapshot.data!.items;

@@ -76,7 +76,8 @@ class _AudioScreenState extends State<AudioScreen> {
                 context,
                 (MaterialPageRoute(
                     builder: (context) => Audio(
-                          url: audioModels[index].url,
+                          url: "https://drive.google.com/uc?export=view&id=" +
+                              audioModels[index].url.substring(32, 65),
                           subjectAudioName: widget.subjectAudioName,
                         ))))),
             child: Padding(
@@ -183,7 +184,6 @@ class _AudioScreenState extends State<AudioScreen> {
   //   );
   // }
 }
-
 
 Future<Directory> getDownloadPath() async {
   Directory? directory;

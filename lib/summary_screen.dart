@@ -9,45 +9,62 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_cached_pdfview/flutter_cached_pdfview.dart';
 import 'package:flutter_progress_hud/flutter_progress_hud.dart';
 import 'package:path_provider/path_provider.dart' as path;
+import 'package:q4k/button_widget.dart';
 import 'package:q4k/firebase_api.dart';
 import 'package:q4k/firebase_file.dart';
+import 'package:q4k/models/pdf_model.dart';
 import 'package:q4k/pdf_viewer.dart';
 
 import '../../constants.dart';
 import 'api/pdf_api.dart';
-import 'models/pdf_model.dart';
+import 'models/summary_model.dart';
 
-class SectionPdfScreen extends StatefulWidget {
-  const SectionPdfScreen({super.key, required this.subjectPdfName});
-  final String subjectPdfName;
+class SummaryScreen extends StatefulWidget {
+  const SummaryScreen({
+    super.key,
+    required this.subjectSummaryName,
+  });
+  final String subjectSummaryName;
 
   @override
-  State<SectionPdfScreen> createState() => _SectionPdfScreenState();
+  State<SummaryScreen> createState() => _SummaryScreenState();
 }
 
-class _SectionPdfScreenState extends State<SectionPdfScreen> {
-  final List<PDFSectionModel> pdfSectionModels = [];
+class _SummaryScreenState extends State<SummaryScreen> {
+  // late Future<ListResult> futureFiles;
+  // late Future<List<FirebaseFile>> download;
+  final List<SummaryModel> summaryModels = [];
   Future<void> getData() async {
     final data = await FirebaseFirestore.instance
-        .collection('sections')
-        .doc(widget.subjectPdfName)
+        .collection('materials')
+        .doc(widget.subjectSummaryName)
         .get();
     print("doc well");
-    final pdfs = data.data()!['pdfs'];
+    final pdfs = data.data()!['summaries'];
     for (var pdf in pdfs) {
-      final pdfModel = PDFSectionModel(name: pdf['name'], url: pdf['url']);
-      pdfSectionModels.add(pdfModel);
+      final pdfModel = SummaryModel(name: pdf['name'], url: pdf['url']);
+      summaryModels.add(pdfModel);
     }
-    @override
-    void initState() {
-      super.initState();
-      // download =
-      //     FirebaseApi.listAll('/material/${widget.subjectPdfName}/section/pdf');
+    print("finished");
 
-      // futureFiles = FirebaseStorage.instance
-      //     .ref('/material/${widget.subjectPdfName}/section/pdf')
-      //     .listAll();
-    }
+    // setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    // download = FirebaseApi.listAll('/material/${widget.subjectPdfName}/pdf');
+    // getData();
+    print("created");
+    // var futureFiles = FirebaseFirestore.instance
+    //     .collection('materials')
+    //     .doc(widget.subjectPdfName)
+    //     .get();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -56,7 +73,7 @@ class _SectionPdfScreenState extends State<SectionPdfScreen> {
       appBar: AppBar(
         backgroundColor: primaryColor,
         title: const Text(
-          'Section PDF',
+          'Summary',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: lightColor,
@@ -76,7 +93,7 @@ class _SectionPdfScreenState extends State<SectionPdfScreen> {
                   child: Text('Empty Folder'),
                 );
               } else {
-                final files = pdfSectionModels;
+                final files = summaryModels;
                 return Column(
                   children: [
                     buildHeader(files.length),
@@ -86,7 +103,7 @@ class _SectionPdfScreenState extends State<SectionPdfScreen> {
                     Expanded(
                         child: ListView.builder(
                       itemBuilder: (context, index) {
-                        final file = pdfSectionModels[index];
+                        final file = summaryModels[index];
 
                         return Column(
                           children: [
@@ -97,7 +114,7 @@ class _SectionPdfScreenState extends State<SectionPdfScreen> {
                                 Future.delayed(Duration(seconds: 1), () async {
                                   final url =
                                       ("https://drive.google.com/uc?export=view&id=" +
-                                          pdfSectionModels[index]
+                                          summaryModels[index]
                                               .url
                                               .substring(32, 65));
                                   print(url);
@@ -155,6 +172,7 @@ class _SectionPdfScreenState extends State<SectionPdfScreen> {
         tileColor: primaryColor,
         title: Text(
           '$length Files',
+          overflow: TextOverflow.ellipsis,
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
@@ -204,3 +222,40 @@ Future<Directory> getDownloadPath() async {
   }
   return directory!;
 }
+
+
+
+
+// InkWell(
+//                                 onTap: () async {
+//                                   final url = pdfModels[index].url;
+//                                   final file = await PDFApi.loadNetwork(url);
+
+//                                   if (file == null) return;
+
+//                                   openPDF(context, file);
+//                                 },
+//                                 child: Padding(
+//                                   padding: const EdgeInsets.all(8.0),
+//                                   child: Row(
+//                                     // mainAxisAlignment: MainAxisAlignment.end,
+//                                     children: [
+//                                       Text(
+//                                         file.name,
+//                                         overflow: TextOverflow.ellipsis,
+//                                       ),
+//                                       Spacer(),
+//                                       Icon(
+//                                         Icons.menu_book_outlined,
+//                                       ),
+//                                       IconButton(
+//                                         icon: Icon(
+//                                           Icons.download,
+//                                         ),
+//                                         onPressed: () =>
+//                                             downloadFile(index, file),
+//                                       ),
+//                                     ],
+//                                   ),
+//                                 ),
+//                               ),

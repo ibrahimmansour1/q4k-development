@@ -32,19 +32,20 @@ dependencies:
   audioplayers: ^1.1.0
   awesome_dialog: ^3.0.2
   cached_network_image: ^3.2.1
-  cloud_firestore: ^3.5.0
+  cloud_firestore: ^4.2.0
   conditional_builder_null_safety: ^0.0.6
   cupertino_icons: ^1.0.2
   dio: ^4.0.6
   file_picker: ^4.6.0
-  firebase_auth: ^3.11.0
-  firebase_core: ^1.23.0
-  firebase_dynamic_links: ^4.3.9
-  firebase_storage: ^10.3.9
+  firebase_auth: ^4.2.0
+  firebase_core: ^2.4.0
+  firebase_dynamic_links: ^5.0.8
+  firebase_storage: ^11.0.7
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
   flutter_cached_pdfview: ^0.4.1
+  flutter_progress_hud: ^2.0.2
   flutter_slider_drawer: ^2.1.1
   flutter_svg: ^1.1.5
   fluttertoast: ^8.0.9
@@ -61,7 +62,7 @@ dependencies:
   youtube_player_flutter: ^8.1.0
 
 dev_dependencies:
-  flutter_launcher_icons: ^0.10.0
+  flutter_launcher_icons: ^0.11.0
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter

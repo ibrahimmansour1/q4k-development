@@ -30,7 +30,6 @@ class _OtherFilesScreenState extends State<OtherFilesScreen> {
     await file.writeToFile(tempFile);
     final result = await OpenFile.open(tempFile.path);
     print(result.message);
-
   }
 
   @override
@@ -66,7 +65,7 @@ class _OtherFilesScreenState extends State<OtherFilesScreen> {
               default:
                 if (snapshot.hasError) {
                   return const Center(
-                    child: Text('Some error occured'),
+                    child: Text('Empty Folder'),
                   );
                 } else {
                   final files = snapshot.data!.items;
