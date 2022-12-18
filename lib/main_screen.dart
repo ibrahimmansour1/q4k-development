@@ -10,6 +10,7 @@ import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
 import 'package:q4k/cs/cs_screen.dart';
 import 'package:q4k/is/is_screen.dart';
 import 'package:q4k/it/it_screen.dart';
+import 'package:q4k/question_library/screens/home_screen.dart';
 import 'package:q4k/screens/info_screen.dart';
 import 'package:q4k/screens/settings_screen.dart';
 import 'package:q4k/screens/sign_in/sign_in.dart';
@@ -91,6 +92,7 @@ class _MainScreenState extends State<MainScreen> {
           },
         ),
         child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
           child: Column(children: [
             Text('Q4K',
                 style: GoogleFonts.nunito(
@@ -110,9 +112,8 @@ class _MainScreenState extends State<MainScreen> {
             // const SizedBox(
             //   height: 10,
             // ),
+            //HomeScreen
             SizedBox(
-              width: 400,
-              height: 500,
               child: ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
@@ -129,6 +130,10 @@ class _MainScreenState extends State<MainScreen> {
                     section_name: sectionName),
               ),
             ),
+            DepartmentCard(icon_name: [Icons.question_mark],index: 0,onPress:(){
+
+              Navigator.push(context, MaterialPageRoute(builder: (_)=>const HomeScreen()));
+            } ,section_name: ['Questions'],)
           ]),
         ),
       ),

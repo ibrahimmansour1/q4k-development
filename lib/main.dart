@@ -1,10 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:q4k/audio_player.dart';
 import 'package:q4k/constants.dart';
 import 'package:q4k/main_screen.dart';
+import 'package:q4k/question_library/notification_manager.dart';
+import 'package:q4k/question_library/screens/home_screen.dart';
 import 'package:q4k/screens/info_screen.dart';
 import 'package:q4k/shared/local/cache_helper.dart';
 import 'package:q4k/shared/styles/theme.dart';
@@ -17,7 +21,9 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   await CacheHelper.init();
+  saveToken();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]).then(
     (_) => runApp(MyApp()),
@@ -30,6 +36,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: const Home(),
@@ -49,12 +56,14 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   Future<FirebaseApp> _initializeFirebase() async {
+
     FirebaseApp firebaseApp = await Firebase.initializeApp();
     return firebaseApp;
   }
 
   @override
   Widget build(BuildContext context) {
+    notificationManager(context);
     return Scaffold(
       backgroundColor: lightColor,
       body: FutureBuilder(
@@ -70,4 +79,20 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+}
+saveToken()async{
+      bool? status = CacheHelper.getData(key: 'added FCM');
+    if (status != true) {
+
+       await FirebaseMessaging.instance.getToken().then((value) async{
+
+
+         await FirebaseFirestore.instance
+        .collection('/question/listOfNotificationToken/listOfNotificationToken').add({'token': value}).then((value) {
+   CacheHelper.putBoolean(key: 'added FCM', value: true);
+        });
+
+      });
+
+    }
 }
