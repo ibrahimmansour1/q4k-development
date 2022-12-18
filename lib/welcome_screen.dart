@@ -26,7 +26,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               height: 80,
             ),
             Center(
-              child: Image.asset("assets/images/dark-logo.jpg"),
+              child: Image.asset(
+                "assets/images/dark-logo.png",
+                width: 250,
+                height: 250,
+              ),
             ),
             const Spacer(),
             Text('All you want is here',

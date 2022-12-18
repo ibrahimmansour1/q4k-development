@@ -26,17 +26,25 @@ class AudioScreen extends StatefulWidget {
 
 class _AudioScreenState extends State<AudioScreen> {
   final List<AudioModel> audioModels = [];
-  Future<void> getData() async {
+  Future<dynamic> getData() async {
     final data = await FirebaseFirestore.instance
         .collection('materials')
         .doc(widget.subjectAudioName)
         .get();
     final audios = data.data()!['audios'];
-    for (var audio in audios) {
-      final audioModel = AudioModel(name: audio['name'], url: audio['url']);
-      audioModels.add(audioModel);
+    // audioModels.removeLast();
+    if (data.data()!['audios'] == null) {
+      if (!audioModels.contains(' ')) {
+        audioModels.add(AudioModel(name: " ", url: ' '));
+        setState(() {});
+      }
+    } else {
+      for (var audio in audios) {
+        final audioModel = AudioModel(name: audio['name'], url: audio['url']);
+        audioModels.add(audioModel);
+      }
+      setState(() {});
     }
-    setState(() {});
   }
 
   late Future<ListResult> futureFiles;
@@ -59,54 +67,58 @@ class _AudioScreenState extends State<AudioScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: primaryColor,
-        title: const Text(
-          'Audio',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: lightColor,
+        appBar: AppBar(
+          backgroundColor: primaryColor,
+          title: const Text(
+            'Audio',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: lightColor,
+            ),
           ),
         ),
-      ),
-      body: ListView.builder(
-        itemBuilder: (context, index) {
-          return InkWell(
-            onTap: (() => Navigator.push(
-                context,
-                (MaterialPageRoute(
-                    builder: (context) => Audio(
-                          url: "https://drive.google.com/uc?export=view&id=" +
-                              audioModels[index].url.substring(32, 65),
-                          subjectAudioName: widget.subjectAudioName,
-                        ))))),
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Row(
-                // mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    audioModels[index].name,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  Spacer(),
-                  Icon(
-                    Icons.play_arrow_rounded,
-                  ),
-                  // IconButton(
-                  //   icon: Icon(
-                  //     Icons.download,
-                  //   ),
-                  //   onPressed: () {},
-                  // ),
-                ],
-              ),
-            ),
-          );
-        },
-        itemCount: audioModels.length,
-      ),
-    );
+        body: (audioModels.first.name == ' ')
+            ? const Center(child: Text("Empty Folder"))
+            : ListView.builder(
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: (() => Navigator.push(
+                        context,
+                        (MaterialPageRoute(
+                            builder: (context) => Audio(
+                                  url:
+                                      "https://drive.google.com/uc?export=view&id=" +
+                                          audioModels[index]
+                                              .url
+                                              .substring(32, 65),
+                                  subjectAudioName: widget.subjectAudioName,
+                                ))))),
+                    child: Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                        // mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            audioModels[index].name,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          const Spacer(),
+                          const Icon(
+                            Icons.play_arrow_rounded,
+                          ),
+                          // IconButton(
+                          //   icon: Icon(
+                          //     Icons.download,
+                          //   ),
+                          //   onPressed: () {},
+                          // ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+                itemCount: audioModels.length,
+              ));
   }
 
   Future downloadFile(int index, Reference ref) async {

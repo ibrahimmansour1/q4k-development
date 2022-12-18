@@ -59,7 +59,7 @@ class _BodyState extends State<Body> {
                 textAlign: TextAlign.center,
               ),
               SizedBox(
-                height: SizeConfig.screenHeight * 0.08,
+                height: SizeConfig.screenHeight * 0.06,
               ),
               Form(
                 key: widget._formKey,

@@ -42,7 +42,8 @@ class SignInScreen extends StatelessWidget {
           }
           if (state is Q4kLoginSuccessState) {
             CacheHelper.saveData(key: 'uId', value: state.uId).then((value) {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) {
                 return const MainScreen();
               }));
             });
@@ -104,7 +105,7 @@ class SignInScreen extends StatelessWidget {
       child: InkWell(
         onTap: () {
           signInWithGoogle();
-          Navigator.push(
+          Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (context) => MainScreen()));
         },
         child: Container(
